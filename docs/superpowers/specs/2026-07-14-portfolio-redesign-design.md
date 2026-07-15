@@ -35,7 +35,7 @@ Shared assets (fonts, base tokens, lightbox script) live in a small shared `<sty
 ### Hero / about (on `index.html`)
 - Name and role, calm typographic treatment — no shadow-duplicate/offset effect, no aggressive weight jump. Warm, first-person tone in the bio line (copy adjustment, not just layout — still needs the user's actual wording, see Open Items).
 - Profile illustration (`assets/hero-portrait.png`, 1086×1448, transparent) stays, composed quietly — no bold accent glow behind it.
-- Physics-chip tag pile (existing Matter.js setup) stays but is toned down: outline/quiet chips (e.g. thin border, no filled bright background) instead of the loud filled colored pills from v1. Roams a bounded area (not full-viewport chaos) — matches the calmer mood.
+- Tag row (prototyped and confirmed): quiet outline chips (thin border, transparent background, muted mono text) laid out as a normal static `flex-wrap` row — no filled bright pills, no full-viewport roam. **The Matter.js physics simulation from v1 is dropped entirely**, replaced by a lightweight cursor-proximity effect: a `mousemove` listener over the tag row reads each chip's live `getBoundingClientRect()` and nudges it a few px away from the cursor (plus a subtle highlight state) when the cursor passes within ~110px, with no rigid-body engine and no CDN dependency. This was a deliberate fallback after the physics engine proved unreliable across environments (chips repeatedly collapsed to position (0,0) because of viewport/layout-timing edge cases) — the simpler cursor-repel effect has no equivalent failure mode since it re-measures on every mouse event instead of once at load, and it fits the calmer direction better regardless.
 - Live status badge (MSK clock, coordinates, "open to work") stays, condensed, quiet styling (matches the rest of the calm palette, not a bright accent-colored pill).
 - Contacts: Telegram, Email, CV — simple inline row, unchanged.
 - Experience timeline (3 entries) stays on `index.html` (no longer needs to be split into a separate "outro" full-viewport section, since scroll-snap sections are gone — it's just the next block on a normally-scrolling page).
@@ -63,7 +63,7 @@ Still fully static, no backend. UI state is local to each page:
 
 ## Accessibility & motion
 
-- `prefers-reduced-motion: reduce` still disables the physics-chip simulation and any pulse/reveal animation, same as before.
+- `prefers-reduced-motion: reduce` still disables the tag row's cursor-repel effect and any pulse/reveal animation, same as before.
 - Touch-device caption fallback (see Work grid, above) is itself an accessibility concern: hover-only content is invisible to touch and to keyboard-only navigation, so the caption must also be reachable/visible on focus (`:focus-within` alongside `:hover`) for keyboard users tabbing through the grid links.
 - Carries forward the outstanding fixes from the prior technical audit, unchanged from v1: real `<h1>` for the name, fix low-contrast text (body 3.7:1 and gradient-tag 1.9:1), add the missing image `alt`, add `<meta name="description">` (now needed on all 5 pages, not just one).
 
@@ -76,11 +76,11 @@ Still fully static, no backend. UI state is local to each page:
 
 - Grid likely drops to 1 column (single case per row) — standard responsive collapse, no special interaction needed since there's no scroll-snap sequence to adapt anymore.
 - Touch caption fallback (always-visible, smaller caption under each image) applies here primarily, since mobile is all touch.
-- Physics-chip roam area stays bounded/contained on mobile, same reasoning as v1 (avoid drift off-screen, keep the simulation cheap).
+- The tag row is a normal wrapping flex row at every width, so it needs no special mobile handling; the cursor-repel effect simply has no effect on touch (no `mousemove`), which is fine — it was always a cosmetic extra, not load-bearing content.
 
 ## Testing / verification plan
 
-- Manual pass covering: grid hover caption reveal and focus-visible fallback, grid tile navigation to each of the 4 case pages, back-navigation from a case page, physics-chip behavior, clock tick, lightbox on each case page, `prefers-reduced-motion` behavior, responsive collapse at mobile widths.
+- Manual pass covering: grid hover caption reveal and focus-visible fallback, grid tile navigation to each of the 4 case pages, back-navigation from a case page, tag-row cursor-repel behavior, clock tick, lightbox on each case page, `prefers-reduced-motion` behavior, responsive collapse at mobile widths.
 - Re-run the `impeccable audit` / Puppeteer performance scan across all 5 pages (not just the homepage) to confirm load-time and contrast findings are resolved on every page, not only the entry point.
 
 ## Open items before implementation

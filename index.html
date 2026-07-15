@@ -140,5 +140,64 @@
       </div>
     </section>
 
+  <script>
+    function tick() {
+      var el = document.getElementById('clock');
+      if (!el) return;
+      el.textContent = new Intl.DateTimeFormat('ru-RU', {
+        timeZone: 'Europe/Moscow', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+      }).format(new Date());
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    (function () {
+      var textEl = document.getElementById('heroNameText');
+      var cursorEl = document.getElementById('typeCursor');
+      if (!textEl || !cursorEl) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { cursorEl.style.display = 'none'; return; }
+      var fullText = textEl.textContent;
+      textEl.textContent = '';
+      var i = 0;
+      function typeNext() {
+        if (i < fullText.length) { textEl.textContent += fullText.charAt(i); i++; setTimeout(typeNext, 70); }
+        else { setTimeout(function () { cursorEl.style.display = 'none'; }, 3000); }
+      }
+      typeNext();
+    })();
+
+    // Quiet cursor-repel for the tag row: chips nudge away from the cursor when it
+    // passes near, no physics engine — reads live getBoundingClientRect() on every
+    // mousemove, so there is no load-time layout measurement to race against.
+    (function () {
+      var zone = document.getElementById('tagRow');
+      if (!zone) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var chips = Array.prototype.slice.call(zone.querySelectorAll('.physics-chip'));
+      var radius = 110;
+      var maxShift = 16;
+
+      zone.addEventListener('mousemove', function (e) {
+        chips.forEach(function (chip) {
+          var r = chip.getBoundingClientRect();
+          var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+          var dx = cx - e.clientX, dy = cy - e.clientY;
+          var dist = Math.sqrt(dx * dx + dy * dy) || 1;
+          if (dist < radius) {
+            var strength = ((radius - dist) / radius) * maxShift;
+            chip.style.transform = 'translate(' + (dx / dist) * strength + 'px,' + (dy / dist) * strength + 'px)';
+            chip.classList.add('is-near');
+          } else {
+            chip.style.transform = '';
+            chip.classList.remove('is-near');
+          }
+        });
+      });
+      zone.addEventListener('mouseleave', function () {
+        chips.forEach(function (chip) { chip.style.transform = ''; chip.classList.remove('is-near'); });
+      });
+    })();
+  </script>
+
 </body>
 </html>

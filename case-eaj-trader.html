@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EAJ Trader — Мадина Рашидова</title>
+<meta name="description" content="EAJ Trader — MVP личного кабинета трейдера с нуля за 2 месяца. Разбор процесса: сегментация пользователей, концепты, итоги.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #131313;
+    --line: #232323;
+    --text: #e8e6e2;
+    --text-dim: #8f8b84;
+    --text-dim-2: #807a70;
+    --accent: #b8836a;
+    --live: #34c759;
+    --mono: 'Spline Sans Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  .page { max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 56px); }
+  .lightbox {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(10, 10, 10, 0.94);
+    display: flex; align-items: center; justify-content: center;
+    padding: 48px; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .lightbox.open { opacity: 1; pointer-events: all; }
+  .lightbox img {
+    max-width: 100%; max-height: 100%; border-radius: 12px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+    transform: scale(0.96); transition: transform 0.3s ease;
+  }
+  .lightbox.open img { transform: scale(1); }
+  .lightbox-close {
+    position: absolute; top: 28px; right: 32px;
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--surface); border: 1px solid var(--line);
+    color: var(--text); font-size: 1.3rem; line-height: 1; cursor: pointer;
+  }
+</style>
+<style>
+  :root { --case-accent: #8a9a6b; }
+  .case-page { padding: 56px 0 96px; }
+  .back-link {
+    display: inline-block; font-family: var(--mono); font-size: 0.82rem;
+    color: var(--text-dim); margin-bottom: 40px; padding-bottom: 2px;
+    border-bottom: 1px solid var(--line); transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .back-link:hover { color: var(--case-accent); border-color: var(--case-accent); }
+  .case-header { margin-bottom: 48px; }
+  .case-meta-line {
+    font-family: var(--mono); font-size: 0.85rem; text-transform: uppercase;
+    letter-spacing: 0.03em; color: var(--text-dim); margin-top: 10px;
+  }
+  .case-name { color: var(--text); font-weight: 700; }
+  .case-tags { font-family: var(--mono); font-size: 0.8rem; color: var(--case-accent); margin-top: 10px; }
+  h1.case-title { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -0.01em; }
+  .metrics { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+  .metric { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; min-width: 140px; }
+  .metric .value { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; color: var(--case-accent); }
+  .metric .label { font-size: 0.8rem; color: var(--text-dim); margin-top: 2px; }
+
+  .detail-block { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); }
+  .detail-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 16px; }
+  .detail-num { font-family: var(--mono); font-size: 1rem; color: var(--text-dim-2); flex-shrink: 0; }
+  .detail-head h4 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; }
+  .detail-block p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; max-width: 65ch; margin-bottom: 18px; }
+  .detail-block img { display: block; width: 100%; height: auto; border-radius: 10px; cursor: pointer; margin-bottom: 18px; }
+
+  .problem-statement { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px 26px; }
+  .problem-statement .quote-mark { display: block; font-size: 2.2rem; font-weight: 800; line-height: 0.6; color: var(--case-accent); opacity: 0.7; margin-bottom: 6px; }
+  .problem-statement p { font-size: 1.02rem; color: var(--text); margin: 0; }
+
+  .outcome-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px 24px; }
+  .outcome-kicker { display: block; font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--case-accent); }
+  .outcome-list { list-style: none; margin-top: 14px; }
+  .outcome-list li { position: relative; padding: 10px 0 10px 26px; border-top: 1px solid var(--line); font-size: 0.95rem; color: var(--text); }
+  .outcome-list li:first-child { border-top: none; padding-top: 0; }
+  .outcome-list li::before { content: "✓"; position: absolute; left: 0; color: var(--case-accent); font-family: var(--mono); }
+
+  .persona-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 20px; }
+  .persona-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; }
+  .persona-card h5 { color: var(--case-accent); font-size: 1rem; font-weight: 700; }
+  .persona-desc { color: var(--text-dim-2); font-size: 0.82rem; margin-top: 2px; margin-bottom: 14px; }
+  .persona-row { display: flex; flex-direction: column; gap: 2px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 0.85rem; }
+  .persona-row:first-of-type { border-top: none; }
+  .persona-label { font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim-2); }
+</style>
+</head>
+<body>
+
+  <div class="page">
+    <div class="case-page">
+      <a class="back-link" href="index.html">← Все работы</a>
+
+      <div class="case-header">
+        <h1 class="case-title">EAJ Trader</h1>
+        <div class="case-meta-line">Web · MVP за 2 месяца</div>
+        <div class="case-tags">/0→1 /trading /fintech</div>
+        <div class="metrics">
+          <div class="metric"><div class="value">2</div><div class="label">протестированных концепта счетов</div></div>
+          <div class="metric"><div class="value">MVP</div><div class="label">полный цикл с нуля за 2 месяца</div></div>
+        </div>
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(01)</span><h4>Цель проекта</h4></div>
+        <div class="problem-statement">
+          <span class="quote-mark">"</span>
+          <p>Создать MVP личного кабинета с нуля, который покрывает ключевые финансовые сценарии пользователей и формирует основу для дальнейшего развития продукта.</p>
+        </div>
+        <p style="margin-top:18px">На предыдущем этапе разработала айдентику и лендинг проекта, а в рамках этого кейса сфокусировалась на проектировании личного кабинета: структуре, логике и интерфейсах для управления счетами, пополнения, вывода средств, переводов и отслеживания баланса.</p>
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(02)</span><h4>Исследование</h4></div>
+        <p>Заказчик уже провёл предварительное исследование и сформировал список ключевых функций, поэтому фокус работы сместился на бизнес-анализ: кто является пользователем личного кабинета, чем отличаются их сценарии поведения и как эти различия должны повлиять на структуру системы.</p>
+        <img src="assets/process/eaj-research.jpg" alt="EAJ Trader — бизнес-анализ пользователей" loading="lazy" onclick="openLightbox(event, 'assets/process/eaj-research.jpg', 'EAJ Trader — бизнес-анализ пользователей')">
+        <p>Разделение пользователей на активных трейдеров и менее активную аудиторию показало: попытка спроектировать универсальный интерфейс приводит к потере эффективности для обоих сегментов. MVP сфокусировался на оптимизации сценариев для активных трейдеров, с заложенной основой для дальнейшей персонализации.</p>
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(03)</span><h4>Определение задачи</h4></div>
+        <p>Бизнес-анализ показал пять разных типов пользователей личного кабинета — от скальпера, для которого любая задержка интерфейса означает убыток, до новичка, которому нужен обучающий UX. Эти различия напрямую определили, какие сценарии MVP должен закрыть в первую очередь.</p>
+        <div class="persona-grid">
+          <div class="persona-card">
+            <h5>Активный трейдер</h5>
+            <p class="persona-desc">Основной пользователь платформы</p>
+            <div class="persona-row"><span class="persona-label">Цели</span><span>Быстро торговать и контролировать капитал</span></div>
+            <div class="persona-row"><span class="persona-label">Поведение</span><span>Постоянно в рынке, следит за графиками</span></div>
+            <div class="persona-row"><span class="persona-label">Боли</span><span>Перегруз интерфейса, задержки</span></div>
+            <div class="persona-row"><span class="persona-label">UX-фокус</span><span>Скорость + минимализм</span></div>
+          </div>
+          <div class="persona-card">
+            <h5>Скальпер</h5>
+            <p class="persona-desc">Высокочастотный трейдер</p>
+            <div class="persona-row"><span class="persona-label">Цели</span><span>Зарабатывать на микродвижениях цены</span></div>
+            <div class="persona-row"><span class="persona-label">Поведение</span><span>Делает десятки сделок в день</span></div>
+            <div class="persona-row"><span class="persona-label">Боли</span><span>Любая задержка = убыток</span></div>
+            <div class="persona-row"><span class="persona-label">UX-фокус</span><span>1-click trading, low latency UI</span></div>
+          </div>
+          <div class="persona-card">
+            <h5>Свинг-трейдер</h5>
+            <p class="persona-desc">Среднесрочный трейдер</p>
+            <div class="persona-row"><span class="persona-label">Цели</span><span>Ловить тренды</span></div>
+            <div class="persona-row"><span class="persona-label">Поведение</span><span>Проверяет позиции несколько раз в день</span></div>
+            <div class="persona-row"><span class="persona-label">Боли</span><span>Недостаток аналитики</span></div>
+            <div class="persona-row"><span class="persona-label">UX-фокус</span><span>Глубокая аналитика портфеля</span></div>
+          </div>
+          <div class="persona-card">
+            <h5>Инвест-трейдер (гибрид)</h5>
+            <p class="persona-desc">Комбинирует инвестиции и трейдинг</p>
+            <div class="persona-row"><span class="persona-label">Цели</span><span>Диверсификация капитала</span></div>
+            <div class="persona-row"><span class="persona-label">Поведение</span><span>Редко открывает сделки, но крупные объёмы</span></div>
+            <div class="persona-row"><span class="persona-label">Боли</span><span>Сложность контроля нескольких активов</span></div>
+            <div class="persona-row"><span class="persona-label">UX-фокус</span><span>Portfolio view + риск-метрики</span></div>
+          </div>
+          <div class="persona-card">
+            <h5>Новичок</h5>
+            <p class="persona-desc">Начинающий трейдер</p>
+            <div class="persona-row"><span class="persona-label">Цели</span><span>Понять рынок и не потерять деньги</span></div>
+            <div class="persona-row"><span class="persona-label">Поведение</span><span>Осторожные сделки, обучение</span></div>
+            <div class="persona-row"><span class="persona-label">Боли</span><span>Сложный интерфейс, страх ошибок</span></div>
+            <div class="persona-row"><span class="persona-label">UX-фокус</span><span>Обучающий UX, подсказки, ограничения</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(04)</span><h4>Работа над продуктом</h4></div>
+        <p>Ключевые сценарии: управление счетами, пополнение, вывод средств, переводы между счетами и отслеживание состояния средств. Основной экран спроектирован вокруг быстрого доступа к операциям, вторичные и аналитические данные вынесены в менее приоритетные зоны.</p>
+        <img src="assets/process/eaj-home.png" alt="EAJ Trader — главный экран личного кабинета" loading="lazy" onclick="openLightbox(event, 'assets/process/eaj-home.png', 'EAJ Trader — главный экран личного кабинета')">
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(05)</span><h4>Работа с торговыми счетами: концепт 1</h4></div>
+        <p>Торговый счёт — основная сущность продукта, точка входа во все ключевые сценарии. Первый вариант: классический табличный список счетов, паттерн, широко используемый у конкурентов и привычный пользователям. Протестировали его в качественном UX-исследовании с фокусом на базовые сценарии.</p>
+        <img src="assets/process/eaj-concept1-2.jpg" alt="EAJ Trader — концепт 1, табличный список счетов" loading="lazy" onclick="openLightbox(event, 'assets/process/eaj-concept1-2.jpg', 'EAJ Trader — концепт 1, табличный список счетов')">
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(06)</span><h4>Концепт 2 — карточный формат</h4></div>
+        <p>Во втором концепте пересобрала представление счетов в карточный формат, где каждый счёт — самостоятельная единица с полной информацией и действиями. Несмотря на то, что табличный формат оказался более ожидаемым и привычным, карточный показал лучшие результаты в понимании и скорости взаимодействия. Выбрала его как основное решение, оставив таблицу в резерве для масштабирования при росте числа счетов.</p>
+        <img src="assets/process/eaj-cards.jpg" alt="EAJ Trader — карточный формат счетов" loading="lazy" onclick="openLightbox(event, 'assets/process/eaj-cards.jpg', 'EAJ Trader — карточный формат счетов')">
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(07)</span><h4>Центр управления средствами</h4></div>
+        <p>Объединила пополнение, вывод и внутренние переводы в единый раздел Funding. Решение приняли совместно с заказчиком, чтобы упростить навигацию и сократить количество разрозненных точек входа в финансовые операции. По результатам юзабилити-тестирования пользователи отмечали более простое восприятие структуры и быстрый доступ к операциям.</p>
+        <img src="assets/process/eaj-funding-2.png" alt="EAJ Trader — раздел Funding: выбор действия" loading="lazy" onclick="openLightbox(event, 'assets/process/eaj-funding-2.png', 'EAJ Trader — раздел Funding: выбор действия')">
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(08)</span><h4>Поддержка внутри продукта</h4></div>
+        <p>Добавила раздел Claims &amp; Complaints: встроенный блок обращений в формате чата. В спорных ситуациях критично важен быстрый прямой канал коммуникации без поиска внешних контактов. На этапе раннего запуска ожидается повышенное количество обращений, поэтому чат стал не только каналом поддержки, но и инструментом обратной связи для улучшения продукта.</p>
+        <img src="assets/process/eaj-claims-list.png" alt="EAJ Trader — список обращений Claims & Complaints" loading="lazy" onclick="openLightbox(event, 'assets/process/eaj-claims-list.png', 'EAJ Trader — список обращений Claims & Complaints')">
+        <img src="assets/process/eaj-claims-detail.png" alt="EAJ Trader — чат по обращению" loading="lazy" onclick="openLightbox(event, 'assets/process/eaj-claims-detail.png', 'EAJ Trader — чат по обращению')" style="margin-top:16px">
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(09)</span><h4>Итоги</h4></div>
+        <p>Спроектирован MVP веб-кабинета для управления финансовыми операциями. Заложенная структура решения позволяет масштабировать продукт за счёт добавления новых сценариев без нарушения основной логики взаимодействия.</p>
+        <div class="outcome-card">
+          <span class="outcome-kicker">В рамках MVP удалось</span>
+          <ul class="outcome-list">
+            <li>Определить ключевые пользовательские сегменты и их поведенческие модели, что позволило сфокусировать продукт на сценариях активных трейдеров</li>
+            <li>Спроектировать и протестировать разные подходы к отображению торговых счетов</li>
+            <li>Сформировать архитектуру кабинета, ориентированную на быстрые и частые финансовые операции</li>
+          </ul>
+        </div>
+      </div>
+
+      <a class="back-link" href="index.html" style="margin-top:48px">← Все работы</a>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Закрыть">×</button>
+    <img id="lightboxImg" src="" alt="">
+  </div>
+
+  <script>
+    function openLightbox(e, src, alt) {
+      e.stopPropagation();
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightboxImg').alt = alt;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('lightbox').addEventListener('click', function (e) {
+      if (e.target.id === 'lightbox') closeLightbox();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+
+</body>
+</html>

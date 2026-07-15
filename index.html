@@ -102,6 +102,41 @@
   @media (prefers-reduced-motion: reduce) {
     .type-cursor, .radar-ring { animation: none; }
   }
+
+  .work { padding: 40px 0 96px; }
+  .work-heading {
+    font-family: var(--mono); font-size: 0.85rem; color: var(--text-dim);
+    text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 24px;
+    padding-bottom: 16px; border-bottom: 1px solid var(--line);
+  }
+  .work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .work-tile {
+    position: relative; display: block; border-radius: 10px; overflow: hidden;
+    background: var(--surface); border: 1px solid var(--line); aspect-ratio: 4 / 3;
+  }
+  .work-tile img {
+    display: block; width: 100%; height: 100%; object-fit: cover;
+    object-position: top; transition: transform 0.5s ease;
+  }
+  .work-tile:hover img, .work-tile:focus-visible img { transform: scale(1.03); }
+  .work-caption {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 18px 20px;
+    background: linear-gradient(to top, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.35) 45%, transparent 75%);
+    opacity: 0; transform: translateY(6px); transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .work-tile:hover .work-caption, .work-tile:focus-visible .work-caption { opacity: 1; transform: translateY(0); }
+  .work-caption .name { font-size: 1.05rem; font-weight: 700; color: var(--text); }
+  .work-caption .meta { font-family: var(--mono); font-size: 0.78rem; color: var(--text-dim); margin-top: 2px; }
+
+  @media (hover: none) and (pointer: coarse) {
+    .work-tile { aspect-ratio: 4 / 3.6; }
+    .work-caption { opacity: 1; transform: none; background: none; position: static; padding: 10px 2px 0; }
+    .work-caption .name { font-size: 0.92rem; }
+  }
+  @media (max-width: 720px) {
+    .work-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -137,6 +172,45 @@
         <div class="hero-photo-wrap">
           <img src="assets/hero-portrait.png" alt="Мадина Рашидова" width="280" height="373">
         </div>
+      </div>
+    </section>
+
+    <section class="work">
+      <div class="work-heading">Работы</div>
+      <div class="work-grid">
+
+        <a class="work-tile" href="case-alif-partners.html">
+          <img src="assets/alif-partners-cover.png" alt="Alif Partners — админ-панель для партнёров банка" loading="lazy" width="1358" height="1128">
+          <div class="work-caption">
+            <div class="name">Alif Partners</div>
+            <div class="meta">Alif Bank · Web + Mobile · 4 месяца</div>
+          </div>
+        </a>
+
+        <a class="work-tile" href="case-eaj-trader.html">
+          <img src="assets/eaj-trader-cover.png" alt="EAJ Trader — личный кабинет трейдера" loading="lazy" width="1358" height="1128">
+          <div class="work-caption">
+            <div class="name">EAJ Trader</div>
+            <div class="meta">Web · MVP за 2 месяца</div>
+          </div>
+        </a>
+
+        <a class="work-tile" href="case-360-tracker.html">
+          <img src="assets/360-tracker-cover.png" alt="360 Tracker — приложение для отслеживания членов семьи" loading="lazy" width="1358" height="1128">
+          <div class="work-caption">
+            <div class="name">360 Tracker</div>
+            <div class="meta">iOS · MVP за 6 месяцев</div>
+          </div>
+        </a>
+
+        <a class="work-tile" href="case-namaste.html">
+          <img src="assets/namaste-cover.png" alt="Namaste — приложение для йоги, фитнеса и медитации" loading="lazy" width="1600" height="1333">
+          <div class="work-caption">
+            <div class="name">Namaste</div>
+            <div class="meta">iOS · MVP за 3 месяца</div>
+          </div>
+        </a>
+
       </div>
     </section>
 

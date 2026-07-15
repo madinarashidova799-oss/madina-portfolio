@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>360 Tracker — Мадина Рашидова</title>
+<meta name="description" content="360 Tracker — MVP мобильного приложения для семейной безопасности за 6 месяцев. Разбор процесса: анализ конкурентов, user flow, итоги.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #131313;
+    --line: #232323;
+    --text: #e8e6e2;
+    --text-dim: #8f8b84;
+    --text-dim-2: #807a70;
+    --accent: #b8836a;
+    --live: #34c759;
+    --mono: 'Spline Sans Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  .page { max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 56px); }
+  /* lightbox (shared across every page that shows process images) */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(10, 10, 10, 0.94);
+    display: flex; align-items: center; justify-content: center;
+    padding: 48px; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .lightbox.open { opacity: 1; pointer-events: all; }
+  .lightbox img {
+    max-width: 100%; max-height: 100%; border-radius: 12px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+    transform: scale(0.96); transition: transform 0.3s ease;
+  }
+  .lightbox.open img { transform: scale(1); }
+  .lightbox-close {
+    position: absolute; top: 28px; right: 32px;
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--surface); border: 1px solid var(--line);
+    color: var(--text); font-size: 1.3rem; line-height: 1; cursor: pointer;
+  }
+</style>
+<style>
+  :root { --case-accent: #6ba39a; }
+  .case-page { padding: 56px 0 96px; }
+  .back-link {
+    display: inline-block; font-family: var(--mono); font-size: 0.82rem;
+    color: var(--text-dim); margin-bottom: 40px; padding-bottom: 2px;
+    border-bottom: 1px solid var(--line); transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .back-link:hover { color: var(--case-accent); border-color: var(--case-accent); }
+  .case-header { margin-bottom: 48px; }
+  .case-meta-line {
+    font-family: var(--mono); font-size: 0.85rem; text-transform: uppercase;
+    letter-spacing: 0.03em; color: var(--text-dim); margin-top: 10px;
+  }
+  .case-tags { font-family: var(--mono); font-size: 0.8rem; color: var(--case-accent); margin-top: 10px; }
+  h1.case-title { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -0.01em; }
+  .metrics { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+  .metric { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; min-width: 140px; }
+  .metric .value { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; color: var(--case-accent); }
+  .metric .label { font-size: 0.8rem; color: var(--text-dim); margin-top: 2px; }
+
+  .detail-block { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); }
+  .detail-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 16px; }
+  .detail-num { font-family: var(--mono); font-size: 1rem; color: var(--text-dim-2); flex-shrink: 0; }
+  .detail-head h4 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; }
+  .detail-block p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; max-width: 65ch; margin-bottom: 18px; }
+  .detail-block img { display: block; width: 100%; height: auto; border-radius: 10px; cursor: pointer; margin-bottom: 18px; }
+
+  .problem-statement { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px 26px; }
+  .problem-statement .quote-mark { display: block; font-size: 2.2rem; font-weight: 800; line-height: 0.6; color: var(--case-accent); opacity: 0.7; margin-bottom: 6px; }
+  .problem-statement p { font-size: 1.02rem; color: var(--text); margin: 0; }
+
+  .outcome-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px 24px; }
+  .outcome-kicker { display: block; font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--case-accent); }
+  .outcome-list { list-style: none; margin-top: 14px; }
+  .outcome-list li { position: relative; padding: 10px 0 10px 26px; border-top: 1px solid var(--line); font-size: 0.95rem; color: var(--text); }
+  .outcome-list li:first-child { border-top: none; padding-top: 0; }
+  .outcome-list li::before { content: "✓"; position: absolute; left: 0; color: var(--case-accent); font-family: var(--mono); }
+
+  .detail-list { display: flex; flex-direction: column; gap: 12px; }
+  .detail-list-item { display: flex; gap: 10px; align-items: flex-start; }
+  .detail-list-item .arrow-icon { flex-shrink: 0; color: var(--case-accent); font-family: var(--mono); margin-top: 2px; }
+  .detail-list-item p { margin: 0; }
+</style>
+</head>
+<body>
+
+  <div class="page">
+    <div class="case-page">
+      <a class="back-link" href="index.html">← Все работы</a>
+
+      <div class="case-header">
+        <h1 class="case-title">360 Tracker</h1>
+        <div class="case-meta-line">iOS · MVP за 6 месяцев</div>
+        <div class="case-tags">/mobile /0→1 /privacy-vs-control</div>
+        <div class="metrics">
+          <div class="metric"><div class="value">4</div><div class="label">конкурента в анализе</div></div>
+          <div class="metric"><div class="value">30 дней</div><div class="label">истории поездок — премиум</div></div>
+        </div>
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(01)</span><h4>Цель проекта</h4></div>
+        <div class="problem-statement">
+          <span class="quote-mark">"</span>
+          <p>Разработать единое мобильное решение, которое помогает семьям оставаться на связи и быть уверенными в безопасности близких, объединяя геолокацию, экстренные оповещения и быструю коммуникацию в одном приложении.</p>
+        </div>
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(02)</span><h4>Общение со стейкхолдерами</h4></div>
+        <p>Основной фокус: обеспечить безопасность членов семьи, не создавая ощущения тотального контроля. Важно было найти баланс: дать родителям инструменты для спокойствия, не вызывая сопротивления у детей и подростков.</p>
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(03)</span><h4>Анализ конкурентов</h4></div>
+        <p>Вместо глубинных интервью сосредоточилась на анализе существующих решений: Kids360, Kid Security, iSharing и Family Tracker: какие функции предлагают, на чём делают акцент и какие сценарии используют для удержания пользователей.</p>
+        <img src="assets/process/tracker-competitors.png" alt="360 Tracker — анализ конкурентов" loading="lazy" onclick="openLightbox(event, 'assets/process/tracker-competitors.png', '360 Tracker — анализ конкурентов')">
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(04)</span><h4>Монетизация конкурентов</h4></div>
+        <p>Большинство приложений используют модель freemium: базовые функции бесплатны, а расширенные возможности открываются по подписке. Бесплатной версии чаще всего достаточно только для базового отслеживания, а ключевые сценарии безопасности и контроля скрыты за paywall.</p>
+        <img src="assets/process/tracker-monetization.png" alt="360 Tracker — монетизация конкурентов" loading="lazy" onclick="openLightbox(event, 'assets/process/tracker-monetization.png', '360 Tracker — монетизация конкурентов')">
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(05)</span><h4>Выводы</h4></div>
+        <p>Исследование определило не только продуктовое направление, но и реалистичный масштаб MVP, учитывая высокую техническую сложность решений в области семейного трекинга:</p>
+        <div class="detail-list">
+          <div class="detail-list-item"><span class="arrow-icon">→</span><p>Работа с GPS в реальном времени</p></div>
+          <div class="detail-list-item"><span class="arrow-icon">→</span><p>Геофенсинг</p></div>
+          <div class="detail-list-item"><span class="arrow-icon">→</span><p>Обработка маршрутов</p></div>
+          <div class="detail-list-item"><span class="arrow-icon">→</span><p>Интеграция с картографическими API</p></div>
+        </div>
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(06)</span><h4>Определение задачи</h4></div>
+        <div class="problem-statement">
+          <span class="quote-mark">"</span>
+          <p>Разработать мобильное приложение для семейной безопасности со сценариями отслеживания местоположения, экстренных уведомлений и встроенного чата для общения.</p>
+        </div>
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(07)</span><h4>User flow</h4></div>
+        <p>По результатам исследования проработала user flow, основанный на ключевых сценариях использования продукта.</p>
+        <img src="assets/process/tracker-flow.png" alt="360 Tracker — user flow" loading="lazy" onclick="openLightbox(event, 'assets/process/tracker-flow.png', '360 Tracker — user flow')">
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(08)</span><h4>Главный экран</h4></div>
+        <p>Спроектирован вокруг интерактивной карты: члены семьи в реальном времени с актуальным статусом, быстрое переключение между людьми и местами, быстрые действия и построение маршрута прямо внутри приложения, по логике, аналогичной картографическим сервисам.</p>
+        <img src="assets/process/tracker-main.png" alt="360 Tracker — главный экран" loading="lazy" onclick="openLightbox(event, 'assets/process/tracker-main.png', '360 Tracker — главный экран')">
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(09)</span><h4>Скрыть геолокацию</h4></div>
+        <p>Гипотеза: возможность временно скрывать местоположение повысит доверие к продукту и снизит ощущение контроля. Тестирование показало: респонденты позитивно восприняли саму возможность скрытия, но в родительском сценарии это вызвало вопросы: теряется контроль над ребёнком.</p>
+        <img src="assets/process/tracker-privacy.png" alt="360 Tracker — скрыть геолокацию" loading="lazy" onclick="openLightbox(event, 'assets/process/tracker-privacy.png', '360 Tracker — скрыть геолокацию')">
+        <p style="margin-top:18px">Доработали логику: родитель может ограничить возможность скрытия геолокации для ребёнка. Это сохранило контроль в детском сценарии и дало взрослым пользователям управление своей приватностью.</p>
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(10)</span><h4>История поездок</h4></div>
+        <p>Добавили историю поездок за последние 30 дней с возможностью просматривать собственные маршруты. Функция доступна в рамках премиум-подписки и не отображается другим участникам семейного круга. Это расширило сценарии использования без усложнения базового опыта.</p>
+        <img src="assets/process/tracker-history.png" alt="360 Tracker — история поездок" loading="lazy" onclick="openLightbox(event, 'assets/process/tracker-history.png', '360 Tracker — история поездок')">
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(11)</span><h4>Геозоны и родительский контроль</h4></div>
+        <p>Добавила функцию создания геозон, где родитель может вручную нарисовать или выбрать на карте область допустимого перемещения ребёнка. При выходе за пределы зоны отправляется уведомление.</p>
+        <img src="assets/process/tracker-geofence.png" alt="360 Tracker — геозоны" loading="lazy" onclick="openLightbox(event, 'assets/process/tracker-geofence.png', '360 Tracker — геозоны')">
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(12)</span><h4>Финальный концепт</h4></div>
+        <p>Включает базовые сценарии семейной безопасности и коммуникации: отслеживание геолокации в реальном времени, геофенсинг, уведомления о перемещениях и встроенный чат для общения внутри семейного круга. Все ключевые функции конкурентных приложений адаптированы под единый пользовательский опыт.</p>
+        <img src="assets/process/tracker-final.png" alt="360 Tracker — финальный концепт" loading="lazy" onclick="openLightbox(event, 'assets/process/tracker-final.png', '360 Tracker — финальный концепт')">
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(13)</span><h4>Итоги</h4></div>
+        <p>Спроектирован и запущен MVP мобильного приложения для семейной безопасности. Расширенная аналитика перемещений и гибкие настройки приватности зафиксированы как направление для дальнейшего развития.</p>
+        <div class="outcome-card">
+          <span class="outcome-kicker">Ключевые результаты MVP</span>
+          <ul class="outcome-list">
+            <li>Сформировать и протестировать ключевые пользовательские сценарии (геолокация, семейный круг, экстренные уведомления и коммуникация)</li>
+            <li>Провести первичное юзабилити-тестирование и собрать обратную связь по ключевым функциям</li>
+            <li>Проработать модель монетизации на основе freemium-подхода с премиум-подпиской и пробным периодом, валидировав готовность пользователей к оплате за расширенные сценарии</li>
+          </ul>
+        </div>
+      </div>
+
+      <a class="back-link" href="index.html" style="margin-top:48px">← Все работы</a>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Закрыть">×</button>
+    <img id="lightboxImg" src="" alt="">
+  </div>
+
+  <script>
+    function openLightbox(e, src, alt) {
+      e.stopPropagation();
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightboxImg').alt = alt;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('lightbox').addEventListener('click', function (e) {
+      if (e.target.id === 'lightbox') closeLightbox();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+
+</body>
+</html>

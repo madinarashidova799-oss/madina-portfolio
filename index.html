@@ -97,7 +97,19 @@
     transition: color 0.2s ease, border-color 0.2s ease;
   }
   .hero-contacts a:hover { color: var(--accent); border-color: var(--accent); }
-  .hero-photo-wrap { flex-shrink: 0; width: min(30vw, 280px); opacity: 0.96; }
+  .hero-photo-wrap {
+    position: relative;
+    flex-shrink: 0;
+    width: min(30vw, 280px);
+    opacity: 0.96;
+  }
+  .hero-photo-wrap::before {
+    content: "";
+    position: absolute;
+    inset: -12% -30% -4%;
+    background: radial-gradient(closest-side, rgba(184, 131, 106, 0.22), transparent 72%);
+    z-index: -1;
+  }
   .hero-photo-wrap img { display: block; width: 100%; height: auto; }
 
   @media (prefers-reduced-motion: reduce) {

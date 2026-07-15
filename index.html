@@ -15,7 +15,7 @@
     --line: #232323;
     --text: #e8e6e2;
     --text-dim: #8f8b84;
-    --text-dim-2: #625d56;
+    --text-dim-2: #807a70;
     --accent: #b8836a;
     --live: #34c759;
     --mono: 'Spline Sans Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -137,6 +137,17 @@
   @media (max-width: 720px) {
     .work-grid { grid-template-columns: 1fr; }
   }
+
+  .experience { padding: 0 0 96px; }
+  .exp-item { padding: 16px 0; border-top: 1px solid var(--line); }
+  .exp-item:first-child { border-top: none; }
+  .exp-date { display: block; font-family: var(--mono); font-size: 0.78rem; color: var(--text-dim-2); }
+  .exp-company { display: block; font-size: 1rem; font-weight: 700; margin-top: 4px; }
+  .exp-role { display: block; font-size: 0.88rem; color: var(--text-dim); margin-top: 2px; }
+  footer.page-footer {
+    border-top: 1px solid var(--line); padding: 32px 0;
+    font-family: var(--mono); font-size: 0.78rem; color: var(--text-dim-2);
+  }
 </style>
 </head>
 <body>
@@ -213,6 +224,30 @@
 
       </div>
     </section>
+
+    <section class="experience">
+      <div class="work-heading">Опыт</div>
+      <div class="exp-item">
+        <span class="exp-date">2024 — сейчас</span>
+        <span class="exp-company">Профинанс / FIBO Group</span>
+        <span class="exp-role">Product Designer</span>
+      </div>
+      <div class="exp-item">
+        <span class="exp-date">2024 — 2025</span>
+        <span class="exp-company">Foreesco Group</span>
+        <span class="exp-role">Product Designer · part-time</span>
+      </div>
+      <div class="exp-item">
+        <span class="exp-date">2022 — 2024</span>
+        <span class="exp-company">Alif Bank</span>
+        <span class="exp-role">UX/UI Designer</span>
+      </div>
+    </section>
+  </div>
+
+  <footer class="page-footer">
+    <div class="page">handmade with claude code · last update: 15.07.2026 · v2.0</div>
+  </footer>
 
   <script>
     function tick() {

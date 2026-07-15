@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alif Partners — Мадина Рашидова</title>
+<meta name="description" content="Alif Partners — редизайн админ-панели для партнёрской сети Alif Bank. Разбор процесса: исследование, решение, итоги.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #131313;
+    --line: #232323;
+    --text: #e8e6e2;
+    --text-dim: #8f8b84;
+    --text-dim-2: #807a70;
+    --accent: #b8836a;
+    --live: #34c759;
+    --mono: 'Spline Sans Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  .page { max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 56px); }
+
+  /* lightbox (shared across every page that shows process images) */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(10, 10, 10, 0.94);
+    display: flex; align-items: center; justify-content: center;
+    padding: 48px; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .lightbox.open { opacity: 1; pointer-events: all; }
+  .lightbox img {
+    max-width: 100%; max-height: 100%; border-radius: 12px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+    transform: scale(0.96); transition: transform 0.3s ease;
+  }
+  .lightbox.open img { transform: scale(1); }
+  .lightbox-close {
+    position: absolute; top: 28px; right: 32px;
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--surface); border: 1px solid var(--line);
+    color: var(--text); font-size: 1.3rem; line-height: 1; cursor: pointer;
+  }
+</style>
+<style>
+  :root { --case-accent: #6b84b8; }
+  .case-page { padding: 56px 0 96px; }
+  .back-link {
+    display: inline-block; font-family: var(--mono); font-size: 0.82rem;
+    color: var(--text-dim); margin-bottom: 40px; padding-bottom: 2px;
+    border-bottom: 1px solid var(--line); transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .back-link:hover { color: var(--case-accent); border-color: var(--case-accent); }
+  .case-header { margin-bottom: 48px; }
+  .case-meta-line {
+    font-family: var(--mono); font-size: 0.85rem; text-transform: uppercase;
+    letter-spacing: 0.03em; color: var(--text-dim); margin-top: 10px;
+  }
+  .case-name { color: var(--text); font-weight: 700; }
+  .case-tags { font-family: var(--mono); font-size: 0.8rem; color: var(--case-accent); margin-top: 10px; }
+  h1.case-title { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -0.01em; }
+  .metrics { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+  .metric { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; min-width: 140px; }
+  .metric .value { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; color: var(--case-accent); }
+  .metric .label { font-size: 0.8rem; color: var(--text-dim); margin-top: 2px; }
+
+  .detail-block { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); }
+  .detail-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 16px; }
+  .detail-num { font-family: var(--mono); font-size: 1rem; color: var(--text-dim-2); flex-shrink: 0; }
+  .detail-head h4 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; }
+  .detail-block p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; max-width: 65ch; margin-bottom: 18px; }
+  .detail-block img { display: block; width: 100%; height: auto; border-radius: 10px; cursor: pointer; margin-bottom: 18px; }
+
+  .problem-statement { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px 26px; }
+  .problem-statement .quote-mark { display: block; font-size: 2.2rem; font-weight: 800; line-height: 0.6; color: var(--case-accent); opacity: 0.7; margin-bottom: 6px; }
+  .problem-statement p { font-size: 1.02rem; color: var(--text); margin: 0; }
+
+  .outcome-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px 24px; }
+  .outcome-kicker { display: block; font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--case-accent); }
+  .outcome-list { list-style: none; margin-top: 14px; }
+  .outcome-list li { position: relative; padding: 10px 0 10px 26px; border-top: 1px solid var(--line); font-size: 0.95rem; color: var(--text); }
+  .outcome-list li:first-child { border-top: none; padding-top: 0; }
+  .outcome-list li::before { content: "✓"; position: absolute; left: 0; color: var(--case-accent); font-family: var(--mono); }
+
+  .persona-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 20px; }
+  .persona-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; }
+  .persona-card h5 { color: var(--case-accent); font-size: 1rem; font-weight: 700; }
+  .persona-desc { color: var(--text-dim-2); font-size: 0.82rem; margin-top: 2px; margin-bottom: 14px; }
+  .persona-row { display: flex; flex-direction: column; gap: 2px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 0.85rem; }
+  .persona-row:first-of-type { border-top: none; }
+  .persona-label { font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim-2); }
+</style>
+</head>
+<body>
+
+  <div class="page">
+    <div class="case-page">
+      <a class="back-link" href="index.html">← Все работы</a>
+
+      <div class="case-header">
+        <h1 class="case-title">Alif Partners</h1>
+        <div class="case-meta-line"><span class="case-name">Alif Bank</span> · Web + Mobile · 4 месяца</div>
+        <div class="case-tags">/b2b /ux-research /fintech</div>
+        <div class="metrics">
+          <div class="metric"><div class="value">2000+</div><div class="label">партнёров в сети</div></div>
+          <div class="metric"><div class="value">8</div><div class="label">интервью легли в основу редизайна</div></div>
+        </div>
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(01)</span><h4>Контекст</h4></div>
+        <p>Alif, крупнейший банк Таджикистана, развивает модель рассрочки через широкую партнёрскую сеть магазинов и собственный маркетплейс Alif Shop. С ростом числа партнёров и заказов операционная нагрузка на банк начала стремительно увеличиваться.</p>
+        <img src="assets/process/alif-context.png" alt="Alif Partners — контекст: рост партнёрской сети" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-context.png', 'Alif Partners — контекст')">
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(02)</span><h4>Исследование</h4></div>
+        <p>Глубинные интервью с 8 модераторами, ежедневно работающими в админ-панели: интерфейс им знаком, а оформление заказов, добавление товаров и изменение цен не вызывают критических сложностей. Но почти все процессы завязаны на ручных действиях: поиск заявки, звонок клиенту, подтверждение по SMS. Иногда они работают нестабильно, заявки задерживаются или теряются. Раздел доставки часть модераторов не использует вовсе из-за неочевидной логики.</p>
+        <img src="assets/process/alif-interviews.png" alt="Alif Partners — интервью с модераторами" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-interviews.png', 'Alif Partners — интервью с модераторами')">
+        <p>Интервью с партнёрами выявили другую проблему: они не видят заявку с маркетплейса, пока не позвонит колл-центр, а оформление через терминалы ограничено и иногда сбоит. Курьеры не могут самостоятельно оформлять доставку и вынуждены звонить операторам.</p>
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(03)</span><h4>Определение задачи</h4></div>
+        <div class="problem-statement">
+          <span class="quote-mark">"</span>
+          <p>Необходимо доработать ключевые пользовательские сценарии админ-панели: работу с заказами и товарами, раздел доставки, а также статусы и заявки. Ускорить работу системы и сократить количество ручных операций.</p>
+        </div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(04)</span><h4>Поиск решения</h4></div>
+        <p>Гипотеза: текущая админ-панель ориентирована на внутренние процессы, а не на задачи партнёров, из-за чего ключевые сценарии остаются зависимыми от модераторов, колл-центра и отдела партнёров. А что если сместить фокус админки на партнёров и сделать её инструментом для самостоятельной работы?</p>
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(05)</span><h4>Решение</h4></div>
+        <p>Переработала структуру админ-панели: навигация переехала из бокового сайдбара в верхнюю часть интерфейса. Новая структура включает разделы «Магазины», «Товары», «Заявки», «Доставка», «Отзывы» и отдельный раздел модерации.</p>
+        <img src="assets/process/alif-solution.png" alt="Alif Partners — новая структура админки" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-solution.png', 'Alif Partners — новая структура админки')">
+        <p>Добавила единый канал коммуникации с банком в виде чата, объединяющего взаимодействие с модераторами, отделом партнёров и колл-центром, а также уведомления об остатках товаров.</p>
+        <img src="assets/process/alif-chat.png" alt="Alif Partners — единый чат с банком" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-chat.png', 'Alif Partners — единый чат с банком')">
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(06)</span><h4>Процесс добавления товара</h4></div>
+        <p>Добавление товара занимало много времени из-за необходимости вручную заполнять данные, даже если товар уже существовал в системе. Добавила функцию поиска товара перед его созданием: если он уже есть на маркетплейсе, партнёр использует готовые данные и сразу переходит к добавлению медиа и созданию оффера вместо заполнения всех этапов.</p>
+        <img src="assets/process/alif-product-search.png" alt="Alif Partners — процесс добавления товара" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-product-search.png', 'Alif Partners — процесс добавления товара')">
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(07)</span><h4>Партнёрский инсайт</h4></div>
+        <p>Из интервью: при формировании цен на товары партнёры ориентируются на конкуренцию. В процессе добавления товара интегрировала блок с ценами на аналогичные позиции: партнёр сразу видит рыночный диапазон и принимает решение по стоимости в момент создания карточки.</p>
+        <img src="assets/process/alif-price-insight.png" alt="Alif Partners — сравнение цен конкурентов" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-price-insight.png', 'Alif Partners — сравнение цен конкурентов')">
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(08)</span><h4>Раздел доставки</h4></div>
+        <p>Самый проблемный раздел: партнёры и курьеры тратили много времени на оформление заявок, которые приходят не только с маркетплейса, но и из оффлайн-точек. Разделила раздел на самовывоз и доставку и перенесла оформление заявок из терминалов в админку, сохранив всю бизнес-логику.</p>
+        <img src="assets/process/alif-delivery.png" alt="Alif Partners — раздел доставки" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-delivery.png', 'Alif Partners — раздел доставки')">
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(09)</span><h4>Мобильная версия</h4></div>
+        <p>Спроектировала мобильную версию с полным функционалом, интегрировав обновлённую логику и оптимизированные процессы.</p>
+        <img src="assets/process/alif-mobile.png" alt="Alif Partners — мобильная версия" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-mobile.png', 'Alif Partners — мобильная версия')">
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">(10)</span><h4>Итоги</h4></div>
+        <p>Удалось переосмыслить админ-панель из внутреннего инструмента в продукт, ориентированный на самостоятельную работу партнёров.</p>
+        <div class="outcome-card">
+          <span class="outcome-kicker">Что изменилось</span>
+          <ul class="outcome-list">
+            <li>Существенно снизилась нагрузка на колл-центр и модераторов за счёт переноса части процессов</li>
+            <li>Партнёры стали самостоятельнее в управлении ключевыми операциями и больше не зависят от подтверждений</li>
+            <li>Система стала более устойчивой к росту нагрузки на фоне развития BNPL-модели</li>
+          </ul>
+        </div>
+      </div>
+
+      <a class="back-link" href="index.html" style="margin-top:48px">← Все работы</a>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Закрыть">×</button>
+    <img id="lightboxImg" src="" alt="Process image">
+  </div>
+
+  <script>
+    function openLightbox(e, src, alt) {
+      e.stopPropagation();
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightboxImg').alt = alt;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('lightbox').addEventListener('click', function (e) {
+      if (e.target.id === 'lightbox') closeLightbox();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+
+</body>
+</html>

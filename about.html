@@ -6,7 +6,7 @@
 <script>(function(){if(localStorage.getItem('site-lang')==='en')document.documentElement.classList.add('lang-en');})();</script>
 <title data-ru="Обо мне — Мадина Рашидова" data-en="About — Madina Rashidova">Обо мне — Мадина Рашидова</title>
 <link rel="icon" type="image/png" href="favicon.png">
-<meta name="description" data-ru="Мадина Рашидова — продуктовый дизайнер с опытом в fintech, banking и мобильных продуктах." data-en="Madina Rashidova — product designer with experience in fintech, banking, and mobile products." content="Мадина Рашидова — продуктовый дизайнер с опытом в fintech, banking и мобильных продуктах.">
+<meta name="description" data-ru="Мадина Рашидова — продуктовый дизайнер с 4-летним опытом в fintech, banking и трейдинге. Как работаю, как пришла в дизайн и чем увлекаюсь помимо него." data-en="Madina Rashidova — product designer with 4 years of experience in fintech, banking, and trading. How I work, how I got into design, and what I'm into besides it." content="Мадина Рашидова — продуктовый дизайнер с 4-летним опытом в fintech, banking и трейдинге.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -70,7 +70,8 @@
   html.lang-en [data-lang="ru"] { display: none; }
   html.lang-en [data-lang="en"] { display: inline; }
 
-  .about-page { padding: 152px 0 96px; max-width: 720px; }
+  .about-page { padding: 152px 0 0; max-width: 720px; }
+  .about-wide { max-width: 960px; }
   .back-link {
     display: inline-block; font-family: var(--mono); font-size: 0.82rem;
     color: var(--text-dim); margin-bottom: 40px; padding-bottom: 2px;
@@ -87,6 +88,64 @@
     letter-spacing: -0.01em; margin-bottom: 20px;
   }
   .about-text p { font-size: 1.02rem; color: var(--text-dim); line-height: 1.7; max-width: 60ch; }
+
+  .about-block { margin-top: 72px; padding-top: 40px; border-top: 1px solid var(--line); padding-bottom: 96px; }
+  .about-block.tight { padding-bottom: 0; }
+  .section-label {
+    font-family: var(--mono); font-size: 0.78rem; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--text-dim-2); margin-bottom: 14px;
+  }
+  .section-title { font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 700; letter-spacing: -0.01em; margin-bottom: 24px; }
+  .section-intro { color: var(--text-dim); font-size: 0.95rem; max-width: 62ch; margin-bottom: 36px; }
+
+  .process-grid { display: flex; flex-direction: column; gap: 36px; }
+  .process-step { display: grid; grid-template-columns: 56px 1fr; gap: 20px; }
+  .process-num {
+    font-family: var(--sans); font-weight: 800; font-size: 2rem; color: var(--line);
+    line-height: 1; letter-spacing: -0.02em;
+  }
+  .process-step h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .process-step p { color: var(--text-dim); font-size: 0.94rem; line-height: 1.65; max-width: 62ch; }
+  .process-example {
+    margin-top: 16px; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 10px; padding: 18px 20px; max-width: 62ch;
+  }
+  .process-example .example-label {
+    display: block; font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--accent); margin-bottom: 8px;
+  }
+  .process-example p { font-style: italic; color: var(--text); font-size: 0.92rem; margin: 0; max-width: none; }
+  @media (max-width: 640px) {
+    .process-step { grid-template-columns: 36px 1fr; }
+    .process-num { font-size: 1.4rem; }
+  }
+
+  .hobby-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 28px 20px;
+  }
+  .hobby-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 22px 20px; opacity: 0; transform: translateY(16px) rotate(var(--rot, 0deg));
+    transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.25s ease;
+  }
+  .hobby-card.in-view { opacity: 1; transform: translateY(0) rotate(var(--rot, 0deg)); }
+  .hobby-card:hover { transform: translateY(-4px) rotate(0deg); box-shadow: 0 16px 32px rgba(0,0,0,0.08); }
+  .hobby-card:nth-child(1) { --rot: -3deg; transition-delay: 0s; }
+  .hobby-card:nth-child(2) { --rot: 2deg; transition-delay: 0.08s; }
+  .hobby-card:nth-child(3) { --rot: -2deg; transition-delay: 0.16s; }
+  .hobby-card:nth-child(4) { --rot: 3deg; transition-delay: 0.24s; }
+  .hobby-card:nth-child(5) { --rot: -4deg; transition-delay: 0.32s; }
+  .hobby-icon { width: 32px; height: 32px; color: var(--accent); margin-bottom: 16px; }
+  .hobby-icon svg { width: 100%; height: 100%; display: block; }
+  .hobby-card h4 { font-size: 0.98rem; font-weight: 700; margin-bottom: 6px; }
+  .hobby-card p { font-size: 0.85rem; color: var(--text-dim); line-height: 1.5; }
+  @media (max-width: 480px) {
+    .hobby-card { transform: translateY(16px) rotate(0deg); }
+    .hobby-card.in-view { transform: translateY(0) rotate(0deg); }
+    .hobby-card:hover { transform: translateY(-2px) rotate(0deg); }
+  }
+
   footer.page-footer {
     border-top: 1px solid var(--line); padding: 32px 0;
     font-family: var(--mono); font-size: 0.78rem; color: var(--text-dim-2);
@@ -104,20 +163,181 @@
   </nav>
 
   <div class="page">
+
     <div class="about-page">
       <a class="back-link" href="index.html"><span data-lang="ru">← На главную</span><span data-lang="en">← Home</span></a>
       <div class="about-kicker"><span data-lang="ru">Обо мне</span><span data-lang="en">About</span></div>
       <h1 class="about-title"><span data-lang="ru">Мадина Рашидова</span><span data-lang="en">Madina Rashidova</span></h1>
       <div class="about-text">
-        <p><span data-lang="ru">Привет — я проектирую сложные административные интерфейсы и продукты с большими объёмами данных. Ниже — несколько историй о том, как это получалось.</span><span data-lang="en">Hi — I design complex admin interfaces and products with large volumes of data. Below are a few stories about how that came together.</span></p>
+        <p><span data-lang="ru">Мне 26, и последние 4 года я работаю продуктовым дизайнером — проектирую B2C, B2B и внутренние цифровые продукты в финтехе, банкинге и трейдинге. В работе участвую во всех этапах: от дискавери до запуска решений.</span><span data-lang="en">I'm 26, and for the past 4 years I've been working as a product designer — designing B2C, B2B, and internal digital products in fintech, banking, and trading. I'm involved at every stage of the work, from discovery to launch.</span></p>
+        <p style="margin-top:14px"><span data-lang="ru">Сейчас ищу сильную продуктовую команду, где смогу влиять на развитие продукта и продолжать профессионально расти как дизайнер.</span><span data-lang="en">Right now I'm looking for a strong product team where I can influence the product's direction and keep growing as a designer.</span></p>
       </div>
     </div>
+
+    <div class="about-wide">
+      <div class="about-block">
+        <div class="section-label"><span data-lang="ru">Как я работаю</span><span data-lang="en">How I work</span></div>
+        <h2 class="section-title"><span data-lang="ru">Шаблон работы над продуктовой задачей</span><span data-lang="en">My template for a product task</span></h2>
+        <p class="section-intro"><span data-lang="ru">У каждой команды свой процесс, но я стараюсь проходить примерно один и тот же путь — от понимания проблемы до проверки результата после запуска.</span><span data-lang="en">Every team has its own process, but I try to follow roughly the same path — from understanding the problem to checking the result after launch.</span></p>
+
+        <div class="process-grid">
+          <div class="process-step">
+            <div class="process-num">01</div>
+            <div>
+              <h3><span data-lang="ru">Разбираюсь, что вообще нужно решить</span><span data-lang="en">Figure out what actually needs solving</span></h3>
+              <p><span data-lang="ru">Любая задача появляется не просто так — за ней всегда стоит проблема пользователя или бизнеса. Фиксирую: в чём проблема, какую боль решаем, какой JTBD стоит за сценарием, что хотим изменить в продукте и на какую метрику это должно повлиять.</span><span data-lang="en">Every task exists for a reason — there's always a user or business problem behind it. I write down what the problem is, what pain we're solving, the JTBD behind the scenario, what we want to change in the product, and what metric it should move.</span></p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-num">02</div>
+            <div>
+              <h3><span data-lang="ru">Исследую контекст</span><span data-lang="en">Research the context</span></h3>
+              <p><span data-lang="ru">Смотрю прямых и косвенных конкурентов, обязательно изучаю международный рынок. Разбираюсь с аудиторией: кто пользователь, какие у него сценарии и сегменты, что происходит в продукте сейчас. Изучаю метрики, отзывы, обращения в поддержку. Если есть сомнение, что проблема действительно существует — провожу интервью или быстрые опросы. И сразу проверяю ограничения: технические, юридические и бизнесовые.</span><span data-lang="en">I look at direct and indirect competitors, always including the international market. I dig into the audience: who the user is, what scenarios and segments exist, what's happening in the product right now. I study metrics, reviews, and support tickets. If I doubt the problem really exists, I run interviews or quick surveys. And I check constraints early — technical, legal, business.</span></p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-num">03</div>
+            <div>
+              <h3><span data-lang="ru">Формирую гипотезы</span><span data-lang="en">Form hypotheses</span></h3>
+              <p><span data-lang="ru">Во время исследования обычно появляется много идей. Стараюсь не хвататься за первую, а фиксировать всё и приоритизировать. Для каждой гипотезы важно понимать: какую проблему она решает → почему должна сработать → какую метрику должна изменить.</span><span data-lang="en">Research usually surfaces a lot of ideas. I try not to grab the first one, but log everything and prioritize. For each hypothesis I need to know: what problem it solves → why it should work → what metric it should change.</span></p>
+              <div class="process-example">
+                <span class="example-label"><span data-lang="ru">Пример</span><span data-lang="en">Example</span></span>
+                <p><span data-lang="ru">«Если добавить уведомление о низком остатке, партнёры будут раньше обновлять количество товаров» — сначала проверяю гипотезу качественно (интервью: партнёры действительно замечают остаток слишком поздно?), затем количественно (опрос: если 70% партнёров сталкиваются с этим — гипотеза значима), и только потом она попадает в разработку.</span><span data-lang="en">"If we add a low-stock notification, partners will update quantities earlier" — I first check the hypothesis qualitatively (interviews: do partners really notice low stock too late?), then quantitatively (a survey: if 70% of partners hit this problem, the hypothesis is significant), and only then does it move into development.</span></p>
+              </div>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-num">04</div>
+            <div>
+              <h3><span data-lang="ru">Проектирую и проверяю</span><span data-lang="en">Design and validate</span></h3>
+              <p><span data-lang="ru">Дальше — подробные сценарии, прототипы и ключевые флоу. Но до финализации стараюсь проверить концепцию: usability-тестами, интервью с прототипом, опросами, хотя бы быстрыми коридорными тестами. После тестирования корректирую решение и только потом собираю все состояния: ошибки, статусы, адаптивы, тёмную и светлую темы, уведомления и остальные сценарии.</span><span data-lang="en">Next come detailed scenarios, prototypes, and key flows. But before finalizing, I try to validate the concept: usability tests, prototype interviews, surveys, or at least quick hallway tests. After testing I adjust the solution, and only then assemble every state: errors, statuses, responsive layouts, dark and light themes, notifications, and the rest of the scenarios.</span></p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-num">05</div>
+            <div>
+              <h3><span data-lang="ru">Сопровождаю разработку и запуск</span><span data-lang="en">Support development and launch</span></h3>
+              <p><span data-lang="ru">Работа дизайнера для меня не заканчивается на передаче макетов. Провожу дизайн-ревью, проверяю реализацию и заранее договариваюсь, какие события и метрики нужно собирать после запуска — без аналитики потом сложно ответить на главный вопрос: решение вообще сработало или просто было запущено.</span><span data-lang="en">For me, a designer's job doesn't end at handoff. I run design reviews, check the implementation, and agree in advance on which events and metrics to track after launch — without analytics it's hard to later answer the main question: did the solution actually work, or did it just ship.</span></p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-num">06</div>
+            <div>
+              <h3><span data-lang="ru">Смотрю на результат</span><span data-lang="en">Look at the result</span></h3>
+              <p><span data-lang="ru">После запуска сравниваю: что ожидали → что получили. Смотрю метрики, собираю обратную связь, анализирую проблемные места и формирую следующие итерации.</span><span data-lang="en">After launch I compare what we expected to what we got. I look at metrics, gather feedback, analyze pain points, and shape the next iterations.</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-page">
+      <div class="about-block">
+        <div class="section-label"><span data-lang="ru">Как пришла в дизайн</span><span data-lang="en">How I got into design</span></div>
+        <div class="about-text">
+          <p><span data-lang="ru">В 2022 году я работала в отделе партнёров банка — на бизнесовой стороне продукта. Именно там я увидела, как UX-логика способна упростить жизнь: и пользователям, и самому бизнесу. Сначала дизайн был просто хобби для души.</span><span data-lang="en">In 2022 I worked in a bank's partner department — on the business side of the product. That's where I first saw how UX logic can simplify life, both for users and for the business itself. At first, design was just a hobby for the soul.</span></p>
+          <p style="margin-top:14px"><span data-lang="ru">После обучений и стажировок оно стало частью моей жизни. Я год боролась за свою мечту и сделала всё, чтобы стать продуктовым дизайнером.</span><span data-lang="en">After courses and internships, it became part of my life. I spent a year fighting for that dream, and did everything I could to become a product designer.</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-wide">
+      <div class="about-block tight">
+        <div class="section-label"><span data-lang="ru">Чем увлекаюсь</span><span data-lang="en">What I'm into</span></div>
+        <h2 class="section-title"><span data-lang="ru">Помимо дизайна</span><span data-lang="en">Beyond design</span></h2>
+
+        <div class="hobby-grid" id="hobbyGrid">
+          <div class="hobby-card">
+            <div class="hobby-icon">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="14" cy="36" r="5" stroke="currentColor" stroke-width="2.2"/>
+                <circle cx="32" cy="32" r="5" stroke="currentColor" stroke-width="2.2"/>
+                <path d="M19 36V12L37 8V32" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19 16L37 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h4>K-pop</h4>
+            <p><span data-lang="ru">Фанатка K-pop, особенно BTS — получилось достать билет на их мировое турне.</span><span data-lang="en">A K-pop fan, especially of BTS — managed to get a ticket to their world tour.</span></p>
+          </div>
+          <div class="hobby-card">
+            <div class="hobby-icon">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="24" cy="9" r="4" stroke="currentColor" stroke-width="2.2"/>
+                <path d="M24 13V26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M24 17L12 11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M24 17L37 21" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M24 26L14 40" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M24 26L33 40" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h4><span data-lang="ru">Танцы</span><span data-lang="en">Dance</span></h4>
+            <p><span data-lang="ru">Танцую с 3 лет. Ритм и движение — самый честный способ выразить эмоции.</span><span data-lang="en">Dancing since age 3. Rhythm and movement are the most honest way I express emotion.</span></p>
+          </div>
+          <div class="hobby-card">
+            <div class="hobby-icon">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="24" cy="34" rx="16" ry="4" stroke="currentColor" stroke-width="2.2"/>
+                <path d="M14 12L34 32" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M12 10L18 16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M6 40Q12 37 18 40Q24 43 30 40Q36 37 42 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h4><span data-lang="ru">Сап</span><span data-lang="en">SUP</span></h4>
+            <p><span data-lang="ru">Вода, доска и тишина — способ отключить голову и найти баланс.</span><span data-lang="en">Water, a board, and silence — a way to switch off and find balance.</span></p>
+          </div>
+          <div class="hobby-card">
+            <div class="hobby-icon">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="14" cy="16" r="3.5" stroke="currentColor" stroke-width="2.2"/>
+                <path d="M18 20L28 26L20 30" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M28 26L40 22" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M4 38Q10 35 16 38Q22 41 28 38Q34 35 40 38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M4 32Q10 29 16 32Q22 35 28 32Q34 29 40 32" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+              </svg>
+            </div>
+            <h4><span data-lang="ru">Плавание</span><span data-lang="en">Swimming</span></h4>
+            <p><span data-lang="ru">Помогает расслабиться и побыть наедине с собой.</span><span data-lang="en">Helps me relax and spend time alone with my thoughts.</span></p>
+          </div>
+          <div class="hobby-card">
+            <div class="hobby-icon">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="24" cy="10" r="4" stroke="currentColor" stroke-width="2.2"/>
+                <path d="M24 14V26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M24 17L14 24" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M24 17L34 24" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M24 26L10 34Q10 38 16 36" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M24 26L38 34Q38 38 32 36" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h4><span data-lang="ru">Йога</span><span data-lang="en">Yoga</span></h4>
+            <p><span data-lang="ru">Про дзен: успокоить мысли и вернуться в тело.</span><span data-lang="en">About finding zen — calming the mind and returning to the body.</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <footer class="page-footer">
     <div class="page">handmade with claude code · last update: 15.07.2026 · v2.0</div>
   </footer>
 
+  <script>
+    if ('IntersectionObserver' in window) {
+      var hobbyCards = document.querySelectorAll('.hobby-card');
+      var hobbyObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            hobbyObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      hobbyCards.forEach(function (card) { hobbyObserver.observe(card); });
+    } else {
+      document.querySelectorAll('.hobby-card').forEach(function (card) { card.classList.add('in-view'); });
+    }
+  </script>
   <script src="assets/i18n.js"></script>
 </body>
 </html>

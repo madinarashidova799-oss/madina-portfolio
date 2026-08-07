@@ -121,11 +121,10 @@
   }
 
   .hobby-scatter {
-    display: none;
     position: relative; container-type: inline-size;
-    height: 50cqw; min-height: 300px; margin-bottom: 8px;
+    height: 58cqw; min-height: 220px; margin-bottom: 8px;
     background-image: radial-gradient(circle, var(--line) 1px, transparent 1px);
-    background-size: 24px 24px; border-radius: 20px;
+    background-size: 20px 20px; border-radius: 20px;
   }
   .hobby-bubble {
     position: absolute; left: var(--x); top: var(--y); width: var(--size); height: var(--size);
@@ -140,76 +139,18 @@
   .hobby-bubble-tag {
     position: absolute; bottom: 6%; left: 50%; transform: translateX(-50%);
     background: hsl(var(--hue, 20) 60% 42%); color: #fff; font-family: var(--mono);
-    font-size: 0.62rem; font-weight: 600; padding: 3px 9px; border-radius: 999px;
+    font-size: clamp(0.56rem, 3cqw, 0.68rem); font-weight: 600;
+    padding: clamp(2px, 0.8cqw, 4px) clamp(6px, 2cqw, 10px); border-radius: 999px;
     white-space: nowrap; border: 2px solid #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   }
   .hobby-legend {
-    display: none; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 14px 28px; margin-top: 28px;
   }
   .hobby-legend-item { display: flex; gap: 10px; align-items: flex-start; }
   .hobby-legend-dot { width: 10px; height: 10px; border-radius: 50%; background: hsl(var(--hue, 20) 60% 50%); margin-top: 6px; flex-shrink: 0; }
   .hobby-legend-item strong { font-size: 0.9rem; display: block; margin-bottom: 2px; }
   .hobby-legend-item p { font-size: 0.83rem; color: var(--text-dim); margin: 0; line-height: 1.5; }
-  @media (min-width: 700px) {
-    .hobby-scatter { display: block; }
-    .hobby-legend { display: grid; }
-    .hobby-grid { display: none; }
-  }
-
-  .hobby-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-    gap: 28px 20px;
-  }
-  .hobby-card {
-    position: relative; overflow: hidden;
-    background: #fff; border: 1px solid var(--line); border-radius: 16px;
-    border-top: 4px solid hsl(var(--hue, 20) 65% 55%);
-    padding: 24px 20px; opacity: 0; transform: translateY(16px) rotate(var(--rot, 0deg));
-    transition: opacity 0.5s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .hobby-card::before {
-    content: ''; position: absolute; top: -32px; right: -32px; width: 92px; height: 92px;
-    border-radius: 50%; background: hsl(var(--hue, 20) 85% 92%); opacity: 0.7; z-index: 0;
-  }
-  .hobby-card.in-view { opacity: 1; transform: translateY(0) rotate(var(--rot, 0deg)); }
-  .hobby-card:hover {
-    transform: translateY(-6px) scale(1.03) rotate(0deg);
-    box-shadow: 0 20px 40px -8px hsl(var(--hue, 20) 70% 45% / 0.35);
-  }
-  .hobby-card:nth-child(1) { --rot: -3deg; --hue: 328; transition-delay: 0s; }
-  .hobby-card:nth-child(2) { --rot: 2deg; --hue: 24; transition-delay: 0.08s; }
-  .hobby-card:nth-child(3) { --rot: -2deg; --hue: 192; transition-delay: 0.16s; }
-  .hobby-card:nth-child(4) { --rot: 3deg; --hue: 212; transition-delay: 0.24s; }
-  .hobby-card:nth-child(5) { --rot: -4deg; --hue: 150; transition-delay: 0.32s; }
-  .hobby-icon {
-    position: relative; z-index: 1; width: 52px; height: 52px; border-radius: 50%;
-    background: hsl(var(--hue, 20) 75% 90%); color: hsl(var(--hue, 20) 70% 38%);
-    display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
-  }
-  .hobby-icon svg { width: 26px; height: 26px; display: block; }
-  .hobby-photo-wrap { position: relative; z-index: 1; width: 72px; height: 72px; margin-bottom: 20px; }
-  .hobby-photo {
-    width: 72px; height: 72px; border-radius: 50%; object-fit: cover; display: block;
-    border: 3px solid hsl(var(--hue, 20) 60% 55%); box-shadow: 0 6px 14px rgba(0,0,0,0.16);
-  }
-  .hobby-badge {
-    position: absolute; bottom: -8px; right: -16px; z-index: 2;
-    background: hsl(var(--hue, 20) 65% 42%); color: #fff;
-    font-family: var(--mono); font-size: 0.66rem; font-weight: 600;
-    padding: 4px 10px; border-radius: 999px; white-space: nowrap;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.2); border: 2px solid #fff;
-  }
-  .hobby-card h4 {
-    position: relative; z-index: 1; font-size: 1.05rem; font-weight: 800; margin-bottom: 6px;
-    color: hsl(var(--hue, 20) 55% 32%);
-  }
-  .hobby-card p { position: relative; z-index: 1; font-size: 0.87rem; color: var(--text-dim); line-height: 1.55; }
-  @media (max-width: 480px) {
-    .hobby-card { transform: translateY(16px) rotate(0deg); }
-    .hobby-card.in-view { transform: translateY(0) rotate(0deg); }
-    .hobby-card:hover { transform: translateY(-3px) scale(1.02) rotate(0deg); }
-  }
 
   footer.page-footer {
     border-top: 1px solid var(--line); padding: 32px 0;
@@ -376,64 +317,6 @@
           </div>
         </div>
 
-        <div class="hobby-grid" id="hobbyGrid">
-          <div class="hobby-card">
-            <div class="hobby-icon">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="14" cy="36" r="5" stroke="currentColor" stroke-width="2.2"/>
-                <circle cx="32" cy="32" r="5" stroke="currentColor" stroke-width="2.2"/>
-                <path d="M19 36V12L37 8V32" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M19 16L37 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <h4>K-pop</h4>
-            <p><span data-lang="ru">Фанатка K-pop, особенно BTS — получилось достать билет на их мировое турне.</span><span data-lang="en">A K-pop fan, especially of BTS — managed to get a ticket to their world tour.</span></p>
-          </div>
-          <div class="hobby-card">
-            <div class="hobby-icon">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="24" cy="9" r="4" stroke="currentColor" stroke-width="2.2"/>
-                <path d="M24 13V26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-                <path d="M24 17L12 11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-                <path d="M24 17L37 21" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-                <path d="M24 26L14 40" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-                <path d="M24 26L33 40" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <h4><span data-lang="ru">Танцы</span><span data-lang="en">Dance</span></h4>
-            <p><span data-lang="ru">Танцую с 3 лет. Ритм и движение — самый честный способ выразить эмоции.</span><span data-lang="en">Dancing since age 3. Rhythm and movement are the most honest way I express emotion.</span></p>
-          </div>
-          <div class="hobby-card">
-            <div class="hobby-photo-wrap">
-              <img class="hobby-photo" src="assets/hobby-sup.jpg" alt="Мадина на сапе на озере" loading="lazy">
-              <span class="hobby-badge"><span data-lang="ru">Сап</span><span data-lang="en">SUP</span></span>
-            </div>
-            <h4><span data-lang="ru">Сап</span><span data-lang="en">SUP</span></h4>
-            <p><span data-lang="ru">Вода, доска и тишина — способ отключить голову и найти баланс.</span><span data-lang="en">Water, a board, and silence — a way to switch off and find balance.</span></p>
-          </div>
-          <div class="hobby-card">
-            <div class="hobby-photo-wrap">
-              <img class="hobby-photo" src="assets/hobby-swim.jpg" alt="Мадина у бассейна в аквапарке" loading="lazy">
-              <span class="hobby-badge"><span data-lang="ru">Плавание</span><span data-lang="en">Swim</span></span>
-            </div>
-            <h4><span data-lang="ru">Плавание</span><span data-lang="en">Swimming</span></h4>
-            <p><span data-lang="ru">Помогает расслабиться и побыть наедине с собой.</span><span data-lang="en">Helps me relax and spend time alone with my thoughts.</span></p>
-          </div>
-          <div class="hobby-card">
-            <div class="hobby-icon">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="24" cy="10" r="4" stroke="currentColor" stroke-width="2.2"/>
-                <path d="M24 14V26" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-                <path d="M24 17L14 24" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-                <path d="M24 17L34 24" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-                <path d="M24 26L10 34Q10 38 16 36" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M24 26L38 34Q38 38 32 36" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <h4><span data-lang="ru">Йога</span><span data-lang="en">Yoga</span></h4>
-            <p><span data-lang="ru">Про дзен: успокоить мысли и вернуться в тело.</span><span data-lang="en">About finding zen — calming the mind and returning to the body.</span></p>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -445,7 +328,7 @@
 
   <script>
     if ('IntersectionObserver' in window) {
-      var hobbyEls = document.querySelectorAll('.hobby-card, .hobby-bubble');
+      var hobbyEls = document.querySelectorAll('.hobby-bubble');
       var hobbyObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
@@ -456,7 +339,7 @@
       }, { threshold: 0.2 });
       hobbyEls.forEach(function (el) { hobbyObserver.observe(el); });
     } else {
-      document.querySelectorAll('.hobby-card, .hobby-bubble').forEach(function (el) { el.classList.add('in-view'); });
+      document.querySelectorAll('.hobby-bubble').forEach(function (el) { el.classList.add('in-view'); });
     }
   </script>
   <script src="assets/i18n.js"></script>

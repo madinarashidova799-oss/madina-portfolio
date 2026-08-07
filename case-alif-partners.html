@@ -3,24 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alif Partners — Мадина Рашидова</title>
+<script>(function(){if(localStorage.getItem('site-lang')==='en')document.documentElement.classList.add('lang-en');})();</script>
+<title data-ru="Alif Partners — Мадина Рашидова" data-en="Alif Partners — Madina Rashidova">Alif Partners — Мадина Рашидова</title>
 <link rel="icon" type="image/png" href="favicon.png">
-<meta name="description" content="Alif Partners — редизайн админ-панели для партнёрской сети Alif Bank. Разбор процесса: исследование, решение, итоги.">
+<meta name="description" content="Alif Partners — редизайн админ-панели для партнёрской сети Alif Bank. Разбор процесса: исследование, решение, итоги." data-ru="Alif Partners — редизайн админ-панели для партнёрской сети Alif Bank. Разбор процесса: исследование, решение, итоги." data-en="Alif Partners — a redesign of the admin panel for Alif Bank's partner network. A breakdown of the process: research, solution, results.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a0a;
-    --surface: #131313;
-    --line: #232323;
-    --text: #e8e6e2;
-    --text-dim: #8f8b84;
-    --text-dim-2: #807a70;
-    --accent: #b8836a;
-    --live: #34c759;
-    --mono: 'Spline Sans Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    --sans: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --bg: #f8f8f8;
+    --surface: #f6f6f7;
+    --line: #e3e3e6;
+    --text: #0a0a0a;
+    --text-dim: #5a5a5f;
+    --text-dim-2: #6e6e73;
+    --accent: #a86647;
+    --live: #1f7a3d;
+    --nav-bg: #070713;
+    --mono: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -33,6 +35,40 @@
   }
   a { color: inherit; text-decoration: none; }
   .page { max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 56px); }
+
+  .site-nav {
+    position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+    z-index: 50; display: flex; align-items: center;
+    background: var(--nav-bg); border-radius: 100px; padding: 8px 8px 8px 22px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+  }
+  .site-nav .nav-name {
+    font-family: var(--mono); font-size: 0.85rem; font-weight: 500;
+    color: #fff; margin-right: 8px; white-space: nowrap;
+  }
+  .site-nav a.nav-link {
+    font-family: var(--sans); font-size: 0.85rem; font-weight: 500;
+    color: rgba(255,255,255,0.68); padding: 9px 16px; border-radius: 100px;
+    white-space: nowrap; transition: background 0.2s ease, color 0.2s ease;
+  }
+  .site-nav a.nav-link:hover, .site-nav a.nav-link:focus-visible { background: rgba(255,255,255,0.12); color: #fff; }
+  .lang-toggle {
+    font-family: var(--mono); font-size: 0.8rem; font-weight: 500;
+    color: rgba(255,255,255,0.68); background: rgba(255,255,255,0.08);
+    border: none; padding: 9px 14px; border-radius: 100px; cursor: pointer;
+    margin-left: 4px; transition: background 0.2s ease, color 0.2s ease;
+  }
+  .lang-toggle:hover, .lang-toggle:focus-visible { background: rgba(255,255,255,0.16); color: #fff; }
+  @media (max-width: 560px) {
+    .site-nav { padding: 6px 6px 6px 14px; }
+    .site-nav .nav-name { display: none; }
+    .site-nav a.nav-link { padding: 8px 10px; font-size: 0.76rem; }
+    .lang-toggle { padding: 8px 11px; font-size: 0.74rem; }
+  }
+
+  [data-lang="en"] { display: none; }
+  html.lang-en [data-lang="ru"] { display: none; }
+  html.lang-en [data-lang="en"] { display: inline; }
 
   /* lightbox (shared across every page that shows process images) */
   .lightbox {
@@ -57,8 +93,8 @@
   }
 </style>
 <style>
-  :root { --case-accent: #6b84b8; }
-  .case-page { padding: 56px 0 96px; }
+  :root { --case-accent: #5373b6; }
+  .case-page { padding: 152px 0 96px; }
   .back-link {
     display: inline-block; font-family: var(--mono); font-size: 0.82rem;
     color: var(--text-dim); margin-bottom: 40px; padding-bottom: 2px;
@@ -72,110 +108,211 @@
   }
   .case-name { color: var(--text); font-weight: 700; }
   .case-tags { font-family: var(--mono); font-size: 0.8rem; color: var(--case-accent); margin-top: 10px; }
-  h1.case-title { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -0.01em; }
-  .metrics { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+  h1.case-title { font-size: clamp(2.1rem, 5vw, 3.4rem); font-weight: 800; letter-spacing: -0.02em; }
+  .case-tags { display: flex; gap: 8px; flex-wrap: wrap; font-size: 0.78rem; }
+  .case-tags span { background: var(--surface); border: 1px solid var(--line); color: var(--case-accent); padding: 5px 12px; border-radius: 999px; }
+  .metrics { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
   .metric { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; min-width: 140px; }
   .metric .value { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; color: var(--case-accent); }
   .metric .label { font-size: 0.8rem; color: var(--text-dim); margin-top: 2px; }
 
-  .detail-block { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); }
-  .detail-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 16px; }
-  .detail-num { font-family: var(--mono); font-size: 1rem; color: var(--text-dim-2); flex-shrink: 0; }
-  .detail-head h4 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; }
-  .detail-block p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; max-width: 65ch; margin-bottom: 18px; }
-  .detail-block img { display: block; width: 100%; height: auto; border-radius: 10px; cursor: pointer; margin-bottom: 18px; }
+  .case-facts {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px 24px;
+    margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line);
+  }
+  .case-facts dt { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); margin-bottom: 4px; }
+  .case-facts dd { font-size: 0.92rem; color: var(--text); line-height: 1.4; }
 
-  .problem-statement { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px 26px; }
-  .problem-statement .quote-mark { display: block; font-size: 2.2rem; font-weight: 800; line-height: 0.6; color: var(--case-accent); opacity: 0.7; margin-bottom: 6px; }
-  .problem-statement p { font-size: 1.02rem; color: var(--text); margin: 0; }
+  .goal-list { list-style: none; margin-top: 14px; display: flex; flex-direction: column; gap: 10px; }
+  .goal-list li { position: relative; padding-left: 24px; font-size: 0.95rem; color: var(--text-dim); line-height: 1.5; }
+  .goal-list li::before { content: "→"; position: absolute; left: 0; color: var(--case-accent); font-family: var(--mono); }
+
+  .case-conclusion { font-size: clamp(1.05rem, 1.6vw, 1.25rem); font-weight: 600; color: var(--text); line-height: 1.5; max-width: 56ch; }
+
+  .detail-block { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--line); }
+  .detail-head { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 24px; }
+  .detail-num {
+    font-family: var(--sans); font-weight: 800; font-size: clamp(2rem, 4.2vw, 2.8rem);
+    color: var(--line); line-height: 0.8; flex-shrink: 0; letter-spacing: -0.02em;
+  }
+  .detail-head h4 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; padding-top: 8px; }
+  .detail-block p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.65; max-width: 60ch; margin-bottom: 18px; }
+  .detail-block > p:last-child { margin-bottom: 0; }
+  .detail-block img { display: block; width: 100%; height: auto; border-radius: 12px; cursor: pointer; margin-bottom: 18px; }
+
+  /* asymmetric text+media row — the "unusual grid" pairing for squarer screenshots */
+  .detail-pair { display: grid; grid-template-columns: 5fr 7fr; gap: 36px; align-items: center; margin-bottom: 18px; }
+  .detail-pair.media-left { grid-template-columns: 7fr 5fr; }
+  .detail-pair.media-left .detail-pair-media { order: -1; }
+  .detail-pair-text p { margin-bottom: 0; max-width: none; }
+  .detail-pair-media { border-radius: 12px; overflow: hidden; background: var(--surface); border: 1px solid var(--line); }
+  .detail-pair-media img { margin: 0; border-radius: 0; }
+  .detail-mosaic { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 18px; }
+  .detail-mosaic img { margin: 0; }
+  @media (max-width: 860px) {
+    .detail-pair, .detail-pair.media-left { grid-template-columns: 1fr; gap: 16px; }
+    .detail-pair.media-left .detail-pair-media { order: 0; }
+    .detail-mosaic { grid-template-columns: 1fr; }
+  }
+
+  .problem-statement { padding: 8px 0; }
+  .problem-statement .quote-mark {
+    display: block; font-family: var(--sans); font-weight: 800; font-size: clamp(3rem, 6vw, 4.5rem);
+    line-height: 0.5; color: var(--case-accent); opacity: 0.32; margin-bottom: 8px;
+  }
+  .problem-statement p { font-size: clamp(1.15rem, 2.2vw, 1.5rem); font-weight: 600; font-style: italic; color: var(--text); line-height: 1.4; max-width: 42ch; }
 
   .outcome-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px 24px; }
   .outcome-kicker { display: block; font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--case-accent); }
-  .outcome-list { list-style: none; margin-top: 14px; }
+  .outcome-list { list-style: none; margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 4px 24px; }
   .outcome-list li { position: relative; padding: 10px 0 10px 26px; border-top: 1px solid var(--line); font-size: 0.95rem; color: var(--text); }
   .outcome-list li:first-child { border-top: none; padding-top: 0; }
   .outcome-list li::before { content: "✓"; position: absolute; left: 0; color: var(--case-accent); font-family: var(--mono); }
+  @media (max-width: 720px) {
+    .outcome-list { grid-template-columns: 1fr; }
+    .outcome-list li { border-top: 1px solid var(--line); padding-top: 10px; }
+    .outcome-list li:first-child { border-top: none; padding-top: 0; }
+  }
 </style>
 </head>
 <body>
 
+  <nav class="site-nav">
+    <a href="index.html" class="nav-name"><span data-lang="ru">Мадина Рашидова</span><span data-lang="en">Madina Rashidova</span></a>
+    <a href="index.html#work" class="nav-link"><span data-lang="ru">Работы →</span><span data-lang="en">Work →</span></a>
+    <a href="about.html" class="nav-link"><span data-lang="ru">Обо мне →</span><span data-lang="en">About →</span></a>
+    <a href="cv.pdf" class="nav-link" target="_blank">CV →</a>
+    <button type="button" class="lang-toggle" data-lang-toggle>EN</button>
+  </nav>
+
   <div class="page">
     <div class="case-page">
-      <a class="back-link" href="index.html">← Все работы</a>
+      <a class="back-link" href="index.html"><span data-lang="ru">← Все работы</span><span data-lang="en">← All work</span></a>
 
       <div class="case-header">
         <h1 class="case-title">Alif Partners</h1>
-        <div class="case-meta-line"><span class="case-name">Alif Bank</span> · Web + Mobile · 4 месяца</div>
-        <div class="case-tags">/b2b /ux-research /fintech</div>
-        <div class="metrics">
-          <div class="metric"><div class="value">2000+</div><div class="label">партнёров в сети</div></div>
-          <div class="metric"><div class="value">8</div><div class="label">интервью легли в основу редизайна</div></div>
-        </div>
+        <div class="case-meta-line"><span class="case-name">Alif Bank</span></div>
+        <div class="case-tags"><span>/b2b</span><span>/ux-research</span><span>/fintech</span></div>
+        <dl class="case-facts">
+          <div><dt><span data-lang="ru">Длительность</span><span data-lang="en">Duration</span></dt><dd><span data-lang="ru">4 месяца</span><span data-lang="en">4 months</span></dd></div>
+          <div><dt><span data-lang="ru">Команда</span><span data-lang="en">Team</span></dt><dd>Product Designer, UX Researcher, Product Owner</dd></div>
+          <div><dt><span data-lang="ru">Моя роль</span><span data-lang="en">My role</span></dt><dd>Product Designer</dd></div>
+          <div><dt><span data-lang="ru">Пользователи</span><span data-lang="en">Users</span></dt><dd><span data-lang="ru">партнёры банка и модераторы маркетплейса</span><span data-lang="en">bank partners and marketplace moderators</span></dd></div>
+          <div><dt><span data-lang="ru">Платформы</span><span data-lang="en">Platforms</span></dt><dd><span data-lang="ru">Web и мобильная версия</span><span data-lang="en">Web and mobile</span></dd></div>
+        </dl>
       </div>
 
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">(01)</span><h4>Контекст</h4></div>
-        <p>Alif, крупнейший банк Таджикистана, развивает модель рассрочки через широкую партнёрскую сеть магазинов и собственный маркетплейс Alif Shop. С ростом числа партнёров и заказов операционная нагрузка на банк начала стремительно увеличиваться.</p>
+        <div class="detail-head"><span class="detail-num">01</span><h4><span data-lang="ru">Контекст</span><span data-lang="en">Context</span></h4></div>
+        <p><span data-lang="ru">Alif, крупнейший банк Таджикистана, развивает BNPL-модель через партнёрскую сеть магазинов и маркетплейс Alif Shop.</span><span data-lang="en">Alif, the largest bank in Tajikistan, is growing its BNPL model through a partner network of stores and the Alif Shop marketplace.</span></p>
+        <p><span data-lang="ru">На момент работы над продуктом у Alif было:</span><span data-lang="en">At the time of working on the product, Alif had:</span></p>
+        <div class="metrics">
+          <div class="metric"><div class="value">70 000+</div><div class="label"><span data-lang="ru">активных покупателей в месяц</span><span data-lang="en">active buyers per month</span></div></div>
+          <div class="metric"><div class="value">500+</div><div class="label"><span data-lang="ru">партнёрских магазинов</span><span data-lang="en">partner stores</span></div></div>
+          <div class="metric"><div class="value">$1 <span data-lang="ru">млрд</span><span data-lang="en">bn</span></div><div class="label"><span data-lang="ru">объём рынка BNPL в 2024 году</span><span data-lang="en">BNPL market size in 2024</span></div></div>
+        </div>
+        <p><span data-lang="ru">С ростом числа партнёров, заказов и операций текущая админ-панель перестала справляться с нагрузкой. Партнёры и модераторы тратили всё больше времени на ручные действия, а банк получал растущую операционную нагрузку.</span><span data-lang="en">As the number of partners, orders, and operations grew, the existing admin panel stopped keeping up with the load. Partners and moderators spent more and more time on manual actions, and the bank absorbed a growing operational burden.</span></p>
         <img src="assets/process/alif-context.png" alt="Alif Partners — контекст: рост партнёрской сети" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-context.png', 'Alif Partners — контекст')">
+        <p><span data-lang="ru">Главная бизнес-цель проекта — сделать партнёрскую сеть масштабируемой без пропорционального роста нагрузки на банк. Проект должен был помочь банку:</span><span data-lang="en">The project's main business goal was to make the partner network scalable without a proportional increase in the bank's load. The project needed to help the bank:</span></p>
+        <ul class="goal-list">
+          <li><span data-lang="ru">быстрее подключать и обслуживать партнёров</span><span data-lang="en">onboard and service partners faster</span></li>
+          <li><span data-lang="ru">снизить количество ручных операций</span><span data-lang="en">reduce the number of manual operations</span></li>
+          <li><span data-lang="ru">уменьшить потери заявок из-за неактуальных данных</span><span data-lang="en">cut request losses caused by outdated data</span></li>
+          <li><span data-lang="ru">повысить долю успешно завершённых заказов</span><span data-lang="en">increase the share of successfully completed orders</span></li>
+          <li><span data-lang="ru">подготовить платформу к росту партнёрской сети и запуску в зарубежных офисах</span><span data-lang="en">prepare the platform for growth of the partner network and launch in overseas offices</span></li>
+        </ul>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">(02)</span><h4>Исследование</h4></div>
-        <p>Глубинные интервью с 8 модераторами, ежедневно работающими в админ-панели: интерфейс им знаком, а оформление заказов, добавление товаров и изменение цен не вызывают критических сложностей. Но почти все процессы завязаны на ручных действиях: поиск заявки, звонок клиенту, подтверждение по SMS. Иногда они работают нестабильно, заявки задерживаются или теряются. Раздел доставки часть модераторов не использует вовсе из-за неочевидной логики.</p>
+        <div class="detail-head"><span class="detail-num">02</span><h4><span data-lang="ru">Исследование</span><span data-lang="en">Research</span></h4></div>
+        <p><span data-lang="ru">Мы начали с исследования текущей админ-панели и реальных сценариев работы модераторов и партнёров.</span><span data-lang="en">We started by researching the existing admin panel and the real scenarios moderators and partners work through.</span></p>
+        <p><span data-lang="ru">Провели глубинные интервью с 8 модераторами, которые ежедневно работают в системе. В целом интерфейс был им знаком, а базовые задачи — оформление заказов, добавление товаров и изменение цен — не вызывали критических сложностей. Но почти все процессы были завязаны на ручные действия.</span><span data-lang="en">We ran in-depth interviews with 8 moderators who work in the system daily. Overall the interface was familiar to them, and basic tasks — processing orders, adding products, changing prices — didn't cause critical difficulties. But almost every process relied on manual action.</span></p>
         <img src="assets/process/alif-interviews.png" alt="Alif Partners — интервью с модераторами" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-interviews.png', 'Alif Partners — интервью с модераторами')">
-        <p>Интервью с партнёрами выявили другую проблему: они не видят заявку с маркетплейса, пока не позвонит колл-центр, а оформление через терминалы ограничено и иногда сбоит. Курьеры не могут самостоятельно оформлять доставку и вынуждены звонить операторам.</p>
+        <p><span data-lang="ru">Отдельно мы провели интервью с партнёрами, чтобы понять их работу с заказами и доставкой. Главная проблема — партнёры не всегда понимали, когда поступает заявка с маркетплейса, и ждали звонка от колл-центра. Это создавало задержки и снижало контроль над заказами.</span><span data-lang="en">Separately, we interviewed partners to understand how they work with orders and delivery. The main problem: partners didn't always know when a marketplace order came in and waited for a call from the call center. This created delays and reduced their control over orders.</span></p>
+        <p><span data-lang="ru">Дополнительным ограничением были терминалы: из-за их количества и возможных сбоев оформление заказов замедлялось и иногда приводило к отменам.</span><span data-lang="en">An additional constraint was the terminals: their limited number and occasional glitches slowed order processing and sometimes led to cancellations.</span></p>
+        <p><span data-lang="ru">Главный вывод исследования: система работала, но не была готова к росту. Партнёрам не хватало самостоятельности, а банк продолжал закрывать слишком много операционных действий через модераторов, колл-центр и фронт-офис.</span><span data-lang="en">The research's main conclusion: the system worked, but wasn't ready to grow. Partners lacked independence, and the bank kept closing too many operational actions through moderators, the call center, and the front office.</span></p>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">(03)</span><h4>Определение задачи</h4></div>
+        <div class="detail-head"><span class="detail-num">03</span><h4><span data-lang="ru">Гипотеза</span><span data-lang="en">Hypothesis</span></h4></div>
         <div class="problem-statement">
           <span class="quote-mark">"</span>
-          <p>Необходимо доработать ключевые пользовательские сценарии админ-панели: работу с заказами и товарами, раздел доставки, а также статусы и заявки. Ускорить работу системы и сократить количество ручных операций.</p>
+          <p><span data-lang="ru">Если сместить фокус продукта с внутренней админки банка на самостоятельную работу партнёров, то партнёры смогут быстрее управлять товарами, заявками и доставкой, а банк снизит ручную нагрузку и потери заявок.</span><span data-lang="en">If we shifted the product's focus from the bank's internal admin tool to partners' independent work, partners would be able to manage products, requests, and delivery faster, and the bank would reduce manual load and lost requests.</span></p>
         </div>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">(04)</span><h4>Поиск решения</h4></div>
-        <p>Гипотеза: текущая админ-панель ориентирована на внутренние процессы, а не на задачи партнёров, из-за чего ключевые сценарии остаются зависимыми от модераторов, колл-центра и отдела партнёров. А что если сместить фокус админки на партнёров и сделать её инструментом для самостоятельной работы?</p>
-      </div>
-      <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">(05)</span><h4>Решение</h4></div>
-        <p>Переработала структуру админ-панели: навигация переехала из бокового сайдбара в верхнюю часть интерфейса. Новая структура включает разделы «Магазины», «Товары», «Заявки», «Доставка», «Отзывы» и отдельный раздел модерации.</p>
+        <div class="detail-head"><span class="detail-num">04</span><h4><span data-lang="ru">Новая структура админки</span><span data-lang="en">New admin panel structure</span></h4></div>
+        <p><span data-lang="ru">Переработала структуру админ-панели: навигация переехала из бокового сайдбара в верхнюю часть интерфейса. Новая структура включает разделы «Магазины», «Товары», «Заявки», «Доставка», «Отзывы» и отдельный раздел «Модерация» для сотрудников банка.</span><span data-lang="en">I reworked the admin panel's structure: navigation moved from the side sidebar to the top of the interface. The new structure includes the "Stores," "Products," "Requests," "Delivery," and "Reviews" sections, plus a separate "Moderation" section for bank staff.</span></p>
         <img src="assets/process/alif-solution.png" alt="Alif Partners — новая структура админки" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-solution.png', 'Alif Partners — новая структура админки')">
-        <p>Добавила единый канал коммуникации с банком в виде чата, объединяющего взаимодействие с модераторами, отделом партнёров и колл-центром, а также уведомления об остатках товаров.</p>
-        <img src="assets/process/alif-chat.png" alt="Alif Partners — единый чат с банком" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-chat.png', 'Alif Partners — единый чат с банком')">
+        <p><span data-lang="ru">Так интерфейс стал строиться вокруг задач партнёра, а не только вокруг внутренних процессов банка.</span><span data-lang="en">This way the interface started to be built around the partner's tasks, not just the bank's internal processes.</span></p>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">(06)</span><h4>Процесс добавления товара</h4></div>
-        <p>Добавление товара занимало много времени из-за необходимости вручную заполнять данные, даже если товар уже существовал в системе. Добавила функцию поиска товара перед его созданием: если он уже есть на маркетплейсе, партнёр использует готовые данные и сразу переходит к добавлению медиа и созданию оффера вместо заполнения всех этапов.</p>
-        <img src="assets/process/alif-product-search.png" alt="Alif Partners — процесс добавления товара" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-product-search.png', 'Alif Partners — процесс добавления товара')">
+        <div class="detail-head"><span class="detail-num">05</span><h4><span data-lang="ru">Единый чат с банком</span><span data-lang="en">A single chat with the bank</span></h4></div>
+        <div class="detail-pair media-left">
+          <div class="detail-pair-media"><img src="assets/process/alif-chat.png" alt="Alif Partners — единый чат с банком" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-chat.png', 'Alif Partners — единый чат с банком')"></div>
+          <div class="detail-pair-text">
+            <p><span data-lang="ru">Добавила единый канал коммуникации с банком в виде чата. Он объединяет взаимодействие с модераторами, отделом партнёров и колл-центром.</span><span data-lang="en">I added a single communication channel with the bank in the form of a chat. It combines interaction with moderators, the partner department, and the call center.</span></p>
+            <p><span data-lang="ru">В этот же контур добавлены уведомления по важным событиям: новые заявки, изменения статусов и низкий остаток товара.</span><span data-lang="en">The same channel also carries notifications for important events: new requests, status changes, and low stock.</span></p>
+            <p><span data-lang="ru">Это помогает партнёру быстрее реагировать, а банку — сократить количество разрозненных обращений.</span><span data-lang="en">This helps the partner react faster, and helps the bank cut down on scattered, one-off requests.</span></p>
+          </div>
+        </div>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">(07)</span><h4>Партнёрский инсайт</h4></div>
-        <p>Из интервью: при формировании цен на товары партнёры ориентируются на конкуренцию. В процессе добавления товара интегрировала блок с ценами на аналогичные позиции: партнёр сразу видит рыночный диапазон и принимает решение по стоимости в момент создания карточки.</p>
+        <div class="detail-head"><span class="detail-num">06</span><h4><span data-lang="ru">Процесс добавления товара</span><span data-lang="en">Adding a product</span></h4></div>
+        <div class="detail-pair">
+          <div class="detail-pair-text">
+            <p><span data-lang="ru">Добавление товара занимало много времени из-за ручного заполнения данных, даже если товар уже существовал на маркетплейсе.</span><span data-lang="en">Adding a product took a lot of time due to manual data entry, even when the product already existed on the marketplace.</span></p>
+            <p><span data-lang="ru">Я добавила поиск товара перед его созданием. Если товар уже есть в системе, партнёр использует готовые данные и сразу переходит к добавлению медиа и созданию оффера.</span><span data-lang="en">I added a product search before creation. If the product already exists in the system, the partner uses the existing data and moves straight to adding media and creating the offer.</span></p>
+            <p><span data-lang="ru">Так сценарий стал короче, а партнёр может быстрее добавлять товары без лишнего участия модератора.</span><span data-lang="en">This shortened the scenario, letting the partner add products faster without unnecessary moderator involvement.</span></p>
+          </div>
+          <div class="detail-pair-media"><img src="assets/process/alif-product-search.png" alt="Alif Partners — процесс добавления товара" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-product-search.png', 'Alif Partners — процесс добавления товара')"></div>
+        </div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">07</span><h4><span data-lang="ru">Ценовой контекст</span><span data-lang="en">Price context</span></h4></div>
+        <p><span data-lang="ru">На интервью партнёры рассказали, что при формировании цены ориентируются на конкурентов.</span><span data-lang="en">In interviews, partners said that when setting prices they look at competitors.</span></p>
         <img src="assets/process/alif-price-insight.png" alt="Alif Partners — сравнение цен конкурентов" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-price-insight.png', 'Alif Partners — сравнение цен конкурентов')">
+        <p><span data-lang="ru">В процесс добавления товара я добавила блок с ценами на аналогичные позиции. Партнёр сразу видит рыночный диапазон и принимает решение по стоимости в момент создания карточки.</span><span data-lang="en">I added a block showing prices for similar items into the product-adding flow. The partner immediately sees the market range and makes a pricing decision the moment they create the listing.</span></p>
+        <p><span data-lang="ru">Это помогает быстрее создавать конкурентный оффер внутри маркетплейса.</span><span data-lang="en">This helps create a competitive offer within the marketplace faster.</span></p>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">(08)</span><h4>Раздел доставки</h4></div>
-        <p>Самый проблемный раздел: партнёры и курьеры тратили много времени на оформление заявок, которые приходят не только с маркетплейса, но и из оффлайн-точек. Разделила раздел на самовывоз и доставку и перенесла оформление заявок из терминалов в админку, сохранив всю бизнес-логику.</p>
-        <img src="assets/process/alif-delivery.png" alt="Alif Partners — раздел доставки" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-delivery.png', 'Alif Partners — раздел доставки')">
+        <div class="detail-head"><span class="detail-num">08</span><h4><span data-lang="ru">Раздел доставки</span><span data-lang="en">Delivery section</span></h4></div>
+        <p><span data-lang="ru">Раздел доставки оказался одним из самых проблемных сценариев. Заявки приходили не только с маркетплейса, но и из офлайн-точек, а партнёры и курьеры тратили много времени на оформление через терминалы и звонки в колл-центр.</span><span data-lang="en">The delivery section turned out to be one of the most problematic scenarios. Requests came in not only from the marketplace but also from offline locations, and partners and couriers spent a lot of time processing them through terminals and calls to the call center.</span></p>
+        <div class="detail-pair media-left">
+          <div class="detail-pair-media"><img src="assets/process/alif-delivery.png" alt="Alif Partners — раздел доставки" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-delivery.png', 'Alif Partners — раздел доставки')"></div>
+          <div class="detail-pair-text"><p><span data-lang="ru">Нужно было перенести процесс в админку, но сохранить текущую бизнес-логику оформления заказов и все необходимые данные, чтобы переход не повлиял на корректность работы. Процесс оформления заявок, который ранее проходил через терминалы, был перенесён в админку и адаптирован под её дизайн, сохранив всю бизнес-логику.</span><span data-lang="en">The process needed to move into the admin panel while preserving the existing business logic for processing orders and all the necessary data, so the transition wouldn't affect how correctly it worked. The request-processing flow that used to run through terminals was moved into the admin panel and adapted to its design, preserving all the business logic.</span></p></div>
+        </div>
+        <p><span data-lang="ru">Теперь сотрудники партнёров и курьеры могут оформлять заявки напрямую через админку или мобильную версию, что сокращает время обработки и делает работу более автономной.</span><span data-lang="en">Now partner staff and couriers can process requests directly through the admin panel or the mobile version, which cuts processing time and makes the work more autonomous.</span></p>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">(09)</span><h4>Мобильная версия</h4></div>
-        <p>Спроектировала мобильную версию с полным функционалом, интегрировав обновлённую логику и оптимизированные процессы.</p>
-        <img src="assets/process/alif-mobile.png" alt="Alif Partners — мобильная версия" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-mobile.png', 'Alif Partners — мобильная версия')">
+        <div class="detail-head"><span class="detail-num">09</span><h4><span data-lang="ru">Мобильная версия</span><span data-lang="en">Mobile version</span></h4></div>
+        <div class="detail-pair">
+          <div class="detail-pair-text"><p><span data-lang="ru">Дополнительно спроектировала мобильную версию с полным функционалом, чтобы партнёры могли работать с заявками, доставкой и уведомлениями не только за компьютером, но и в магазине, на складе или на выдаче.</span><span data-lang="en">I additionally designed a full-featured mobile version so partners could work with requests, delivery, and notifications not just at a computer, but in-store, in the warehouse, or at pickup.</span></p></div>
+          <div class="detail-pair-media"><img src="assets/process/alif-mobile.png" alt="Alif Partners — мобильная версия" loading="lazy" onclick="openLightbox(event, 'assets/process/alif-mobile.png', 'Alif Partners — мобильная версия')"></div>
+        </div>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">(10)</span><h4>Итоги</h4></div>
-        <p>Удалось переосмыслить админ-панель из внутреннего инструмента в продукт, ориентированный на самостоятельную работу партнёров.</p>
+        <div class="detail-head"><span class="detail-num">10</span><h4><span data-lang="ru">Результат</span><span data-lang="en">Result</span></h4></div>
+        <p><span data-lang="ru">Удалось переосмыслить админ-панель из внутреннего инструмента банка в продукт для самостоятельной работы партнёров.</span><span data-lang="en">The admin panel was reimagined from the bank's internal tool into a product for partners' independent work.</span></p>
+        <p><span data-lang="ru">Часть процессов перешла на сторону партнёров: они могут сами работать с товарами, заявками, доставкой, остатками и коммуникацией с банком. Внутренние команды сохранили контроль, но перестали быть обязательным участником каждого операционного действия.</span><span data-lang="en">Part of the processes moved to the partners' side: they can now handle products, requests, delivery, stock, and communication with the bank themselves. Internal teams kept control but stopped being a required participant in every operational action.</span></p>
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">11</span><h4><span data-lang="ru">Метрики, на которые влиял продукт</span><span data-lang="en">Metrics the product influenced</span></h4></div>
+        <p><span data-lang="ru">Успешность решения проверялась через метрики, связанные с исходной бизнес-целью:</span><span data-lang="en">The solution's success was measured against metrics tied to the original business goal:</span></p>
         <div class="outcome-card">
-          <span class="outcome-kicker">Что изменилось</span>
           <ul class="outcome-list">
-            <li>Существенно снизилась нагрузка на колл-центр и модераторов за счёт переноса части процессов</li>
-            <li>Партнёры стали самостоятельнее в управлении ключевыми операциями и больше не зависят от подтверждений</li>
-            <li>Система стала более устойчивой к росту нагрузки на фоне развития BNPL-модели</li>
+            <li><span data-lang="ru">Снижение ручной нагрузки на модераторов, колл-центр и фронт-офис</span><span data-lang="en">Reduced manual load on moderators, the call center, and the front office</span></li>
+            <li><span data-lang="ru">Сокращение времени обработки заявок и доставки</span><span data-lang="en">Shorter processing time for requests and delivery</span></li>
+            <li><span data-lang="ru">Снижение потерь заявок из-за неактуальных данных</span><span data-lang="en">Fewer lost requests due to outdated data</span></li>
+            <li><span data-lang="ru">Рост доли успешно завершённых заказов</span><span data-lang="en">A higher share of successfully completed orders</span></li>
+            <li><span data-lang="ru">Готовность продукта к масштабированию на новых партнёров и зарубежные офисы</span><span data-lang="en">The product's readiness to scale to new partners and overseas offices</span></li>
           </ul>
         </div>
       </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">12</span><h4><span data-lang="ru">Вывод</span><span data-lang="en">Conclusion</span></h4></div>
+        <p class="case-conclusion"><span data-lang="ru">Проект достиг исходной цели: Alif Partners стал более масштабируемым продуктом для партнёрской сети.</span><span data-lang="en">The project achieved its original goal: Alif Partners became a more scalable product for the partner network.</span></p>
+      </div>
 
-      <a class="back-link" href="index.html" style="margin-top:48px">← Все работы</a>
+      <a class="back-link" href="index.html" style="margin-top:48px"><span data-lang="ru">← Все работы</span><span data-lang="en">← All work</span></a>
     </div>
   </div>
 
@@ -204,5 +341,6 @@
     });
   </script>
 
+  <script src="assets/i18n.js"></script>
 </body>
 </html>

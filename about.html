@@ -151,6 +151,18 @@
     display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
   }
   .hobby-icon svg { width: 26px; height: 26px; display: block; }
+  .hobby-photo-wrap { position: relative; z-index: 1; width: 72px; height: 72px; margin-bottom: 20px; }
+  .hobby-photo {
+    width: 72px; height: 72px; border-radius: 50%; object-fit: cover; display: block;
+    border: 3px solid hsl(var(--hue, 20) 60% 55%); box-shadow: 0 6px 14px rgba(0,0,0,0.16);
+  }
+  .hobby-badge {
+    position: absolute; bottom: -8px; right: -16px; z-index: 2;
+    background: hsl(var(--hue, 20) 65% 42%); color: #fff;
+    font-family: var(--mono); font-size: 0.66rem; font-weight: 600;
+    padding: 4px 10px; border-radius: 999px; white-space: nowrap;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2); border: 2px solid #fff;
+  }
   .hobby-card h4 {
     position: relative; z-index: 1; font-size: 1.05rem; font-weight: 800; margin-bottom: 6px;
     color: hsl(var(--hue, 20) 55% 32%);
@@ -290,26 +302,17 @@
             <p><span data-lang="ru">Танцую с 3 лет. Ритм и движение — самый честный способ выразить эмоции.</span><span data-lang="en">Dancing since age 3. Rhythm and movement are the most honest way I express emotion.</span></p>
           </div>
           <div class="hobby-card">
-            <div class="hobby-icon">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="24" cy="34" rx="16" ry="4" stroke="currentColor" stroke-width="2.2"/>
-                <path d="M14 12L34 32" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-                <path d="M12 10L18 16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-                <path d="M6 40Q12 37 18 40Q24 43 30 40Q36 37 42 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              </svg>
+            <div class="hobby-photo-wrap">
+              <img class="hobby-photo" src="assets/hobby-sup.jpg" alt="Мадина на сапе на озере" loading="lazy">
+              <span class="hobby-badge"><span data-lang="ru">Сап</span><span data-lang="en">SUP</span></span>
             </div>
             <h4><span data-lang="ru">Сап</span><span data-lang="en">SUP</span></h4>
             <p><span data-lang="ru">Вода, доска и тишина — способ отключить голову и найти баланс.</span><span data-lang="en">Water, a board, and silence — a way to switch off and find balance.</span></p>
           </div>
           <div class="hobby-card">
-            <div class="hobby-icon">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="14" cy="16" r="3.5" stroke="currentColor" stroke-width="2.2"/>
-                <path d="M18 20L28 26L20 30" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M28 26L40 22" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-                <path d="M4 38Q10 35 16 38Q22 41 28 38Q34 35 40 38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                <path d="M4 32Q10 29 16 32Q22 35 28 32Q34 29 40 32" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
-              </svg>
+            <div class="hobby-photo-wrap">
+              <img class="hobby-photo" src="assets/hobby-swim.jpg" alt="Мадина у бассейна в аквапарке" loading="lazy">
+              <span class="hobby-badge"><span data-lang="ru">Плавание</span><span data-lang="en">Swim</span></span>
             </div>
             <h4><span data-lang="ru">Плавание</span><span data-lang="en">Swimming</span></h4>
             <p><span data-lang="ru">Помогает расслабиться и побыть наедине с собой.</span><span data-lang="en">Helps me relax and spend time alone with my thoughts.</span></p>

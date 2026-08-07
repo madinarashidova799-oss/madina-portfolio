@@ -6,7 +6,7 @@
 <script>(function(){if(localStorage.getItem('site-lang')==='en')document.documentElement.classList.add('lang-en');})();</script>
 <title data-ru="Обо мне — Мадина Рашидова" data-en="About — Madina Rashidova">Обо мне — Мадина Рашидова</title>
 <link rel="icon" type="image/png" href="favicon.png">
-<meta name="description" data-ru="Мадина Рашидова — продуктовый дизайнер с опытом в fintech, banking и мобильных продуктах." data-en="Madina Rashidova — product designer with experience in fintech, banking, and mobile products." content="Мадина Рашидова — продуктовый дизайнер с опытом в fintech, banking и мобильных продуктах.">
+<meta name="description" data-ru="Мадина Рашидова — продуктовый дизайнер с 4-летним опытом в fintech, banking и трейдинге. Как работаю, как пришла в дизайн и чем увлекаюсь помимо него." data-en="Madina Rashidova — product designer with 4 years of experience in fintech, banking, and trading. How I work, how I got into design, and what I'm into besides it." content="Мадина Рашидова — продуктовый дизайнер с 4-летним опытом в fintech, banking и трейдинге.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -70,7 +70,8 @@
   html.lang-en [data-lang="ru"] { display: none; }
   html.lang-en [data-lang="en"] { display: inline; }
 
-  .about-page { padding: 152px 0 96px; max-width: 720px; }
+  .about-page { padding: 152px 0 0; max-width: 720px; }
+  .about-wide { max-width: 960px; }
   .back-link {
     display: inline-block; font-family: var(--mono); font-size: 0.82rem;
     color: var(--text-dim); margin-bottom: 40px; padding-bottom: 2px;
@@ -87,6 +88,53 @@
     letter-spacing: -0.01em; margin-bottom: 20px;
   }
   .about-text p { font-size: 1.02rem; color: var(--text-dim); line-height: 1.7; max-width: 60ch; }
+
+  .about-block { margin-top: 72px; padding-top: 40px; border-top: 1px solid var(--line); padding-bottom: 96px; }
+  .about-block.tight { padding-bottom: 0; }
+  .section-label {
+    font-family: var(--mono); font-size: 0.78rem; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--text-dim-2); margin-bottom: 14px;
+  }
+  .section-title { font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 700; letter-spacing: -0.01em; margin-bottom: 24px; }
+  .section-intro { color: var(--text-dim); font-size: 0.95rem; max-width: 62ch; margin-bottom: 36px; }
+
+  .process-grid { display: flex; flex-direction: column; gap: 36px; }
+  .process-step { display: grid; grid-template-columns: 56px 1fr; gap: 20px; }
+  .process-num {
+    font-family: var(--sans); font-weight: 800; font-size: 2rem; color: var(--line);
+    line-height: 1; letter-spacing: -0.02em;
+  }
+  .process-step h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .process-step p { color: var(--text-dim); font-size: 0.94rem; line-height: 1.65; max-width: 62ch; }
+  .process-example {
+    margin-top: 16px; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 10px; padding: 18px 20px; max-width: 62ch;
+  }
+  .process-example .example-label {
+    display: block; font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--accent); margin-bottom: 8px;
+  }
+  .process-example p { font-style: italic; color: var(--text); font-size: 0.92rem; margin: 0; max-width: none; }
+  @media (max-width: 640px) {
+    .process-step { grid-template-columns: 36px 1fr; }
+    .process-num { font-size: 1.4rem; }
+  }
+
+  .hobby-scatter {
+    position: relative; container-type: inline-size;
+    aspect-ratio: 100 / 68;
+    background-image: radial-gradient(circle, var(--line) 1px, transparent 1px);
+    background-size: 20px 20px; border-radius: 20px;
+  }
+  .hobby-bubble {
+    position: absolute; left: var(--x); top: var(--y); width: var(--size); height: var(--size);
+    border-radius: 50%; overflow: hidden; box-shadow: 0 10px 26px rgba(0,0,0,0.14);
+    opacity: 0; transform: scale(0.7); transition: opacity 0.5s ease, transform 0.5s ease;
+    transition-delay: var(--delay, 0s);
+  }
+  .hobby-bubble.in-view { opacity: 1; transform: scale(1); }
+  .hobby-bubble img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
   footer.page-footer {
     border-top: 1px solid var(--line); padding: 32px 0;
     font-family: var(--mono); font-size: 0.78rem; color: var(--text-dim-2);
@@ -104,20 +152,146 @@
   </nav>
 
   <div class="page">
+
     <div class="about-page">
       <a class="back-link" href="index.html"><span data-lang="ru">← На главную</span><span data-lang="en">← Home</span></a>
       <div class="about-kicker"><span data-lang="ru">Обо мне</span><span data-lang="en">About</span></div>
       <h1 class="about-title"><span data-lang="ru">Мадина Рашидова</span><span data-lang="en">Madina Rashidova</span></h1>
       <div class="about-text">
-        <p><span data-lang="ru">Привет — я проектирую сложные административные интерфейсы и продукты с большими объёмами данных. Ниже — несколько историй о том, как это получалось.</span><span data-lang="en">Hi — I design complex admin interfaces and products with large volumes of data. Below are a few stories about how that came together.</span></p>
+        <p><span data-lang="ru">Мне 26, и последние 4 года я работаю продуктовым дизайнером — проектирую B2C, B2B и внутренние цифровые продукты в финтехе, банкинге и трейдинге. В работе участвую во всех этапах: от дискавери до запуска решений.</span><span data-lang="en">I'm 26, and for the past 4 years I've been working as a product designer — designing B2C, B2B, and internal digital products in fintech, banking, and trading. I'm involved at every stage of the work, from discovery to launch.</span></p>
+        <p style="margin-top:14px"><span data-lang="ru">Сейчас ищу сильную продуктовую команду, где смогу влиять на развитие продукта и продолжать профессионально расти как дизайнер.</span><span data-lang="en">Right now I'm looking for a strong product team where I can influence the product's direction and keep growing as a designer.</span></p>
       </div>
     </div>
+
+    <div class="about-wide">
+      <div class="about-block">
+        <div class="section-label"><span data-lang="ru">Как я работаю</span><span data-lang="en">How I work</span></div>
+        <h2 class="section-title"><span data-lang="ru">Шаблон работы над продуктовой задачей</span><span data-lang="en">My template for a product task</span></h2>
+        <p class="section-intro"><span data-lang="ru">У каждой команды свой процесс, но я стараюсь проходить примерно один и тот же путь — от понимания проблемы до проверки результата после запуска.</span><span data-lang="en">Every team has its own process, but I try to follow roughly the same path — from understanding the problem to checking the result after launch.</span></p>
+
+        <div class="process-grid">
+          <div class="process-step">
+            <div class="process-num">01</div>
+            <div>
+              <h3><span data-lang="ru">Разбираюсь, что вообще нужно решить</span><span data-lang="en">Figure out what actually needs solving</span></h3>
+              <p><span data-lang="ru">Любая задача появляется не просто так — за ней всегда стоит проблема пользователя или бизнеса. Фиксирую: в чём проблема, какую боль решаем, какой JTBD стоит за сценарием, что хотим изменить в продукте и на какую метрику это должно повлиять.</span><span data-lang="en">Every task exists for a reason — there's always a user or business problem behind it. I write down what the problem is, what pain we're solving, the JTBD behind the scenario, what we want to change in the product, and what metric it should move.</span></p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-num">02</div>
+            <div>
+              <h3><span data-lang="ru">Исследую контекст</span><span data-lang="en">Research the context</span></h3>
+              <p><span data-lang="ru">Смотрю прямых и косвенных конкурентов, обязательно изучаю международный рынок. Разбираюсь с аудиторией: кто пользователь, какие у него сценарии и сегменты, что происходит в продукте сейчас. Изучаю метрики, отзывы, обращения в поддержку. Если есть сомнение, что проблема действительно существует — провожу интервью или быстрые опросы. И сразу проверяю ограничения: технические, юридические и бизнесовые.</span><span data-lang="en">I look at direct and indirect competitors, always including the international market. I dig into the audience: who the user is, what scenarios and segments exist, what's happening in the product right now. I study metrics, reviews, and support tickets. If I doubt the problem really exists, I run interviews or quick surveys. And I check constraints early — technical, legal, business.</span></p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-num">03</div>
+            <div>
+              <h3><span data-lang="ru">Формирую гипотезы</span><span data-lang="en">Form hypotheses</span></h3>
+              <p><span data-lang="ru">Во время исследования обычно появляется много идей. Стараюсь не хвататься за первую, а фиксировать всё и приоритизировать. Для каждой гипотезы важно понимать: какую проблему она решает → почему должна сработать → какую метрику должна изменить.</span><span data-lang="en">Research usually surfaces a lot of ideas. I try not to grab the first one, but log everything and prioritize. For each hypothesis I need to know: what problem it solves → why it should work → what metric it should change.</span></p>
+              <div class="process-example">
+                <span class="example-label"><span data-lang="ru">Пример</span><span data-lang="en">Example</span></span>
+                <p><span data-lang="ru">«Если добавить уведомление о низком остатке, партнёры будут раньше обновлять количество товаров» — сначала проверяю гипотезу качественно (интервью: партнёры действительно замечают остаток слишком поздно?), затем количественно (опрос: если 70% партнёров сталкиваются с этим — гипотеза значима), и только потом она попадает в разработку.</span><span data-lang="en">"If we add a low-stock notification, partners will update quantities earlier" — I first check the hypothesis qualitatively (interviews: do partners really notice low stock too late?), then quantitatively (a survey: if 70% of partners hit this problem, the hypothesis is significant), and only then does it move into development.</span></p>
+              </div>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-num">04</div>
+            <div>
+              <h3><span data-lang="ru">Проектирую и проверяю</span><span data-lang="en">Design and validate</span></h3>
+              <p><span data-lang="ru">Дальше — подробные сценарии, прототипы и ключевые флоу. Но до финализации стараюсь проверить концепцию: usability-тестами, интервью с прототипом, опросами, хотя бы быстрыми коридорными тестами. После тестирования корректирую решение и только потом собираю все состояния: ошибки, статусы, адаптивы, тёмную и светлую темы, уведомления и остальные сценарии.</span><span data-lang="en">Next come detailed scenarios, prototypes, and key flows. But before finalizing, I try to validate the concept: usability tests, prototype interviews, surveys, or at least quick hallway tests. After testing I adjust the solution, and only then assemble every state: errors, statuses, responsive layouts, dark and light themes, notifications, and the rest of the scenarios.</span></p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-num">05</div>
+            <div>
+              <h3><span data-lang="ru">Сопровождаю разработку и запуск</span><span data-lang="en">Support development and launch</span></h3>
+              <p><span data-lang="ru">Работа дизайнера для меня не заканчивается на передаче макетов. Провожу дизайн-ревью, проверяю реализацию и заранее договариваюсь, какие события и метрики нужно собирать после запуска — без аналитики потом сложно ответить на главный вопрос: решение вообще сработало или просто было запущено.</span><span data-lang="en">For me, a designer's job doesn't end at handoff. I run design reviews, check the implementation, and agree in advance on which events and metrics to track after launch — without analytics it's hard to later answer the main question: did the solution actually work, or did it just ship.</span></p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-num">06</div>
+            <div>
+              <h3><span data-lang="ru">Смотрю на результат</span><span data-lang="en">Look at the result</span></h3>
+              <p><span data-lang="ru">После запуска сравниваю: что ожидали → что получили. Смотрю метрики, собираю обратную связь, анализирую проблемные места и формирую следующие итерации.</span><span data-lang="en">After launch I compare what we expected to what we got. I look at metrics, gather feedback, analyze pain points, and shape the next iterations.</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-page">
+      <div class="about-block">
+        <div class="section-label"><span data-lang="ru">Как пришла в дизайн</span><span data-lang="en">How I got into design</span></div>
+        <div class="about-text">
+          <p><span data-lang="ru">В 2022 году я работала в отделе партнёров банка — на бизнесовой стороне продукта. Именно там я увидела, как UX-логика способна упростить жизнь: и пользователям, и самому бизнесу. Сначала дизайн был просто хобби для души.</span><span data-lang="en">In 2022 I worked in a bank's partner department — on the business side of the product. That's where I first saw how UX logic can simplify life, both for users and for the business itself. At first, design was just a hobby for the soul.</span></p>
+          <p style="margin-top:14px"><span data-lang="ru">После обучений и стажировок оно стало частью моей жизни. Я год боролась за свою мечту и сделала всё, чтобы стать продуктовым дизайнером.</span><span data-lang="en">After courses and internships, it became part of my life. I spent a year fighting for that dream, and did everything I could to become a product designer.</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-wide">
+      <div class="about-block tight">
+        <div class="section-label"><span data-lang="ru">Чем увлекаюсь</span><span data-lang="en">What I'm into</span></div>
+        <h2 class="section-title"><span data-lang="ru">Помимо дизайна</span><span data-lang="en">Beyond design</span></h2>
+
+        <div class="hobby-scatter" id="hobbyScatter">
+          <div class="hobby-bubble" style="--size:26cqw; --x:2cqw; --y:2cqw; --delay:0s;">
+            <img src="assets/collage-mural-pose.jpg" alt="Мадина у стрит-арт мурала" loading="lazy">
+          </div>
+          <div class="hobby-bubble" style="--size:24cqw; --x:32cqw; --y:0cqw; --delay:0.06s;">
+            <img src="assets/hobby-swim.jpg" alt="Мадина у бассейна в аквапарке" loading="lazy">
+          </div>
+          <div class="hobby-bubble" style="--size:19cqw; --x:60cqw; --y:2cqw; --delay:0.12s;">
+            <img src="assets/collage-gondola.jpg" alt="Гондола на воде" loading="lazy">
+          </div>
+          <div class="hobby-bubble" style="--size:13cqw; --x:82cqw; --y:6cqw; --delay:0.18s;">
+            <img src="assets/collage-ornament.jpg" alt="Новогодний шар с огоньками" loading="lazy">
+          </div>
+          <div class="hobby-bubble" style="--size:27cqw; --x:14cqw; --y:24cqw; --delay:0.24s;">
+            <img src="assets/hobby-sup.jpg" alt="Мадина на сапе на озере" loading="lazy">
+          </div>
+          <div class="hobby-bubble" style="--size:18cqw; --x:46cqw; --y:26cqw; --delay:0.3s;">
+            <img src="assets/collage-sup-aerial.jpg" alt="Сап с высоты, каньон" loading="lazy">
+          </div>
+          <div class="hobby-bubble" style="--size:13cqw; --x:68cqw; --y:22cqw; --delay:0.36s;">
+            <img src="assets/collage-paddlesign.jpg" alt="Табличка I love Gulhi на пляже" loading="lazy">
+          </div>
+          <div class="hobby-bubble" style="--size:19cqw; --x:79cqw; --y:32cqw; --delay:0.42s;">
+            <img src="assets/collage-mural-color.jpg" alt="Цветной стрит-арт мурал" loading="lazy">
+          </div>
+          <div class="hobby-bubble" style="--size:20cqw; --x:0cqw; --y:47cqw; --delay:0.48s;">
+            <img src="assets/collage-cliff.jpg" alt="Мадина на скале" loading="lazy">
+          </div>
+          <div class="hobby-bubble" style="--size:14cqw; --x:27cqw; --y:53cqw; --delay:0.54s;">
+            <img src="assets/collage-coconut.jpg" alt="Кокос с трубочкой над водой" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <footer class="page-footer">
     <div class="page">handmade with claude code · last update: 15.07.2026 · v2.0</div>
   </footer>
 
+  <script>
+    if ('IntersectionObserver' in window) {
+      var hobbyEls = document.querySelectorAll('.hobby-bubble');
+      var hobbyObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            hobbyObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      hobbyEls.forEach(function (el) { hobbyObserver.observe(el); });
+    } else {
+      document.querySelectorAll('.hobby-bubble').forEach(function (el) { el.classList.add('in-view'); });
+    }
+  </script>
   <script src="assets/i18n.js"></script>
 </body>
 </html>

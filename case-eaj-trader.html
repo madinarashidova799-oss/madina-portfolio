@@ -9,20 +9,37 @@
 <meta name="description" content="EAJ Trader — MVP личного кабинета трейдера с нуля за 2 месяца. Разбор процесса: сегментация пользователей, концепты, итоги." data-ru="EAJ Trader — MVP личного кабинета трейдера с нуля за 2 месяца. Разбор процесса: сегментация пользователей, концепты, итоги." data-en="EAJ Trader — an MVP of a trader's personal dashboard built from scratch in 2 months. A breakdown of the process: user segmentation, concepts, outcomes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #f8f8f8;
-    --surface: #f6f6f7;
-    --line: #e3e3e6;
-    --text: #0a0a0a;
-    --text-dim: #5a5a5f;
-    --text-dim-2: #6e6e73;
-    --accent: #a86647;
-    --live: #1f7a3d;
-    --nav-bg: #070713;
+    --surface: #f7f7f7;
+    --surface-translucent: rgba(255, 255, 255, 0.65);
+    --line: #ececec;
+    --line-strong: #eaeaea;
+    --line-soft: #f1f1f1;
+    --line-faint: #f5f5f5;
+    --text: #171717;
+    --text-strong: #231e1b;
+    --text-dim: #62605d;
+    --text-dim-2: #8a8782;
+    --text-inverse: #f8f8f8;
+    --accent: #231e1b;
+    --live: #2f6b52;
+    --nav-bg: #17110e;
+    --nav-bg-hover: #261f1b;
+    --nav-control: #302925;
+    --radius-small: 12px;
+    --radius-medium: 20px;
+    --radius-large: 32px;
+    --radius-pill: 999px;
+    --shadow-soft: 0 8px 24px rgba(23,17,14,0.06), 0 20px 50px rgba(23,17,14,0.05);
+    --shadow-control: 0 8px 20px rgba(23,17,14,0.08);
+    --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px;
+    --space-6: 32px; --space-7: 48px; --space-8: 64px; --space-9: 96px; --space-10: 128px;
     --mono: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --display: var(--sans);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -34,13 +51,13 @@
     -webkit-font-smoothing: antialiased;
   }
   a { color: inherit; text-decoration: none; }
-  .page { max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 56px); }
+  .page { max-width: 1680px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 80px); }
 
   .site-nav {
     position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-    z-index: 50; display: flex; align-items: center;
+    z-index: 100; display: flex; align-items: center;
     background: var(--nav-bg); border-radius: 100px; padding: 8px 8px 8px 22px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+    box-shadow: var(--shadow-control);
   }
   .site-nav .nav-name {
     font-family: var(--mono); font-size: 0.85rem; font-weight: 500;
@@ -70,7 +87,7 @@
   html.lang-en [data-lang="ru"] { display: none; }
   html.lang-en [data-lang="en"] { display: inline; }
   .lightbox {
-    position: fixed; inset: 0; z-index: 100;
+    position: fixed; inset: 0; z-index: 200;
     background: rgba(10, 10, 10, 0.94);
     display: flex; align-items: center; justify-content: center;
     padding: 48px; opacity: 0; pointer-events: none;
@@ -78,7 +95,7 @@
   }
   .lightbox.open { opacity: 1; pointer-events: all; }
   .lightbox img {
-    max-width: 100%; max-height: 100%; border-radius: 12px;
+    max-width: 100%; max-height: 100%; border-radius: var(--radius-large);
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
     transform: scale(0.96); transition: transform 0.3s ease;
   }
@@ -89,46 +106,61 @@
     background: var(--surface); border: 1px solid var(--line);
     color: var(--text); font-size: 1.3rem; line-height: 1; cursor: pointer;
   }
+
 </style>
 <style>
-  :root { --case-accent: #6b7a4e; }
-  .case-page { padding: 152px 0 96px; }
+  :root { --case-accent: var(--text-strong); }
+  .case-page { padding: 152px 0 160px; }
   .back-link {
     display: inline-block; font-family: var(--mono); font-size: 0.82rem;
     color: var(--text-dim); margin-bottom: 40px; padding-bottom: 2px;
     border-bottom: 1px solid var(--line); transition: color 0.2s ease, border-color 0.2s ease;
   }
   .back-link:hover { color: var(--case-accent); border-color: var(--case-accent); }
-  .case-header { margin-bottom: 48px; }
+  .back-link:focus-visible { outline: 2px solid var(--case-accent); outline-offset: 3px; border-radius: 2px; }
+  .case-header { margin-bottom: 48px; padding: 28px clamp(16px,4vw,32px); }
   .case-meta-line {
     font-family: var(--mono); font-size: 0.85rem; text-transform: uppercase;
     letter-spacing: 0.03em; color: var(--text-dim); margin-top: 10px;
   }
   .case-tags { display: flex; gap: 8px; flex-wrap: wrap; font-size: 0.78rem; }
   .case-tags span { background: var(--surface); border: 1px solid var(--line); color: var(--case-accent); padding: 5px 12px; border-radius: 999px; }
-  h1.case-title { font-size: clamp(2.1rem, 5vw, 3.4rem); font-weight: 800; letter-spacing: -0.02em; }
+  .case-dek { margin-top: 16px; font-size: 1rem; color: var(--text-dim); max-width: 62ch; line-height: 1.55; }
+  h1.case-title {
+    font-family: var(--display); font-size: clamp(2.3rem, 5.4vw, 3.6rem); font-weight: 700;
+    line-height: 1.05; letter-spacing: -0.025em;
+  }
   .metrics { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
-  .metric { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; min-width: 140px; }
+  .metric { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-medium); padding: 14px 18px; min-width: 140px; box-shadow: var(--shadow-soft); }
   .metric .value { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; color: var(--case-accent); }
   .metric .label { font-size: 0.8rem; color: var(--text-dim); margin-top: 2px; }
 
   .detail-block { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--line); }
   .detail-head { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 24px; }
   .detail-num {
-    font-family: var(--sans); font-weight: 800; font-size: clamp(2rem, 4.2vw, 2.8rem);
-    color: var(--line); line-height: 0.8; flex-shrink: 0; letter-spacing: -0.02em;
+    font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 4.2vw, 2.8rem);
+    color: var(--line); line-height: 0.8; flex-shrink: 0; letter-spacing: 0;
   }
-  .detail-head h4 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; padding-top: 8px; }
+  .detail-head h2 { font-family: var(--display); font-size: 1.4rem; line-height: 1.15; font-weight: 700; letter-spacing: -0.025em; padding-top: 8px; }
   .detail-block p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.65; max-width: 60ch; margin-bottom: 18px; }
   .detail-block > p:last-child { margin-bottom: 0; }
-  .detail-block img { display: block; width: 100%; height: auto; border-radius: 12px; cursor: pointer; margin-bottom: 18px; }
+  .detail-block img { display: block; width: 100%; height: auto; border-radius: var(--radius-large); margin-bottom: 18px; }
+  .case-image-trigger {
+    display: block; width: 100%; padding: 0; margin: 0; border: 0; background: none;
+    cursor: pointer; font: inherit; color: inherit; text-align: inherit;
+  }
+  .case-image-trigger:focus-visible {
+    outline: 3px solid var(--text-strong); outline-offset: 3px; border-radius: var(--radius-large);
+  }
 
   .detail-pair { display: grid; grid-template-columns: 5fr 7fr; gap: 36px; align-items: center; margin-bottom: 18px; }
   .detail-pair.media-left { grid-template-columns: 7fr 5fr; }
   .detail-pair.media-left .detail-pair-media { order: -1; }
   .detail-pair-text p { margin-bottom: 0; max-width: none; }
-  .detail-pair-media { border-radius: 12px; overflow: hidden; background: var(--surface); border: 1px solid var(--line); }
+  .detail-pair-media { border-radius: var(--radius-large); overflow: hidden; background: var(--surface); border: 1px solid var(--line); }
   .detail-pair-media img { margin: 0; border-radius: 0; }
+  .detail-pair-media .case-image-trigger:focus-visible,
+  .detail-mosaic .case-image-trigger:focus-visible { outline-offset: -3px; }
   .detail-mosaic { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 18px; }
   .detail-mosaic img { margin: 0; }
   @media (max-width: 860px) {
@@ -139,17 +171,18 @@
 
   .problem-statement { padding: 8px 0; }
   .problem-statement .quote-mark {
-    display: block; font-family: var(--sans); font-weight: 800; font-size: clamp(3rem, 6vw, 4.5rem);
-    line-height: 0.5; color: var(--case-accent); opacity: 0.32; margin-bottom: 8px;
+    display: block; font-family: var(--display); font-weight: 700; font-size: clamp(3rem, 6vw, 4.5rem);
+    line-height: 0.5; color: var(--case-accent); opacity: 0.4; margin-bottom: 8px;
   }
   .problem-statement p { font-size: clamp(1.15rem, 2.2vw, 1.5rem); font-weight: 600; font-style: italic; color: var(--text); line-height: 1.4; max-width: 42ch; }
 
-  .outcome-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px 24px; }
+  .outcome-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-medium); padding: 22px 24px; box-shadow: var(--shadow-soft); }
   .outcome-kicker { display: block; font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--case-accent); }
   .outcome-list { list-style: none; margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 4px 24px; }
   .outcome-list li { position: relative; padding: 10px 0 10px 26px; border-top: 1px solid var(--line); font-size: 0.95rem; color: var(--text); }
   .outcome-list li:first-child { border-top: none; padding-top: 0; }
   .outcome-list li::before { content: "✓"; position: absolute; left: 0; color: var(--case-accent); font-family: var(--mono); }
+  .outcome-list.is-expected li::before { content: "→"; }
   @media (max-width: 720px) {
     .outcome-list { grid-template-columns: 1fr; }
     .outcome-list li { border-top: 1px solid var(--line); padding-top: 10px; }
@@ -157,12 +190,99 @@
   }
 
   .persona-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 20px; }
-  .persona-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; }
+  .persona-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-medium); padding: 18px; box-shadow: var(--shadow-soft); }
   .persona-card h5 { color: var(--case-accent); font-size: 1rem; font-weight: 700; }
   .persona-desc { color: var(--text-dim-2); font-size: 0.82rem; margin-top: 2px; margin-bottom: 14px; }
   .persona-row { display: flex; flex-direction: column; gap: 2px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 0.85rem; }
   .persona-row:first-of-type { border-top: none; }
   .persona-label { font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim-2); }
+
+  /* ===== Case floating dock (like + next case) — shared across all case pages =====
+     Two independent glass controls, fixed to the viewport like the top nav —
+     see DESIGN.md § Floating case controls. Never a full-width panel. */
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+  .case-floating-nav {
+    position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom));
+    transform: translateX(-50%) translateY(12px);
+    z-index: 110; display: flex; align-items: center; gap: 10px;
+    max-width: calc(100vw - 32px);
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  .case-floating-nav.is-inview { opacity: 1; transform: translateX(-50%) translateY(0); }
+  body.lightbox-open .case-floating-nav { opacity: 0; pointer-events: none; }
+
+  .case-like, .case-next {
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    box-shadow:
+      0 10px 32px rgba(15, 13, 12, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px) saturate(125%);
+    -webkit-backdrop-filter: blur(20px) saturate(125%);
+    border-radius: var(--radius-pill);
+  }
+  @supports not (backdrop-filter: blur(1px)) {
+    .case-like, .case-next { background: rgba(248, 248, 248, 0.94); }
+  }
+
+  .case-like {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--sans); font-size: 0.92rem; font-weight: 600; color: #171717;
+    padding-inline: 20px; min-height: 56px;
+    cursor: pointer; flex-shrink: 0;
+    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s cubic-bezier(0.22,1,0.36,1);
+  }
+  .case-like:hover { background: rgba(255,255,255,0.85); box-shadow: var(--shadow-control); }
+  .case-like:focus-visible { outline: 2px solid var(--text-strong); outline-offset: 2px; }
+  .case-like:active { transform: scale(0.96); }
+  .case-like__icon { width: 20px; height: 20px; flex-shrink: 0; color: var(--text-dim); transition: transform 0.2s cubic-bezier(0.22,1,0.36,1), color 0.2s ease; }
+  .case-like:hover .case-like__icon { transform: scale(1.06); }
+  .case-like.is-liked { color: var(--text-strong); }
+  .case-like.is-liked .case-like__icon { color: var(--text-strong); }
+  .case-like.is-liked .case-like__icon path { fill: currentColor; }
+  .case-like.is-pulsing .case-like__icon { animation: caseLikePulse 240ms cubic-bezier(0.22,1,0.36,1); }
+  @keyframes caseLikePulse {
+    0% { transform: scale(1); }
+    45% { transform: scale(1.22); }
+    100% { transform: scale(1); }
+  }
+  .case-like__label { white-space: nowrap; }
+  .case-like__count { font-family: var(--mono); color: var(--text-dim); min-width: 1.4em; }
+
+  .case-next {
+    display: flex; align-items: center; gap: 12px;
+    padding-inline: 24px; min-height: 56px;
+    max-width: min(360px, 60vw);
+    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s cubic-bezier(0.22,1,0.36,1);
+  }
+  .case-next:hover, .case-next:focus-visible { background: rgba(255,255,255,0.88); box-shadow: var(--shadow-control); transform: translateY(-2px); }
+  .case-next:focus-visible { outline: 2px solid var(--text-strong); outline-offset: 2px; }
+  .case-next:active { transform: translateY(0); }
+  .case-next__label { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); }
+  .case-next__title-row { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+  .case-next__title { font-family: var(--display); font-weight: 700; font-size: 1.05rem; color: #171717; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .case-next__arrow { flex-shrink: 0; color: #171717; transition: transform 0.25s cubic-bezier(0.22,1,0.36,1); }
+  .case-next:hover .case-next__arrow, .case-next:focus-visible .case-next__arrow { transform: translateX(5px); }
+
+  @media (max-width: 720px) {
+    .case-floating-nav { bottom: max(14px, env(safe-area-inset-bottom)); gap: 8px; }
+    .case-like { min-height: 48px; padding-inline: 16px; }
+    .case-next { min-height: 48px; padding-inline: 16px; max-width: min(220px, 52vw); }
+    .case-next__label {
+      position: absolute; width: 1px; height: 1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .case-floating-nav { transition: none; opacity: 1; transform: translateX(-50%); }
+    .case-like__icon, .case-next__arrow, .case-like, .case-next { transition: none; }
+    .case-like.is-pulsing .case-like__icon { animation: none; }
+  }
 </style>
 </head>
 <body>
@@ -171,8 +291,8 @@
     <a href="index.html" class="nav-name"><span data-lang="ru">Мадина Рашидова</span><span data-lang="en">Madina Rashidova</span></a>
     <a href="index.html#work" class="nav-link"><span data-lang="ru">Работы →</span><span data-lang="en">Work →</span></a>
     <a href="about.html" class="nav-link"><span data-lang="ru">Обо мне →</span><span data-lang="en">About →</span></a>
-    <a href="cv.pdf" class="nav-link" target="_blank">CV →</a>
-    <button type="button" class="lang-toggle" data-lang-toggle>EN</button>
+    <a href="cv.pdf" class="nav-link" target="_blank" rel="noopener">CV →</a>
+    <button type="button" class="lang-toggle" data-lang-toggle aria-label="Switch to English">EN</button>
   </nav>
 
   <div class="page">
@@ -183,6 +303,7 @@
         <h1 class="case-title">EAJ Trader</h1>
         <div class="case-meta-line"><span data-lang="ru">Web · MVP за 2 месяца</span><span data-lang="en">Web · MVP in 2 months</span></div>
         <div class="case-tags"><span>/0→1</span><span>/trading</span><span>/fintech</span></div>
+        <p class="case-dek"><span data-lang="ru">MVP личного кабинета трейдера с нуля за 2 месяца. Разбор процесса: сегментация пользователей, концепты, итоги.</span><span data-lang="en">An MVP of a trader's personal dashboard built from scratch in 2 months. A breakdown of the process: user segmentation, concepts, outcomes.</span></p>
         <div class="metrics">
           <div class="metric"><div class="value">2</div><div class="label"><span data-lang="ru">протестированных концепта счетов</span><span data-lang="en">tested account concepts</span></div></div>
           <div class="metric"><div class="value">MVP</div><div class="label"><span data-lang="ru">полный цикл с нуля за 2 месяца</span><span data-lang="en">full cycle from scratch in 2 months</span></div></div>
@@ -190,23 +311,29 @@
       </div>
 
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">01</span><h4><span data-lang="ru">Цель проекта</span><span data-lang="en">Project goal</span></h4></div>
+        <div class="detail-head"><span class="detail-num">01</span><h2><span data-lang="ru">Проблема и цель</span><span data-lang="en">Problem and goal</span></h2></div>
+        <p><span data-lang="ru">К этому этапу у EAJ Trader уже были айдентика и лендинг, но не было работающего продукта: пользователю было буквально некуда войти, чтобы управлять своими счетами.</span><span data-lang="en">By this stage EAJ Trader already had an identity and a landing page, but no working product — there was literally nowhere for a user to log in and manage their accounts.</span></p>
+        <p><span data-lang="ru"><strong>Бизнес-цель: </strong>в сжатый срок (2 месяца) получить работающий MVP личного кабинета — реальную точку входа в продукт, а не только лендинг.</span><span data-lang="en"><strong>Business goal: </strong>ship a working dashboard MVP on a tight timeline (2 months) — a real entry point into the product, not just a landing page.</span></p>
         <div class="problem-statement">
           <span class="quote-mark">"</span>
-          <p><span data-lang="ru">Создать MVP личного кабинета с нуля, который покрывает ключевые финансовые сценарии пользователей и формирует основу для дальнейшего развития продукта.</span><span data-lang="en">Create an MVP of the personal dashboard from scratch that covers key user financial scenarios and forms the foundation for further product development.</span></p>
+          <p><span data-lang="ru"><strong>Пользовательская цель: </strong>покрыть ключевые финансовые сценарии — счета, пополнение, вывод, переводы, отслеживание баланса — и заложить основу для дальнейшего развития продукта.</span><span data-lang="en"><strong>User goal: </strong>cover the key financial scenarios — accounts, deposits, withdrawals, transfers, balance tracking — and lay a foundation for further product development.</span></p>
         </div>
-        <p style="margin-top:18px"><span data-lang="ru">На предыдущем этапе разработала айдентику и лендинг проекта, а в рамках этого кейса сфокусировалась на проектировании личного кабинета: структуре, логике и интерфейсах для управления счетами, пополнения, вывода средств, переводов и отслеживания баланса.</span><span data-lang="en">In the previous stage, I developed the project's identity and landing page, and within this case study I focused on designing the personal dashboard: the structure, logic, and interfaces for managing accounts, deposits, withdrawals, transfers, and balance tracking.</span></p>
+        <p style="margin-top:18px"><span data-lang="ru">На предыдущем этапе разработала айдентику и лендинг проекта, а в рамках этого кейса сфокусировалась на проектировании личного кабинета: структуре, логике и интерфейсах для управления счетами, пополнения, вывода средств, переводов и отслеживания баланса. Решение — разделы 04–08 ниже, проверка результата — раздел 09.</span><span data-lang="en">In the previous stage, I developed the project's identity and landing page, and within this case study I focused on designing the personal dashboard: the structure, logic, and interfaces for managing accounts, deposits, withdrawals, transfers, and balance tracking. The solution is sections 04–08 below; checking the result is section 09.</span></p>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">02</span><h4><span data-lang="ru">Исследование</span><span data-lang="en">Research</span></h4></div>
+        <div class="detail-head"><span class="detail-num">02</span><h2><span data-lang="ru">Исследование</span><span data-lang="en">Research</span></h2></div>
         <div class="detail-pair">
           <div class="detail-pair-text"><p><span data-lang="ru">Заказчик уже провёл предварительное исследование и сформировал список ключевых функций, поэтому фокус работы сместился на бизнес-анализ: кто является пользователем личного кабинета, чем отличаются их сценарии поведения и как эти различия должны повлиять на структуру системы.</span><span data-lang="en">The client had already conducted preliminary research and put together a list of key features, so the focus of the work shifted to business analysis: who the dashboard's users are, how their behavioral scenarios differ, and how these differences should shape the system's structure.</span></p></div>
-          <div class="detail-pair-media"><img src="assets/process/eaj-research.jpg" alt="EAJ Trader — бизнес-анализ пользователей" loading="lazy" onclick="openLightbox(event, 'assets/process/eaj-research.jpg', 'EAJ Trader — бизнес-анализ пользователей')"></div>
+          <div class="detail-pair-media">
+            <button class="case-image-trigger" type="button">
+              <img src="assets/process/eaj-research.jpg" data-alt-ru="EAJ Trader — бизнес-анализ пользователей" data-alt-en="EAJ Trader — user business analysis" alt="EAJ Trader — бизнес-анализ пользователей" loading="lazy">
+            </button>
+          </div>
         </div>
         <p><span data-lang="ru">Разделение пользователей на активных трейдеров и менее активную аудиторию показало: попытка спроектировать универсальный интерфейс приводит к потере эффективности для обоих сегментов. MVP сфокусировался на оптимизации сценариев для активных трейдеров, с заложенной основой для дальнейшей персонализации.</span><span data-lang="en">Splitting users into active traders and a less active audience showed that trying to design a one-size-fits-all interface reduces effectiveness for both segments. The MVP focused on optimizing scenarios for active traders, with a foundation laid for further personalization.</span></p>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">03</span><h4><span data-lang="ru">Определение задачи</span><span data-lang="en">Defining the task</span></h4></div>
+        <div class="detail-head"><span class="detail-num">03</span><h2><span data-lang="ru">Определение задачи</span><span data-lang="en">Defining the task</span></h2></div>
         <p><span data-lang="ru">Бизнес-анализ показал пять разных типов пользователей личного кабинета — от скальпера, для которого любая задержка интерфейса означает убыток, до новичка, которому нужен обучающий UX. Эти различия напрямую определили, какие сценарии MVP должен закрыть в первую очередь.</span><span data-lang="en">The business analysis revealed five different types of dashboard users — from the scalper, for whom any interface delay means a loss, to the beginner, who needs educational UX. These differences directly determined which scenarios the MVP had to cover first.</span></p>
         <div class="persona-grid">
           <div class="persona-card">
@@ -250,43 +377,62 @@
             <div class="persona-row"><span class="persona-label"><span data-lang="ru">UX-фокус</span><span data-lang="en">UX focus</span></span><span><span data-lang="ru">Обучающий UX, подсказки, ограничения</span><span data-lang="en">Educational UX, hints, limits</span></span></div>
           </div>
         </div>
+        <p style="margin-top:20px"><span data-lang="ru">Из пяти сегментов в MVP полноценно вошёл только «Активный трейдер» — его сценарии (счета, пополнение, вывод, переводы, баланс) определяют структуру кабинета, описанную в разделах 04–08. «Скальпер», «Свинг-трейдер», «Инвест-трейдер» и «Новичок» в MVP не резолвились: их UX-фокус (1-click trading и минимальная задержка, глубокая аналитика портфеля, риск-метрики, обучающий UX) требует функциональности, которую 2-месячный MVP не покрывал, — в кабинете нет отдельного экрана исполнения сделок, ленты цен или риск-панели. Это зафиксированные направления для следующих итераций, а не забытая часть анализа.</span><span data-lang="en">Of the five segments, only "Active trader" was fully resolved in the MVP — their scenarios (accounts, deposits, withdrawals, transfers, balance) define the dashboard structure described in sections 04–08. "Scalper," "Swing trader," "Investor-trader," and "Beginner" weren't resolved in the MVP: their UX focus (1-click trading and minimal latency, in-depth portfolio analytics, risk metrics, educational UX) needs functionality the 2-month MVP didn't cover — the dashboard has no dedicated trade-execution screen, price feed, or risk panel. These are logged directions for future iterations, not a forgotten part of the analysis.</span></p>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">04</span><h4><span data-lang="ru">Работа над продуктом</span><span data-lang="en">Product work</span></h4></div>
+        <div class="detail-head"><span class="detail-num">04</span><h2><span data-lang="ru">Работа над продуктом</span><span data-lang="en">Product work</span></h2></div>
         <div class="detail-pair" style="grid-template-columns: 7fr 5fr;">
-          <div class="detail-pair-text"><p><span data-lang="ru">Ключевые сценарии: управление счетами, пополнение, вывод средств, переводы между счетами и отслеживание состояния средств. Основной экран спроектирован вокруг быстрого доступа к операциям, вторичные и аналитические данные вынесены в менее приоритетные зоны.</span><span data-lang="en">Key scenarios: managing accounts, deposits, withdrawals, transfers between accounts, and tracking fund status. The main screen is designed around quick access to operations, with secondary and analytical data moved to lower-priority zones.</span></p></div>
-          <div class="detail-pair-media"><img src="assets/process/eaj-home.png" alt="EAJ Trader — главный экран личного кабинета" loading="lazy" onclick="openLightbox(event, 'assets/process/eaj-home.png', 'EAJ Trader — главный экран личного кабинета')"></div>
+          <div class="detail-pair-text"><p><span data-lang="ru">Ключевые сценарии: управление счетами, пополнение, вывод средств, переводы между счетами и отслеживание состояния средств. Основной экран спроектирован вокруг быстрого доступа к операциям, вторичные и аналитические данные вынесены в менее приоритетные зоны — так пользователь быстрее находит состояние своих счетов и меньше сомневается, сколько средств доступно прямо сейчас.</span><span data-lang="en">Key scenarios: managing accounts, deposits, withdrawals, transfers between accounts, and tracking fund status. The main screen is designed around quick access to operations, with secondary and analytical data moved to lower-priority zones — so the user finds their account status faster and is less uncertain about how much is available right now.</span></p></div>
+          <div class="detail-pair-media">
+            <button class="case-image-trigger" type="button">
+              <img src="assets/process/eaj-home.png" data-alt-ru="EAJ Trader — главный экран личного кабинета" data-alt-en="EAJ Trader — the dashboard's main screen" alt="EAJ Trader — главный экран личного кабинета" loading="lazy">
+            </button>
+          </div>
         </div>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">05</span><h4><span data-lang="ru">Работа с торговыми счетами: концепт 1</span><span data-lang="en">Working with trading accounts: concept 1</span></h4></div>
+        <div class="detail-head"><span class="detail-num">05</span><h2><span data-lang="ru">Работа с торговыми счетами: концепт 1</span><span data-lang="en">Working with trading accounts: concept 1</span></h2></div>
         <div class="detail-pair media-left" style="grid-template-columns: 5fr 7fr;">
-          <div class="detail-pair-media"><img src="assets/process/eaj-concept1-2.jpg" alt="EAJ Trader — концепт 1, табличный список счетов" loading="lazy" onclick="openLightbox(event, 'assets/process/eaj-concept1-2.jpg', 'EAJ Trader — концепт 1, табличный список счетов')"></div>
+          <div class="detail-pair-media">
+            <button class="case-image-trigger" type="button">
+              <img src="assets/process/eaj-concept1-2.jpg" data-alt-ru="EAJ Trader — концепт 1, табличный список счетов" data-alt-en="EAJ Trader — concept 1, a tabular account list" alt="EAJ Trader — концепт 1, табличный список счетов" loading="lazy">
+            </button>
+          </div>
           <div class="detail-pair-text"><p><span data-lang="ru">Торговый счёт — основная сущность продукта, точка входа во все ключевые сценарии. Первый вариант: классический табличный список счетов, паттерн, широко используемый у конкурентов и привычный пользователям. Протестировали его в качественном UX-исследовании с фокусом на базовые сценарии.</span><span data-lang="en">A trading account is the product's core entity, the entry point into all key scenarios. The first version: a classic tabular list of accounts, a pattern widely used by competitors and familiar to users. We tested it in a qualitative UX study focused on basic scenarios.</span></p></div>
         </div>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">06</span><h4><span data-lang="ru">Концепт 2 — карточный формат</span><span data-lang="en">Concept 2 — card format</span></h4></div>
+        <div class="detail-head"><span class="detail-num">06</span><h2><span data-lang="ru">Концепт 2 — карточный формат</span><span data-lang="en">Concept 2 — card format</span></h2></div>
         <div class="detail-pair">
           <div class="detail-pair-text"><p><span data-lang="ru">Во втором концепте пересобрала представление счетов в карточный формат, где каждый счёт — самостоятельная единица с полной информацией и действиями. Несмотря на то, что табличный формат оказался более ожидаемым и привычным, карточный показал лучшие результаты в понимании и скорости взаимодействия. Выбрала его как основное решение, оставив таблицу в резерве для масштабирования при росте числа счетов.</span><span data-lang="en">In the second concept, I rebuilt the account view into a card format, where each account is a self-contained unit with full information and actions. Even though the tabular format turned out to be more expected and familiar, the card format showed better results in comprehension and interaction speed. I chose it as the primary solution, keeping the table in reserve for scaling as the number of accounts grows.</span></p></div>
-          <div class="detail-pair-media"><img src="assets/process/eaj-cards.jpg" alt="EAJ Trader — карточный формат счетов" loading="lazy" onclick="openLightbox(event, 'assets/process/eaj-cards.jpg', 'EAJ Trader — карточный формат счетов')"></div>
+          <div class="detail-pair-media">
+            <button class="case-image-trigger" type="button">
+              <img src="assets/process/eaj-cards.jpg" data-alt-ru="EAJ Trader — карточный формат счетов" data-alt-en="EAJ Trader — accounts in card format" alt="EAJ Trader — карточный формат счетов" loading="lazy">
+            </button>
+          </div>
         </div>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">07</span><h4><span data-lang="ru">Центр управления средствами</span><span data-lang="en">Funds management center</span></h4></div>
+        <div class="detail-head"><span class="detail-num">07</span><h2><span data-lang="ru">Центр управления средствами</span><span data-lang="en">Funds management center</span></h2></div>
         <p><span data-lang="ru">Объединила пополнение, вывод и внутренние переводы в единый раздел Funding. Решение приняли совместно с заказчиком, чтобы упростить навигацию и сократить количество разрозненных точек входа в финансовые операции. По результатам юзабилити-тестирования пользователи отмечали более простое восприятие структуры и быстрый доступ к операциям.</span><span data-lang="en">I combined deposits, withdrawals, and internal transfers into a single Funding section. The decision was made together with the client to simplify navigation and reduce the number of scattered entry points into financial operations. Usability testing showed users found the structure easier to grasp and operations quicker to access.</span></p>
-        <img src="assets/process/eaj-funding-2.png" alt="EAJ Trader — раздел Funding: выбор действия" loading="lazy" onclick="openLightbox(event, 'assets/process/eaj-funding-2.png', 'EAJ Trader — раздел Funding: выбор действия')">
+        <button class="case-image-trigger" type="button">
+          <img src="assets/process/eaj-funding-2.png" data-alt-ru="EAJ Trader — раздел Funding: выбор действия" data-alt-en="EAJ Trader — the Funding section: choosing an action" alt="EAJ Trader — раздел Funding: выбор действия" loading="lazy">
+        </button>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">08</span><h4><span data-lang="ru">Поддержка внутри продукта</span><span data-lang="en">In-product support</span></h4></div>
+        <div class="detail-head"><span class="detail-num">08</span><h2><span data-lang="ru">Поддержка внутри продукта</span><span data-lang="en">In-product support</span></h2></div>
         <p><span data-lang="ru">Добавила раздел Claims &amp; Complaints: встроенный блок обращений в формате чата. В спорных ситуациях критично важен быстрый прямой канал коммуникации без поиска внешних контактов. На этапе раннего запуска ожидается повышенное количество обращений, поэтому чат стал не только каналом поддержки, но и инструментом обратной связи для улучшения продукта.</span><span data-lang="en">I added a Claims &amp; Complaints section: a built-in requests block in chat format. In disputed situations, a fast, direct communication channel without hunting for outside contacts is critical. Early launch is expected to bring a higher volume of requests, so the chat became not just a support channel but also a feedback tool for improving the product.</span></p>
         <div class="detail-mosaic">
-          <img src="assets/process/eaj-claims-list.png" alt="EAJ Trader — список обращений Claims & Complaints" loading="lazy" onclick="openLightbox(event, 'assets/process/eaj-claims-list.png', 'EAJ Trader — список обращений Claims & Complaints')">
-          <img src="assets/process/eaj-claims-detail.png" alt="EAJ Trader — чат по обращению" loading="lazy" onclick="openLightbox(event, 'assets/process/eaj-claims-detail.png', 'EAJ Trader — чат по обращению')">
+          <button class="case-image-trigger" type="button">
+            <img src="assets/process/eaj-claims-list.png" data-alt-ru="EAJ Trader — список обращений Claims & Complaints" data-alt-en="EAJ Trader — the Claims & Complaints request list" alt="EAJ Trader — список обращений Claims & Complaints" loading="lazy">
+          </button>
+          <button class="case-image-trigger" type="button">
+            <img src="assets/process/eaj-claims-detail.png" data-alt-ru="EAJ Trader — чат по обращению" data-alt-en="EAJ Trader — the chat for a single request" alt="EAJ Trader — чат по обращению" loading="lazy">
+          </button>
         </div>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">09</span><h4><span data-lang="ru">Итоги</span><span data-lang="en">Results</span></h4></div>
+        <div class="detail-head"><span class="detail-num">09</span><h2><span data-lang="ru">Итоги</span><span data-lang="en">Results</span></h2></div>
         <p><span data-lang="ru">Спроектирован MVP веб-кабинета для управления финансовыми операциями. Заложенная структура решения позволяет масштабировать продукт за счёт добавления новых сценариев без нарушения основной логики взаимодействия.</span><span data-lang="en">An MVP of the web dashboard for managing financial operations was designed. The solution's underlying structure allows the product to scale by adding new scenarios without breaking the core interaction logic.</span></p>
         <div class="outcome-card">
           <span class="outcome-kicker"><span data-lang="ru">В рамках MVP удалось</span><span data-lang="en">Within the MVP, we managed to</span></span>
@@ -300,34 +446,33 @@
 
       <a class="back-link" href="index.html" style="margin-top:48px"><span data-lang="ru">← Все работы</span><span data-lang="en">← All work</span></a>
     </div>
+
+    <nav class="case-floating-nav">
+      <button class="case-like" type="button" data-case-id="eaj-trader" aria-pressed="false" aria-label="Поставить лайк кейсу EAJ Trader">
+        <svg class="case-like__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
+          <path d="M12 20.5s-7.2-4.5-9.8-8.9C.5 8.4 1.9 4.5 5.6 4.5c2.2 0 3.8 1.4 4.9 3.1 1.1-1.7 2.7-3.1 4.9-3.1 3.7 0 5.1 3.9 2.4 7.1-2.6 4.4-9.8 8.9-9.8 8.9z"/>
+        </svg>
+        <span class="case-like__label"><span data-lang="ru">Нравится</span><span data-lang="en">Like</span></span>
+        <span class="case-like__count">0</span>
+      </button>
+      <a class="case-next" href="case-namaste.html">
+        <span class="case-next__label"><span data-lang="ru">Следующий кейс</span><span data-lang="en">Next case</span></span>
+        <span class="case-next__title-row">
+          <span class="case-next__title">Namaste</span>
+          <span class="case-next__arrow" aria-hidden="true">→</span>
+        </span>
+      </a>
+      <span class="sr-only" aria-live="polite" data-case-live></span>
+    </nav>
   </div>
 
   <div class="lightbox" id="lightbox">
-    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Закрыть">×</button>
+    <button class="lightbox-close" aria-label="Закрыть">×</button>
     <img id="lightboxImg" src="" alt="">
   </div>
 
-  <script>
-    function openLightbox(e, src, alt) {
-      e.stopPropagation();
-      document.getElementById('lightboxImg').src = src;
-      document.getElementById('lightboxImg').alt = alt;
-      document.getElementById('lightbox').classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeLightbox() {
-      document.getElementById('lightbox').classList.remove('open');
-      document.body.style.overflow = '';
-    }
-    document.getElementById('lightbox').addEventListener('click', function (e) {
-      if (e.target.id === 'lightbox') closeLightbox();
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeLightbox();
-    });
-  </script>
-
   <script src="assets/i18n.js"></script>
-
+  <script src="assets/lightbox.js"></script>
+  <script src="assets/case-nav.js"></script>
 </body>
 </html>

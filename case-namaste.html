@@ -9,20 +9,37 @@
 <meta name="description" content="Namaste — MVP мобильного приложения для йоги, фитнеса и медитации за 3 месяца. Разбор процесса: анализ рынка, айдентика, итоги." data-ru="Namaste — MVP мобильного приложения для йоги, фитнеса и медитации за 3 месяца. Разбор процесса: анализ рынка, айдентика, итоги." data-en="Namaste — an MVP of a mobile app for yoga, fitness, and meditation in 3 months. Process breakdown: market analysis, identity, outcomes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #f8f8f8;
-    --surface: #f6f6f7;
-    --line: #e3e3e6;
-    --text: #0a0a0a;
-    --text-dim: #5a5a5f;
-    --text-dim-2: #6e6e73;
-    --accent: #a86647;
-    --live: #1f7a3d;
-    --nav-bg: #070713;
+    --surface: #f7f7f7;
+    --surface-translucent: rgba(255, 255, 255, 0.65);
+    --line: #ececec;
+    --line-strong: #eaeaea;
+    --line-soft: #f1f1f1;
+    --line-faint: #f5f5f5;
+    --text: #171717;
+    --text-strong: #231e1b;
+    --text-dim: #62605d;
+    --text-dim-2: #8a8782;
+    --text-inverse: #f8f8f8;
+    --accent: #231e1b;
+    --live: #2f6b52;
+    --nav-bg: #17110e;
+    --nav-bg-hover: #261f1b;
+    --nav-control: #302925;
+    --radius-small: 12px;
+    --radius-medium: 20px;
+    --radius-large: 32px;
+    --radius-pill: 999px;
+    --shadow-soft: 0 8px 24px rgba(23,17,14,0.06), 0 20px 50px rgba(23,17,14,0.05);
+    --shadow-control: 0 8px 20px rgba(23,17,14,0.08);
+    --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px;
+    --space-6: 32px; --space-7: 48px; --space-8: 64px; --space-9: 96px; --space-10: 128px;
     --mono: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --display: var(--sans);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -34,13 +51,13 @@
     -webkit-font-smoothing: antialiased;
   }
   a { color: inherit; text-decoration: none; }
-  .page { max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 56px); }
+  .page { max-width: 1680px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 80px); }
 
   .site-nav {
     position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-    z-index: 50; display: flex; align-items: center;
+    z-index: 100; display: flex; align-items: center;
     background: var(--nav-bg); border-radius: 100px; padding: 8px 8px 8px 22px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+    box-shadow: var(--shadow-control);
   }
   .site-nav .nav-name {
     font-family: var(--mono); font-size: 0.85rem; font-weight: 500;
@@ -71,7 +88,7 @@
   html.lang-en [data-lang="en"] { display: inline; }
   /* lightbox (shared across every page that shows process images) */
   .lightbox {
-    position: fixed; inset: 0; z-index: 100;
+    position: fixed; inset: 0; z-index: 200;
     background: rgba(10, 10, 10, 0.94);
     display: flex; align-items: center; justify-content: center;
     padding: 48px; opacity: 0; pointer-events: none;
@@ -79,7 +96,7 @@
   }
   .lightbox.open { opacity: 1; pointer-events: all; }
   .lightbox img {
-    max-width: 100%; max-height: 100%; border-radius: 12px;
+    max-width: 100%; max-height: 100%; border-radius: var(--radius-large);
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
     transform: scale(0.96); transition: transform 0.3s ease;
   }
@@ -90,46 +107,61 @@
     background: var(--surface); border: 1px solid var(--line);
     color: var(--text); font-size: 1.3rem; line-height: 1; cursor: pointer;
   }
+
 </style>
 <style>
-  :root { --case-accent: #8c7034; }
-  .case-page { padding: 152px 0 96px; }
+  :root { --case-accent: var(--text-strong); }
+  .case-page { padding: 152px 0 160px; }
   .back-link {
     display: inline-block; font-family: var(--mono); font-size: 0.82rem;
     color: var(--text-dim); margin-bottom: 40px; padding-bottom: 2px;
     border-bottom: 1px solid var(--line); transition: color 0.2s ease, border-color 0.2s ease;
   }
   .back-link:hover { color: var(--case-accent); border-color: var(--case-accent); }
-  .case-header { margin-bottom: 48px; }
+  .back-link:focus-visible { outline: 2px solid var(--case-accent); outline-offset: 3px; border-radius: 2px; }
+  .case-header { margin-bottom: 48px; padding: 28px clamp(16px,4vw,32px); }
   .case-meta-line {
     font-family: var(--mono); font-size: 0.85rem; text-transform: uppercase;
     letter-spacing: 0.03em; color: var(--text-dim); margin-top: 10px;
   }
   .case-tags { display: flex; gap: 8px; flex-wrap: wrap; font-size: 0.78rem; }
   .case-tags span { background: var(--surface); border: 1px solid var(--line); color: var(--case-accent); padding: 5px 12px; border-radius: 999px; }
-  h1.case-title { font-size: clamp(2.1rem, 5vw, 3.4rem); font-weight: 800; letter-spacing: -0.02em; }
+  .case-dek { margin-top: 16px; font-size: 1rem; color: var(--text-dim); max-width: 62ch; line-height: 1.55; }
+  h1.case-title {
+    font-family: var(--display); font-size: clamp(2.3rem, 5.4vw, 3.6rem); font-weight: 700;
+    line-height: 1.05; letter-spacing: -0.025em;
+  }
   .metrics { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
-  .metric { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; min-width: 140px; }
+  .metric { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-medium); padding: 14px 18px; min-width: 140px; box-shadow: var(--shadow-soft); }
   .metric .value { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; color: var(--case-accent); }
   .metric .label { font-size: 0.8rem; color: var(--text-dim); margin-top: 2px; }
 
   .detail-block { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--line); }
   .detail-head { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 24px; }
   .detail-num {
-    font-family: var(--sans); font-weight: 800; font-size: clamp(2rem, 4.2vw, 2.8rem);
-    color: var(--line); line-height: 0.8; flex-shrink: 0; letter-spacing: -0.02em;
+    font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 4.2vw, 2.8rem);
+    color: var(--line); line-height: 0.8; flex-shrink: 0; letter-spacing: 0;
   }
-  .detail-head h4 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; padding-top: 8px; }
+  .detail-head h2 { font-family: var(--display); font-size: 1.4rem; line-height: 1.15; font-weight: 700; letter-spacing: -0.025em; padding-top: 8px; }
   .detail-block p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.65; max-width: 60ch; margin-bottom: 18px; }
   .detail-block > p:last-child { margin-bottom: 0; }
-  .detail-block img { display: block; width: 100%; height: auto; border-radius: 12px; cursor: pointer; margin-bottom: 18px; }
+  .detail-block img { display: block; width: 100%; height: auto; border-radius: var(--radius-large); margin-bottom: 18px; }
+  .case-image-trigger {
+    display: block; width: 100%; padding: 0; margin: 0; border: 0; background: none;
+    cursor: pointer; font: inherit; color: inherit; text-align: inherit;
+  }
+  .case-image-trigger:focus-visible {
+    outline: 3px solid var(--text-strong); outline-offset: 3px; border-radius: var(--radius-large);
+  }
 
   .detail-pair { display: grid; grid-template-columns: 5fr 7fr; gap: 36px; align-items: center; margin-bottom: 18px; }
   .detail-pair.media-left { grid-template-columns: 7fr 5fr; }
   .detail-pair.media-left .detail-pair-media { order: -1; }
   .detail-pair-text p { margin-bottom: 0; max-width: none; }
-  .detail-pair-media { border-radius: 12px; overflow: hidden; background: var(--surface); border: 1px solid var(--line); }
+  .detail-pair-media { border-radius: var(--radius-large); overflow: hidden; background: var(--surface); border: 1px solid var(--line); }
   .detail-pair-media img { margin: 0; border-radius: 0; }
+  .detail-pair-media .case-image-trigger:focus-visible,
+  .detail-mosaic .case-image-trigger:focus-visible { outline-offset: -3px; }
   .detail-mosaic { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 18px; }
   .detail-mosaic img { margin: 0; }
   @media (max-width: 860px) {
@@ -140,12 +172,12 @@
 
   .problem-statement { padding: 8px 0; }
   .problem-statement .quote-mark {
-    display: block; font-family: var(--sans); font-weight: 800; font-size: clamp(3rem, 6vw, 4.5rem);
-    line-height: 0.5; color: var(--case-accent); opacity: 0.32; margin-bottom: 8px;
+    display: block; font-family: var(--display); font-weight: 700; font-size: clamp(3rem, 6vw, 4.5rem);
+    line-height: 0.5; color: var(--case-accent); opacity: 0.4; margin-bottom: 8px;
   }
   .problem-statement p { font-size: clamp(1.15rem, 2.2vw, 1.5rem); font-weight: 600; font-style: italic; color: var(--text); line-height: 1.4; max-width: 42ch; }
 
-  .outcome-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px 24px; }
+  .outcome-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-medium); padding: 22px 24px; box-shadow: var(--shadow-soft); }
   .outcome-kicker { display: block; font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--case-accent); }
   .outcome-list { list-style: none; margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 4px 24px; }
   .outcome-list li { position: relative; padding: 10px 0 10px 26px; border-top: 1px solid var(--line); font-size: 0.95rem; color: var(--text); }
@@ -156,6 +188,93 @@
     .outcome-list li { border-top: 1px solid var(--line); padding-top: 10px; }
     .outcome-list li:first-child { border-top: none; padding-top: 0; }
   }
+
+  /* ===== Case floating dock (like + next case) — shared across all case pages =====
+     Two independent glass controls, fixed to the viewport like the top nav —
+     see DESIGN.md § Floating case controls. Never a full-width panel. */
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+  .case-floating-nav {
+    position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom));
+    transform: translateX(-50%) translateY(12px);
+    z-index: 110; display: flex; align-items: center; gap: 10px;
+    max-width: calc(100vw - 32px);
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  .case-floating-nav.is-inview { opacity: 1; transform: translateX(-50%) translateY(0); }
+  body.lightbox-open .case-floating-nav { opacity: 0; pointer-events: none; }
+
+  .case-like, .case-next {
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    box-shadow:
+      0 10px 32px rgba(15, 13, 12, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px) saturate(125%);
+    -webkit-backdrop-filter: blur(20px) saturate(125%);
+    border-radius: var(--radius-pill);
+  }
+  @supports not (backdrop-filter: blur(1px)) {
+    .case-like, .case-next { background: rgba(248, 248, 248, 0.94); }
+  }
+
+  .case-like {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--sans); font-size: 0.92rem; font-weight: 600; color: #171717;
+    padding-inline: 20px; min-height: 56px;
+    cursor: pointer; flex-shrink: 0;
+    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s cubic-bezier(0.22,1,0.36,1);
+  }
+  .case-like:hover { background: rgba(255,255,255,0.85); box-shadow: var(--shadow-control); }
+  .case-like:focus-visible { outline: 2px solid var(--text-strong); outline-offset: 2px; }
+  .case-like:active { transform: scale(0.96); }
+  .case-like__icon { width: 20px; height: 20px; flex-shrink: 0; color: var(--text-dim); transition: transform 0.2s cubic-bezier(0.22,1,0.36,1), color 0.2s ease; }
+  .case-like:hover .case-like__icon { transform: scale(1.06); }
+  .case-like.is-liked { color: var(--text-strong); }
+  .case-like.is-liked .case-like__icon { color: var(--text-strong); }
+  .case-like.is-liked .case-like__icon path { fill: currentColor; }
+  .case-like.is-pulsing .case-like__icon { animation: caseLikePulse 240ms cubic-bezier(0.22,1,0.36,1); }
+  @keyframes caseLikePulse {
+    0% { transform: scale(1); }
+    45% { transform: scale(1.22); }
+    100% { transform: scale(1); }
+  }
+  .case-like__label { white-space: nowrap; }
+  .case-like__count { font-family: var(--mono); color: var(--text-dim); min-width: 1.4em; }
+
+  .case-next {
+    display: flex; align-items: center; gap: 12px;
+    padding-inline: 24px; min-height: 56px;
+    max-width: min(360px, 60vw);
+    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s cubic-bezier(0.22,1,0.36,1);
+  }
+  .case-next:hover, .case-next:focus-visible { background: rgba(255,255,255,0.88); box-shadow: var(--shadow-control); transform: translateY(-2px); }
+  .case-next:focus-visible { outline: 2px solid var(--text-strong); outline-offset: 2px; }
+  .case-next:active { transform: translateY(0); }
+  .case-next__label { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); }
+  .case-next__title-row { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+  .case-next__title { font-family: var(--display); font-weight: 700; font-size: 1.05rem; color: #171717; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .case-next__arrow { flex-shrink: 0; color: #171717; transition: transform 0.25s cubic-bezier(0.22,1,0.36,1); }
+  .case-next:hover .case-next__arrow, .case-next:focus-visible .case-next__arrow { transform: translateX(5px); }
+
+  @media (max-width: 720px) {
+    .case-floating-nav { bottom: max(14px, env(safe-area-inset-bottom)); gap: 8px; }
+    .case-like { min-height: 48px; padding-inline: 16px; }
+    .case-next { min-height: 48px; padding-inline: 16px; max-width: min(220px, 52vw); }
+    .case-next__label {
+      position: absolute; width: 1px; height: 1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .case-floating-nav { transition: none; opacity: 1; transform: translateX(-50%); }
+    .case-like__icon, .case-next__arrow, .case-like, .case-next { transition: none; }
+    .case-like.is-pulsing .case-like__icon { animation: none; }
+  }
 </style>
 </head>
 <body>
@@ -164,8 +283,8 @@
     <a href="index.html" class="nav-name"><span data-lang="ru">Мадина Рашидова</span><span data-lang="en">Madina Rashidova</span></a>
     <a href="index.html#work" class="nav-link"><span data-lang="ru">Работы →</span><span data-lang="en">Work →</span></a>
     <a href="about.html" class="nav-link"><span data-lang="ru">Обо мне →</span><span data-lang="en">About →</span></a>
-    <a href="cv.pdf" class="nav-link" target="_blank">CV →</a>
-    <button type="button" class="lang-toggle" data-lang-toggle>EN</button>
+    <a href="cv.pdf" class="nav-link" target="_blank" rel="noopener">CV →</a>
+    <button type="button" class="lang-toggle" data-lang-toggle aria-label="Switch to English">EN</button>
   </nav>
 
   <div class="page">
@@ -176,6 +295,7 @@
         <h1 class="case-title">Namaste</h1>
         <div class="case-meta-line"><span data-lang="ru">iOS · MVP за 3 месяца</span><span data-lang="en">iOS · MVP in 3 months</span></div>
         <div class="case-tags"><span>/mobile</span><span>/0→1</span><span>/brand+ui</span></div>
+        <p class="case-dek"><span data-lang="ru">MVP мобильного приложения для йоги, фитнеса и медитации за 3 месяца. Разбор процесса: анализ рынка, айдентика, итоги.</span><span data-lang="en">An MVP of a mobile app for yoga, fitness, and meditation in 3 months. Process breakdown: market analysis, identity, outcomes.</span></p>
         <div class="metrics">
           <div class="metric"><div class="value">4</div><div class="label"><span data-lang="ru">конкурента в анализе</span><span data-lang="en">competitors analyzed</span></div></div>
           <div class="metric"><div class="value">reuse</div><div class="label"><span data-lang="ru">логика — из предыдущего проекта</span><span data-lang="en">logic reused from a previous project</span></div></div>
@@ -183,53 +303,79 @@
       </div>
 
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">01</span><h4><span data-lang="ru">Моя роль</span><span data-lang="en">My role</span></h4></div>
+        <div class="detail-head"><span class="detail-num">01</span><h2><span data-lang="ru">Моя роль</span><span data-lang="en">My role</span></h2></div>
         <p><span data-lang="ru">Работала продуктовым дизайнером в проекте по созданию мобильного приложения для онлайн-тренировок. Запускали MVP, поэтому на старте сфокусировалась на исследовании: изучила конкурентов и помогла определить структуру и логику приложения. Дальше отвечала за визуальную часть и пользовательский опыт: разработала концепцию дизайна, айдентику и интерфейсы. На этапе разработки тесно взаимодействовала с программистом, проводила дизайн-ревью и следила за соответствием финального продукта изначальной идее.</span><span data-lang="en">I worked as a product designer on a project building a mobile app for online workouts. We were launching an MVP, so at the start I focused on research: studied competitors and helped define the app's structure and logic. After that I was responsible for the visual side and user experience: developed the design concept, identity, and interfaces. During development I worked closely with the engineer, ran design reviews, and made sure the final product matched the original idea.</span></p>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">02</span><h4><span data-lang="ru">Исследование</span><span data-lang="en">Research</span></h4></div>
+        <div class="detail-head"><span class="detail-num">02</span><h2><span data-lang="ru">Исследование</span><span data-lang="en">Research</span></h2></div>
         <div class="detail-pair">
           <div class="detail-pair-text"><p><span data-lang="ru">Проект нужно было реализовать в сжатые сроки, поэтому вместо глубинных исследований сфокусировалась на анализе рынка: Down Dog, Yoga for Beginners, Yoga Fit и Daily Yoga по ключевым продуктовым показателям, напрямую влияющим на пользовательский опыт.</span><span data-lang="en">The project had to be delivered on a tight timeline, so instead of in-depth research I focused on market analysis: Down Dog, Yoga for Beginners, Yoga Fit, and Daily Yoga, across key product metrics that directly affect user experience.</span></p></div>
-          <div class="detail-pair-media"><img src="assets/process/namaste-competitors.png" alt="Namaste — сравнение конкурентов" loading="lazy" onclick="openLightbox(event, 'assets/process/namaste-competitors.png', 'Namaste — сравнение конкурентов')"></div>
+          <div class="detail-pair-media">
+            <button class="case-image-trigger" type="button">
+              <img src="assets/process/namaste-competitors.png" data-alt-ru="Namaste — сравнение конкурентов" data-alt-en="Namaste — competitor comparison" alt="Namaste — сравнение конкурентов" loading="lazy">
+            </button>
+          </div>
         </div>
         <p><span data-lang="ru">Ключевая проблема рынка: отсутствие продукта, который одновременно даёт понятную навигацию новичкам и достаточную гибкость и персонализацию продвинутым пользователям.</span><span data-lang="en">The key market problem: no product offers clear navigation for beginners while also giving advanced users enough flexibility and personalization.</span></p>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">03</span><h4><span data-lang="ru">Определение задачи</span><span data-lang="en">Defining the task</span></h4></div>
+        <div class="detail-head"><span class="detail-num">03</span><h2><span data-lang="ru">Определение задачи</span><span data-lang="en">Defining the task</span></h2></div>
         <div class="problem-statement">
           <span class="quote-mark">"</span>
           <p><span data-lang="ru">Спроектировать йога-приложение с понятным стартовым опытом, которое при этом постепенно раскрывает уровни персонализации и сложные функции.</span><span data-lang="en">Design a yoga app with a clear onboarding experience that gradually reveals levels of personalization and more advanced features.</span></p>
         </div>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">04</span><h4><span data-lang="ru">Работа над продуктом</span><span data-lang="en">Product work</span></h4></div>
+        <div class="detail-head"><span class="detail-num">04</span><h2><span data-lang="ru">Работа над продуктом</span><span data-lang="en">Product work</span></h2></div>
         <div class="detail-pair">
           <div class="detail-pair-text"><p><span data-lang="ru">Ключевой ценностью категории определили персонализированное планирование тренировок. Этот сценарий стал основой архитектуры продукта. Важно было сохранить баланс между простотой входа для новичков и вариативностью для продвинутых, не перегружая интерфейс количеством направлений. Отдельным ограничением стал отказ от мультиформатного контента и случайных тренировок в пользу заранее подобранных видеоуроков от тренеров, чтобы сохранить ощущение «живого» и качественно подобранного опыта.</span><span data-lang="en">We defined personalized workout planning as the category's core value. This scenario became the foundation of the product's architecture. It was important to keep the balance between an easy entry point for beginners and enough variety for advanced users, without overloading the interface with too many directions. A deliberate constraint was ruling out multi-format content and randomized workouts in favor of pre-curated video lessons from trainers, to preserve a "live," carefully curated feel.</span></p></div>
-          <div class="detail-pair-media"><img src="assets/process/namaste-directions.png" alt="Namaste — направления йоги" loading="lazy" onclick="openLightbox(event, 'assets/process/namaste-directions.png', 'Namaste — направления йоги')"></div>
+          <div class="detail-pair-media">
+            <button class="case-image-trigger" type="button">
+              <img src="assets/process/namaste-directions.png" data-alt-ru="Namaste — направления йоги" data-alt-en="Namaste — yoga styles" alt="Namaste — направления йоги" loading="lazy">
+            </button>
+          </div>
         </div>
         <div class="detail-pair media-left">
-          <div class="detail-pair-media"><img src="assets/process/namaste-progression.png" alt="Namaste — уровни сложности" loading="lazy" onclick="openLightbox(event, 'assets/process/namaste-progression.png', 'Namaste — уровни сложности')"></div>
+          <div class="detail-pair-media">
+            <button class="case-image-trigger" type="button">
+              <img src="assets/process/namaste-progression.png" data-alt-ru="Namaste — уровни сложности" data-alt-en="Namaste — difficulty levels" alt="Namaste — уровни сложности" loading="lazy">
+            </button>
+          </div>
           <div class="detail-pair-text"><p><span data-lang="ru">В основе продукта: базовые практики (Хатха-йога, Йога Айенгара) и более динамичные направления для пользователей с высокой нагрузкой (Аштанга, Виньяса-флоу). Для каждого направления предусмотрены три уровня сложности, начинающий, продвинутый и мастер, что даёт понятную прогрессию внутри приложения.</span><span data-lang="en">At the product's core: basic practices (Hatha yoga, Iyengar yoga) and more dynamic styles for users wanting a higher intensity (Ashtanga, Vinyasa flow). Each style has three difficulty levels — beginner, advanced, and master — giving a clear sense of progression within the app.</span></p></div>
         </div>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">05</span><h4><span data-lang="ru">Health-функции</span><span data-lang="en">Health features</span></h4></div>
+        <div class="detail-head"><span class="detail-num">05</span><h2><span data-lang="ru">Health-функции</span><span data-lang="en">Health features</span></h2></div>
         <div class="detail-pair">
           <div class="detail-pair-text"><p><span data-lang="ru">Вопрос: за счёт чего продукт может выделиться на фоне конкурентов при существующих ограничениях, не усложняя основной сценарий тренировок. Гипотеза: расширение за счёт смежных health-функций повысит вовлечённость и усилит восприятие приложения как комплексного инструмента заботы о себе. В условиях ограниченных ресурсов оценивала направления расширения через сложность реализации, пользовательскую ценность и влияние на монетизацию.</span><span data-lang="en">Question: what could help the product stand out from competitors within the existing constraints, without complicating the core workout scenario. Hypothesis: expanding into adjacent health features would increase engagement and strengthen the app's positioning as a comprehensive self-care tool. Given limited resources, I evaluated expansion directions by implementation complexity, user value, and impact on monetization.</span></p></div>
-          <div class="detail-pair-media"><img src="assets/process/namaste-health-table.png" alt="Namaste — оценка health-функций" loading="lazy" onclick="openLightbox(event, 'assets/process/namaste-health-table.png', 'Namaste — оценка health-функций')"></div>
+          <div class="detail-pair-media">
+            <button class="case-image-trigger" type="button">
+              <img src="assets/process/namaste-health-table.png" data-alt-ru="Namaste — оценка health-функций" data-alt-en="Namaste — scoring the health features" alt="Namaste — оценка health-функций" loading="lazy">
+            </button>
+          </div>
         </div>
         <div class="detail-pair media-left">
-          <div class="detail-pair-media"><img src="assets/process/namaste-health.png" alt="Namaste — health-функции" loading="lazy" onclick="openLightbox(event, 'assets/process/namaste-health.png', 'Namaste — health-функции')"></div>
+          <div class="detail-pair-media">
+            <button class="case-image-trigger" type="button">
+              <img src="assets/process/namaste-health.png" data-alt-ru="Namaste — health-функции" data-alt-en="Namaste — the health features" alt="Namaste — health-функции" loading="lazy">
+            </button>
+          </div>
           <div class="detail-pair-text"><p><span data-lang="ru">Решение: интегрировать трекер сна и потребления воды. Реализацию упростило то, что ранее уже был запущен персонализированный трекер сна: переиспользовала его логику, адаптировав под новый контекст, и добавила отслеживание воды как дополнительный показатель. На тестировании респонденты позитивно отреагировали на расширение функциональности.</span><span data-lang="en">Decision: integrate a sleep and water-intake tracker. Implementation was simplified by the fact that a personalized sleep tracker had already been launched previously: I reused its logic, adapting it to the new context, and added water tracking as an additional metric. In testing, respondents responded positively to the expanded functionality.</span></p></div>
         </div>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">06</span><h4><span data-lang="ru">Финальный концепт</span><span data-lang="en">Final concept</span></h4></div>
-        <img src="assets/process/namaste-keyactions.png" alt="Namaste — key actions" loading="lazy" onclick="openLightbox(event, 'assets/process/namaste-keyactions.png', 'Namaste — key actions')">
-        <img src="assets/process/namaste-actions.png" alt="Namaste — ключевые действия" loading="lazy" onclick="openLightbox(event, 'assets/process/namaste-actions.png', 'Namaste — ключевые действия')">
+        <div class="detail-head"><span class="detail-num">06</span><h2><span data-lang="ru">Финальный концепт</span><span data-lang="en">Final concept</span></h2></div>
+        <p><span data-lang="ru">На этих экранах пользователь видит и запускает свой следующий шаг: выбранное направление и уровень сложности из раздела 04 и health-виджеты (сон, вода) из раздела 05 собраны в один экран ключевых действий — тот самый core workout scenario, вокруг которого построена архитектура продукта (раздел 04). Пользователь не выбирает направление и не открывает трекер отдельно — оба сценария доступны из одной точки входа, без лишних переходов.</span><span data-lang="en">These screens are where the user sees and starts their next step: the style and difficulty level from section 04 and the health widgets (sleep, water) from section 05 come together on one key-actions screen — the core workout scenario the product's architecture (section 04) is built around. The user doesn't pick a style and open the tracker separately — both are reachable from one entry point, with no extra navigation.</span></p>
+        <p><span data-lang="ru">Это прямая проверка гипотезы раздела 04: что персонализированное планирование тренировок и health-функции можно совместить на одном экране без перегрузки интерфейса лишними направлениями.</span><span data-lang="en">This is the direct test of section 04's hypothesis: that personalized workout planning and the health features could share one screen without overloading the interface with too many directions.</span></p>
+        <button class="case-image-trigger" type="button">
+          <img src="assets/process/namaste-keyactions.png" data-alt-ru="Namaste — экран ключевых действий" data-alt-en="Namaste — the key-actions screen" alt="Namaste — экран ключевых действий" loading="lazy">
+        </button>
+        <button class="case-image-trigger" type="button">
+          <img src="assets/process/namaste-actions.png" data-alt-ru="Namaste — ключевые действия" data-alt-en="Namaste — key actions" alt="Namaste — ключевые действия" loading="lazy">
+        </button>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">07</span><h4><span data-lang="ru">Итоги</span><span data-lang="en">Results</span></h4></div>
+        <div class="detail-head"><span class="detail-num">07</span><h2><span data-lang="ru">Итоги</span><span data-lang="en">Results</span></h2></div>
         <p><span data-lang="ru">Спроектирован и запущен MVP мобильного приложения для йоги, фитнеса и медитации.</span><span data-lang="en">An MVP of the mobile app for yoga, fitness, and meditation was designed and launched.</span></p>
         <div class="outcome-card">
           <span class="outcome-kicker"><span data-lang="ru">Что получилось</span><span data-lang="en">What worked out</span></span>
@@ -243,33 +389,33 @@
 
       <a class="back-link" href="index.html" style="margin-top:48px"><span data-lang="ru">← Все работы</span><span data-lang="en">← All work</span></a>
     </div>
+
+    <nav class="case-floating-nav">
+      <button class="case-like" type="button" data-case-id="namaste" aria-pressed="false" aria-label="Поставить лайк кейсу Namaste">
+        <svg class="case-like__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
+          <path d="M12 20.5s-7.2-4.5-9.8-8.9C.5 8.4 1.9 4.5 5.6 4.5c2.2 0 3.8 1.4 4.9 3.1 1.1-1.7 2.7-3.1 4.9-3.1 3.7 0 5.1 3.9 2.4 7.1-2.6 4.4-9.8 8.9-9.8 8.9z"/>
+        </svg>
+        <span class="case-like__label"><span data-lang="ru">Нравится</span><span data-lang="en">Like</span></span>
+        <span class="case-like__count">0</span>
+      </button>
+      <a class="case-next" href="case-360-tracker.html">
+        <span class="case-next__label"><span data-lang="ru">Следующий кейс</span><span data-lang="en">Next case</span></span>
+        <span class="case-next__title-row">
+          <span class="case-next__title">360 Tracker</span>
+          <span class="case-next__arrow" aria-hidden="true">→</span>
+        </span>
+      </a>
+      <span class="sr-only" aria-live="polite" data-case-live></span>
+    </nav>
   </div>
 
   <div class="lightbox" id="lightbox">
-    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Закрыть">×</button>
+    <button class="lightbox-close" aria-label="Закрыть">×</button>
     <img id="lightboxImg" src="" alt="">
   </div>
 
-  <script>
-    function openLightbox(e, src, alt) {
-      e.stopPropagation();
-      document.getElementById('lightboxImg').src = src;
-      document.getElementById('lightboxImg').alt = alt;
-      document.getElementById('lightbox').classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeLightbox() {
-      document.getElementById('lightbox').classList.remove('open');
-      document.body.style.overflow = '';
-    }
-    document.getElementById('lightbox').addEventListener('click', function (e) {
-      if (e.target.id === 'lightbox') closeLightbox();
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeLightbox();
-    });
-  </script>
   <script src="assets/i18n.js"></script>
-
+  <script src="assets/lightbox.js"></script>
+  <script src="assets/case-nav.js"></script>
 </body>
 </html>

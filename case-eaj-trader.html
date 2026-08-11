@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){if(localStorage.getItem('site-lang')==='en')document.documentElement.classList.add('lang-en');})();</script>
-<title data-ru="EAJ Trader — Мадина Рашидова" data-en="EAJ Trader — Madina Rashidova">EAJ Trader — Мадина Рашидова</title>
+<title data-ru="EAJ Trader · Мадина Рашидова" data-en="EAJ Trader · Madina Rashidova">EAJ Trader · Мадина Рашидова</title>
 <link rel="icon" type="image/png" href="favicon.png">
-<meta name="description" content="EAJ Trader — MVP личного кабинета трейдера с нуля за 2 месяца. Разбор процесса: сегментация пользователей, концепты, итоги." data-ru="EAJ Trader — MVP личного кабинета трейдера с нуля за 2 месяца. Разбор процесса: сегментация пользователей, концепты, итоги." data-en="EAJ Trader — an MVP of a trader's personal dashboard built from scratch in 2 months. A breakdown of the process: user segmentation, concepts, outcomes.">
+<meta name="description" content="EAJ Trader. MVP личного кабинета трейдера с нуля за 2 месяца. Разбор процесса: сегментация пользователей, концепты, итоги." data-ru="EAJ Trader. MVP личного кабинета трейдера с нуля за 2 месяца. Разбор процесса: сегментация пользователей, концепты, итоги." data-en="EAJ Trader. An MVP of a trader's personal dashboard built from scratch in 2 months. A breakdown of the process: user segmentation, concepts, outcomes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,600&display=swap" rel="stylesheet">
@@ -58,7 +58,9 @@
     z-index: 100; display: flex; align-items: center;
     background: var(--nav-bg); border-radius: 100px; padding: 8px 8px 8px 22px;
     box-shadow: var(--shadow-control);
+    transition: transform 0.28s cubic-bezier(0.22,1,0.36,1), opacity 0.28s cubic-bezier(0.22,1,0.36,1);
   }
+  .site-nav.is-nav-hidden { transform: translateX(-50%) translateY(-140%); opacity: 0; pointer-events: none; }
   .site-nav .nav-name {
     font-family: var(--mono); font-size: 0.85rem; font-weight: 500;
     color: #fff; margin-right: 8px; white-space: nowrap;
@@ -312,13 +314,13 @@
 
       <div class="detail-block">
         <div class="detail-head"><span class="detail-num">01</span><h2><span data-lang="ru">Проблема и цель</span><span data-lang="en">Problem and goal</span></h2></div>
-        <p><span data-lang="ru">К этому этапу у EAJ Trader уже были айдентика и лендинг, но не было работающего продукта: пользователю было буквально некуда войти, чтобы управлять своими счетами.</span><span data-lang="en">By this stage EAJ Trader already had an identity and a landing page, but no working product — there was literally nowhere for a user to log in and manage their accounts.</span></p>
-        <p><span data-lang="ru"><strong>Бизнес-цель: </strong>в сжатый срок (2 месяца) получить работающий MVP личного кабинета — реальную точку входа в продукт, а не только лендинг.</span><span data-lang="en"><strong>Business goal: </strong>ship a working dashboard MVP on a tight timeline (2 months) — a real entry point into the product, not just a landing page.</span></p>
+        <p><span data-lang="ru">К этому этапу у EAJ Trader уже были айдентика и лендинг, но не было работающего продукта: пользователю было буквально некуда войти, чтобы управлять своими счетами.</span><span data-lang="en">By this stage EAJ Trader already had an identity and a landing page, but no working product: there was literally nowhere for a user to log in and manage their accounts.</span></p>
+        <p><span data-lang="ru"><strong>Бизнес-цель: </strong>в сжатый срок (2 месяца) получить работающий MVP личного кабинета как реальную точку входа в продукт, а не только лендинг.</span><span data-lang="en"><strong>Business goal: </strong>ship a working dashboard MVP on a tight timeline (2 months) as a real entry point into the product, not just a landing page.</span></p>
         <div class="problem-statement">
           <span class="quote-mark">"</span>
-          <p><span data-lang="ru"><strong>Пользовательская цель: </strong>покрыть ключевые финансовые сценарии — счета, пополнение, вывод, переводы, отслеживание баланса — и заложить основу для дальнейшего развития продукта.</span><span data-lang="en"><strong>User goal: </strong>cover the key financial scenarios — accounts, deposits, withdrawals, transfers, balance tracking — and lay a foundation for further product development.</span></p>
+          <p><span data-lang="ru"><strong>Пользовательская цель: </strong>покрыть ключевые финансовые сценарии (счета, пополнение, вывод, переводы, отслеживание баланса) и заложить основу для дальнейшего развития продукта.</span><span data-lang="en"><strong>User goal: </strong>cover the key financial scenarios (accounts, deposits, withdrawals, transfers, balance tracking) and lay a foundation for further product development.</span></p>
         </div>
-        <p style="margin-top:18px"><span data-lang="ru">На предыдущем этапе разработала айдентику и лендинг проекта, а в рамках этого кейса сфокусировалась на проектировании личного кабинета: структуре, логике и интерфейсах для управления счетами, пополнения, вывода средств, переводов и отслеживания баланса. Решение — разделы 04–08 ниже, проверка результата — раздел 09.</span><span data-lang="en">In the previous stage, I developed the project's identity and landing page, and within this case study I focused on designing the personal dashboard: the structure, logic, and interfaces for managing accounts, deposits, withdrawals, transfers, and balance tracking. The solution is sections 04–08 below; checking the result is section 09.</span></p>
+        <p style="margin-top:18px"><span data-lang="ru">На предыдущем этапе разработала айдентику и лендинг проекта, а в рамках этого кейса сфокусировалась на проектировании личного кабинета: структуре, логике и интерфейсах для управления счетами, пополнения, вывода средств, переводов и отслеживания баланса. Решение: разделы 04…08 ниже. Проверка результата: раздел 09.</span><span data-lang="en">In the previous stage, I developed the project's identity and landing page, and within this case study I focused on designing the personal dashboard: the structure, logic, and interfaces for managing accounts, deposits, withdrawals, transfers, and balance tracking. The solution is sections 04…08 below; checking the result is section 09.</span></p>
       </div>
       <div class="detail-block">
         <div class="detail-head"><span class="detail-num">02</span><h2><span data-lang="ru">Исследование</span><span data-lang="en">Research</span></h2></div>
@@ -326,7 +328,7 @@
           <div class="detail-pair-text"><p><span data-lang="ru">Заказчик уже провёл предварительное исследование и сформировал список ключевых функций, поэтому фокус работы сместился на бизнес-анализ: кто является пользователем личного кабинета, чем отличаются их сценарии поведения и как эти различия должны повлиять на структуру системы.</span><span data-lang="en">The client had already conducted preliminary research and put together a list of key features, so the focus of the work shifted to business analysis: who the dashboard's users are, how their behavioral scenarios differ, and how these differences should shape the system's structure.</span></p></div>
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/eaj-research.jpg" data-alt-ru="EAJ Trader — бизнес-анализ пользователей" data-alt-en="EAJ Trader — user business analysis" alt="EAJ Trader — бизнес-анализ пользователей" loading="lazy">
+              <img src="assets/process/eaj-research.jpg" data-alt-ru="EAJ Trader · бизнес-анализ пользователей" data-alt-en="EAJ Trader · user business analysis" alt="EAJ Trader · бизнес-анализ пользователей" loading="lazy">
             </button>
           </div>
         </div>
@@ -334,7 +336,7 @@
       </div>
       <div class="detail-block">
         <div class="detail-head"><span class="detail-num">03</span><h2><span data-lang="ru">Определение задачи</span><span data-lang="en">Defining the task</span></h2></div>
-        <p><span data-lang="ru">Бизнес-анализ показал пять разных типов пользователей личного кабинета — от скальпера, для которого любая задержка интерфейса означает убыток, до новичка, которому нужен обучающий UX. Эти различия напрямую определили, какие сценарии MVP должен закрыть в первую очередь.</span><span data-lang="en">The business analysis revealed five different types of dashboard users — from the scalper, for whom any interface delay means a loss, to the beginner, who needs educational UX. These differences directly determined which scenarios the MVP had to cover first.</span></p>
+        <p><span data-lang="ru">Бизнес-анализ показал пять разных типов пользователей личного кабинета: от скальпера, для которого любая задержка интерфейса означает убыток, до новичка, которому нужен обучающий UX. Эти различия напрямую определили, какие сценарии MVP должен закрыть в первую очередь.</span><span data-lang="en">The business analysis revealed five different types of dashboard users: from the scalper, for whom any interface delay means a loss, to the beginner, who needs educational UX. These differences directly determined which scenarios the MVP had to cover first.</span></p>
         <div class="persona-grid">
           <div class="persona-card">
             <h5><span data-lang="ru">Активный трейдер</span><span data-lang="en">Active trader</span></h5>
@@ -377,15 +379,15 @@
             <div class="persona-row"><span class="persona-label"><span data-lang="ru">UX-фокус</span><span data-lang="en">UX focus</span></span><span><span data-lang="ru">Обучающий UX, подсказки, ограничения</span><span data-lang="en">Educational UX, hints, limits</span></span></div>
           </div>
         </div>
-        <p style="margin-top:20px"><span data-lang="ru">Из пяти сегментов в MVP полноценно вошёл только «Активный трейдер» — его сценарии (счета, пополнение, вывод, переводы, баланс) определяют структуру кабинета, описанную в разделах 04–08. «Скальпер», «Свинг-трейдер», «Инвест-трейдер» и «Новичок» в MVP не резолвились: их UX-фокус (1-click trading и минимальная задержка, глубокая аналитика портфеля, риск-метрики, обучающий UX) требует функциональности, которую 2-месячный MVP не покрывал, — в кабинете нет отдельного экрана исполнения сделок, ленты цен или риск-панели. Это зафиксированные направления для следующих итераций, а не забытая часть анализа.</span><span data-lang="en">Of the five segments, only "Active trader" was fully resolved in the MVP — their scenarios (accounts, deposits, withdrawals, transfers, balance) define the dashboard structure described in sections 04–08. "Scalper," "Swing trader," "Investor-trader," and "Beginner" weren't resolved in the MVP: their UX focus (1-click trading and minimal latency, in-depth portfolio analytics, risk metrics, educational UX) needs functionality the 2-month MVP didn't cover — the dashboard has no dedicated trade-execution screen, price feed, or risk panel. These are logged directions for future iterations, not a forgotten part of the analysis.</span></p>
+        <p style="margin-top:20px"><span data-lang="ru">Из пяти сегментов в MVP полноценно вошёл только «Активный трейдер»: его сценарии (счета, пополнение, вывод, переводы, баланс) определяют структуру кабинета, описанную в разделах 04…08. «Скальпер», «Свинг-трейдер», «Инвест-трейдер» и «Новичок» в MVP не резолвились: их UX-фокус (1-click trading и минимальная задержка, глубокая аналитика портфеля, риск-метрики, обучающий UX) требует функциональности, которую 2-месячный MVP не покрывал. В кабинете нет отдельного экрана исполнения сделок, ленты цен или риск-панели. Это зафиксированные направления для следующих итераций, а не забытая часть анализа.</span><span data-lang="en">Of the five segments, only "Active trader" was fully resolved in the MVP: their scenarios (accounts, deposits, withdrawals, transfers, balance) define the dashboard structure described in sections 04…08. "Scalper," "Swing trader," "Investor-trader," and "Beginner" weren't resolved in the MVP: their UX focus (1-click trading and minimal latency, in-depth portfolio analytics, risk metrics, educational UX) needs functionality the 2-month MVP didn't cover. The dashboard has no dedicated trade-execution screen, price feed, or risk panel. These are logged directions for future iterations, not a forgotten part of the analysis.</span></p>
       </div>
       <div class="detail-block">
         <div class="detail-head"><span class="detail-num">04</span><h2><span data-lang="ru">Работа над продуктом</span><span data-lang="en">Product work</span></h2></div>
         <div class="detail-pair" style="grid-template-columns: 7fr 5fr;">
-          <div class="detail-pair-text"><p><span data-lang="ru">Ключевые сценарии: управление счетами, пополнение, вывод средств, переводы между счетами и отслеживание состояния средств. Основной экран спроектирован вокруг быстрого доступа к операциям, вторичные и аналитические данные вынесены в менее приоритетные зоны — так пользователь быстрее находит состояние своих счетов и меньше сомневается, сколько средств доступно прямо сейчас.</span><span data-lang="en">Key scenarios: managing accounts, deposits, withdrawals, transfers between accounts, and tracking fund status. The main screen is designed around quick access to operations, with secondary and analytical data moved to lower-priority zones — so the user finds their account status faster and is less uncertain about how much is available right now.</span></p></div>
+          <div class="detail-pair-text"><p><span data-lang="ru">Ключевые сценарии: управление счетами, пополнение, вывод средств, переводы между счетами и отслеживание состояния средств. Основной экран спроектирован вокруг быстрого доступа к операциям, вторичные и аналитические данные вынесены в менее приоритетные зоны, так пользователь быстрее находит состояние своих счетов и меньше сомневается, сколько средств доступно прямо сейчас.</span><span data-lang="en">Key scenarios: managing accounts, deposits, withdrawals, transfers between accounts, and tracking fund status. The main screen is designed around quick access to operations, with secondary and analytical data moved to lower-priority zones, so the user finds their account status faster and is less uncertain about how much is available right now.</span></p></div>
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/eaj-home.png" data-alt-ru="EAJ Trader — главный экран личного кабинета" data-alt-en="EAJ Trader — the dashboard's main screen" alt="EAJ Trader — главный экран личного кабинета" loading="lazy">
+              <img src="assets/process/eaj-home.png" data-alt-ru="EAJ Trader · главный экран личного кабинета" data-alt-en="EAJ Trader · the dashboard's main screen" alt="EAJ Trader · главный экран личного кабинета" loading="lazy">
             </button>
           </div>
         </div>
@@ -395,19 +397,19 @@
         <div class="detail-pair media-left" style="grid-template-columns: 5fr 7fr;">
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/eaj-concept1-2.jpg" data-alt-ru="EAJ Trader — концепт 1, табличный список счетов" data-alt-en="EAJ Trader — concept 1, a tabular account list" alt="EAJ Trader — концепт 1, табличный список счетов" loading="lazy">
+              <img src="assets/process/eaj-concept1-2.jpg" data-alt-ru="EAJ Trader · концепт 1, табличный список счетов" data-alt-en="EAJ Trader · concept 1, a tabular account list" alt="EAJ Trader · концепт 1, табличный список счетов" loading="lazy">
             </button>
           </div>
-          <div class="detail-pair-text"><p><span data-lang="ru">Торговый счёт — основная сущность продукта, точка входа во все ключевые сценарии. Первый вариант: классический табличный список счетов, паттерн, широко используемый у конкурентов и привычный пользователям. Протестировали его в качественном UX-исследовании с фокусом на базовые сценарии.</span><span data-lang="en">A trading account is the product's core entity, the entry point into all key scenarios. The first version: a classic tabular list of accounts, a pattern widely used by competitors and familiar to users. We tested it in a qualitative UX study focused on basic scenarios.</span></p></div>
+          <div class="detail-pair-text"><p><span data-lang="ru">Торговый счёт: основная сущность продукта, точка входа во все ключевые сценарии. Первый вариант: классический табличный список счетов, паттерн, широко используемый у конкурентов и привычный пользователям. Протестировали его в качественном UX-исследовании с фокусом на базовые сценарии.</span><span data-lang="en">A trading account is the product's core entity, the entry point into all key scenarios. The first version: a classic tabular list of accounts, a pattern widely used by competitors and familiar to users. We tested it in a qualitative UX study focused on basic scenarios.</span></p></div>
         </div>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">06</span><h2><span data-lang="ru">Концепт 2 — карточный формат</span><span data-lang="en">Concept 2 — card format</span></h2></div>
+        <div class="detail-head"><span class="detail-num">06</span><h2><span data-lang="ru">Концепт 2: карточный формат</span><span data-lang="en">Concept 2: card format</span></h2></div>
         <div class="detail-pair">
-          <div class="detail-pair-text"><p><span data-lang="ru">Во втором концепте пересобрала представление счетов в карточный формат, где каждый счёт — самостоятельная единица с полной информацией и действиями. Несмотря на то, что табличный формат оказался более ожидаемым и привычным, карточный показал лучшие результаты в понимании и скорости взаимодействия. Выбрала его как основное решение, оставив таблицу в резерве для масштабирования при росте числа счетов.</span><span data-lang="en">In the second concept, I rebuilt the account view into a card format, where each account is a self-contained unit with full information and actions. Even though the tabular format turned out to be more expected and familiar, the card format showed better results in comprehension and interaction speed. I chose it as the primary solution, keeping the table in reserve for scaling as the number of accounts grows.</span></p></div>
+          <div class="detail-pair-text"><p><span data-lang="ru">Во втором концепте пересобрала представление счетов в карточный формат, где каждый счёт является самостоятельной единицей с полной информацией и действиями. Несмотря на то, что табличный формат оказался более ожидаемым и привычным, карточный показал лучшие результаты в понимании и скорости взаимодействия. Выбрала его как основное решение, оставив таблицу в резерве для масштабирования при росте числа счетов.</span><span data-lang="en">In the second concept, I rebuilt the account view into a card format, where each account is a self-contained unit with full information and actions. Even though the tabular format turned out to be more expected and familiar, the card format showed better results in comprehension and interaction speed. I chose it as the primary solution, keeping the table in reserve for scaling as the number of accounts grows.</span></p></div>
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/eaj-cards.jpg" data-alt-ru="EAJ Trader — карточный формат счетов" data-alt-en="EAJ Trader — accounts in card format" alt="EAJ Trader — карточный формат счетов" loading="lazy">
+              <img src="assets/process/eaj-cards.jpg" data-alt-ru="EAJ Trader · карточный формат счетов" data-alt-en="EAJ Trader · accounts in card format" alt="EAJ Trader · карточный формат счетов" loading="lazy">
             </button>
           </div>
         </div>
@@ -416,7 +418,7 @@
         <div class="detail-head"><span class="detail-num">07</span><h2><span data-lang="ru">Центр управления средствами</span><span data-lang="en">Funds management center</span></h2></div>
         <p><span data-lang="ru">Объединила пополнение, вывод и внутренние переводы в единый раздел Funding. Решение приняли совместно с заказчиком, чтобы упростить навигацию и сократить количество разрозненных точек входа в финансовые операции. По результатам юзабилити-тестирования пользователи отмечали более простое восприятие структуры и быстрый доступ к операциям.</span><span data-lang="en">I combined deposits, withdrawals, and internal transfers into a single Funding section. The decision was made together with the client to simplify navigation and reduce the number of scattered entry points into financial operations. Usability testing showed users found the structure easier to grasp and operations quicker to access.</span></p>
         <button class="case-image-trigger" type="button">
-          <img src="assets/process/eaj-funding-2.png" data-alt-ru="EAJ Trader — раздел Funding: выбор действия" data-alt-en="EAJ Trader — the Funding section: choosing an action" alt="EAJ Trader — раздел Funding: выбор действия" loading="lazy">
+          <img src="assets/process/eaj-funding-2.png" data-alt-ru="EAJ Trader · раздел Funding: выбор действия" data-alt-en="EAJ Trader · the Funding section: choosing an action" alt="EAJ Trader · раздел Funding: выбор действия" loading="lazy">
         </button>
       </div>
       <div class="detail-block">
@@ -424,10 +426,10 @@
         <p><span data-lang="ru">Добавила раздел Claims &amp; Complaints: встроенный блок обращений в формате чата. В спорных ситуациях критично важен быстрый прямой канал коммуникации без поиска внешних контактов. На этапе раннего запуска ожидается повышенное количество обращений, поэтому чат стал не только каналом поддержки, но и инструментом обратной связи для улучшения продукта.</span><span data-lang="en">I added a Claims &amp; Complaints section: a built-in requests block in chat format. In disputed situations, a fast, direct communication channel without hunting for outside contacts is critical. Early launch is expected to bring a higher volume of requests, so the chat became not just a support channel but also a feedback tool for improving the product.</span></p>
         <div class="detail-mosaic">
           <button class="case-image-trigger" type="button">
-            <img src="assets/process/eaj-claims-list.png" data-alt-ru="EAJ Trader — список обращений Claims & Complaints" data-alt-en="EAJ Trader — the Claims & Complaints request list" alt="EAJ Trader — список обращений Claims & Complaints" loading="lazy">
+            <img src="assets/process/eaj-claims-list.png" data-alt-ru="EAJ Trader · список обращений Claims & Complaints" data-alt-en="EAJ Trader · the Claims & Complaints request list" alt="EAJ Trader · список обращений Claims & Complaints" loading="lazy">
           </button>
           <button class="case-image-trigger" type="button">
-            <img src="assets/process/eaj-claims-detail.png" data-alt-ru="EAJ Trader — чат по обращению" data-alt-en="EAJ Trader — the chat for a single request" alt="EAJ Trader — чат по обращению" loading="lazy">
+            <img src="assets/process/eaj-claims-detail.png" data-alt-ru="EAJ Trader · чат по обращению" data-alt-en="EAJ Trader · the chat for a single request" alt="EAJ Trader · чат по обращению" loading="lazy">
           </button>
         </div>
       </div>

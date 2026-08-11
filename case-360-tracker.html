@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){if(localStorage.getItem('site-lang')==='en')document.documentElement.classList.add('lang-en');})();</script>
-<title data-ru="360 Tracker — Мадина Рашидова" data-en="360 Tracker — Madina Rashidova">360 Tracker — Мадина Рашидова</title>
+<title data-ru="360 Tracker · Мадина Рашидова" data-en="360 Tracker · Madina Rashidova">360 Tracker · Мадина Рашидова</title>
 <link rel="icon" type="image/png" href="favicon.png">
-<meta name="description" content="360 Tracker — MVP мобильного приложения для семейной безопасности за 6 месяцев. Разбор процесса: анализ конкурентов, user flow, итоги." data-ru="360 Tracker — MVP мобильного приложения для семейной безопасности за 6 месяцев. Разбор процесса: анализ конкурентов, user flow, итоги." data-en="360 Tracker — a family safety mobile app MVP built in 6 months. Process breakdown: competitor analysis, user flow, outcomes.">
+<meta name="description" content="360 Tracker. MVP мобильного приложения для семейной безопасности за 6 месяцев. Разбор процесса: анализ конкурентов, user flow, итоги." data-ru="360 Tracker. MVP мобильного приложения для семейной безопасности за 6 месяцев. Разбор процесса: анализ конкурентов, user flow, итоги." data-en="360 Tracker. A family safety mobile app MVP built in 6 months. Process breakdown: competitor analysis, user flow, outcomes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,600&display=swap" rel="stylesheet">
@@ -58,7 +58,9 @@
     z-index: 100; display: flex; align-items: center;
     background: var(--nav-bg); border-radius: 100px; padding: 8px 8px 8px 22px;
     box-shadow: var(--shadow-control);
+    transition: transform 0.28s cubic-bezier(0.22,1,0.36,1), opacity 0.28s cubic-bezier(0.22,1,0.36,1);
   }
+  .site-nav.is-nav-hidden { transform: translateX(-50%) translateY(-140%); opacity: 0; pointer-events: none; }
   .site-nav .nav-name {
     font-family: var(--mono); font-size: 0.85rem; font-weight: 500;
     color: #fff; margin-right: 8px; white-space: nowrap;
@@ -304,7 +306,7 @@
         <p class="case-dek"><span data-lang="ru">MVP мобильного приложения для семейной безопасности за 6 месяцев. Разбор процесса: анализ конкурентов, user flow, итоги.</span><span data-lang="en">A family safety mobile app MVP built in 6 months. Process breakdown: competitor analysis, user flow, outcomes.</span></p>
         <div class="metrics">
           <div class="metric"><div class="value">4</div><div class="label"><span data-lang="ru">конкурента в анализе</span><span data-lang="en">competitors analyzed</span></div></div>
-          <div class="metric"><div class="value"><span data-lang="ru">30 дней</span><span data-lang="en">30 days</span></div><div class="label"><span data-lang="ru">истории поездок — премиум</span><span data-lang="en">trip history — premium</span></div></div>
+          <div class="metric"><div class="value"><span data-lang="ru">30 дней</span><span data-lang="en">30 days</span></div><div class="label"><span data-lang="ru">истории поездок · премиум</span><span data-lang="en">trip history · premium</span></div></div>
         </div>
       </div>
 
@@ -318,16 +320,16 @@
 
       <div class="detail-block">
         <div class="detail-head"><span class="detail-num">02</span><h2><span data-lang="ru">Общение со стейкхолдерами</span><span data-lang="en">Stakeholder communication</span></h2></div>
-        <p><span data-lang="ru">Основной фокус: обеспечить безопасность членов семьи, не создавая ощущения тотального контроля. Важно было найти баланс: дать родителям инструменты для спокойствия, не вызывая сопротивления у детей и подростков.</span><span data-lang="en">The main focus: ensure the safety of family members without creating a feeling of total control. It was important to find a balance — give parents tools for peace of mind without provoking resistance from children and teenagers.</span></p>
+        <p><span data-lang="ru">Основной фокус: обеспечить безопасность членов семьи, не создавая ощущения тотального контроля. Важно было найти баланс: дать родителям инструменты для спокойствия, не вызывая сопротивления у детей и подростков.</span><span data-lang="en">The main focus: ensure the safety of family members without creating a feeling of total control. It was important to find a balance: give parents tools for peace of mind without provoking resistance from children and teenagers.</span></p>
       </div>
 
       <div class="detail-block">
         <div class="detail-head"><span class="detail-num">03</span><h2><span data-lang="ru">Анализ конкурентов</span><span data-lang="en">Competitor analysis</span></h2></div>
         <div class="detail-pair">
-          <div class="detail-pair-text"><p><span data-lang="ru">Вместо глубинных интервью сосредоточилась на анализе существующих решений: Kids360, Kid Security, iSharing и Family Tracker: какие функции предлагают, на чём делают акцент и какие сценарии используют для удержания пользователей.</span><span data-lang="en">Instead of in-depth interviews, I focused on analyzing existing solutions: Kids360, Kid Security, iSharing, and Family Tracker — what features they offer, what they emphasize, and what scenarios they use to retain users.</span></p></div>
+          <div class="detail-pair-text"><p><span data-lang="ru">Вместо глубинных интервью сосредоточилась на анализе существующих решений: Kids360, Kid Security, iSharing и Family Tracker: какие функции предлагают, на чём делают акцент и какие сценарии используют для удержания пользователей.</span><span data-lang="en">Instead of in-depth interviews, I focused on analyzing existing solutions: Kids360, Kid Security, iSharing, and Family Tracker: what features they offer, what they emphasize, and what scenarios they use to retain users.</span></p></div>
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/tracker-competitors.png" data-alt-ru="360 Tracker — анализ конкурентов" data-alt-en="360 Tracker — competitor analysis" alt="360 Tracker — анализ конкурентов" loading="lazy">
+              <img src="assets/process/tracker-competitors.png" data-alt-ru="360 Tracker · анализ конкурентов" data-alt-en="360 Tracker · competitor analysis" alt="360 Tracker · анализ конкурентов" loading="lazy">
             </button>
           </div>
         </div>
@@ -338,7 +340,7 @@
         <div class="detail-pair media-left">
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/tracker-monetization.png" data-alt-ru="360 Tracker — монетизация конкурентов" data-alt-en="360 Tracker — competitor monetization" alt="360 Tracker — монетизация конкурентов" loading="lazy">
+              <img src="assets/process/tracker-monetization.png" data-alt-ru="360 Tracker · монетизация конкурентов" data-alt-en="360 Tracker · competitor monetization" alt="360 Tracker · монетизация конкурентов" loading="lazy">
             </button>
           </div>
           <div class="detail-pair-text"><p><span data-lang="ru">Большинство приложений используют модель freemium: базовые функции бесплатны, а расширенные возможности открываются по подписке. Бесплатной версии чаще всего достаточно только для базового отслеживания, а ключевые сценарии безопасности и контроля скрыты за paywall.</span><span data-lang="en">Most apps use a freemium model: basic features are free, and extended capabilities unlock via subscription. The free version is usually enough only for basic tracking, while key safety and control scenarios are hidden behind a paywall.</span></p></div>
@@ -370,7 +372,7 @@
           <div class="detail-pair-text"><p><span data-lang="ru">По результатам исследования проработала user flow, основанный на ключевых сценариях использования продукта.</span><span data-lang="en">Based on the research results, I worked out a user flow built around the product's key usage scenarios.</span></p></div>
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/tracker-flow.png" data-alt-ru="360 Tracker — user flow" data-alt-en="360 Tracker — user flow" alt="360 Tracker — user flow" loading="lazy">
+              <img src="assets/process/tracker-flow.png" data-alt-ru="360 Tracker · user flow" data-alt-en="360 Tracker · user flow" alt="360 Tracker · user flow" loading="lazy">
             </button>
           </div>
         </div>
@@ -381,21 +383,21 @@
         <div class="detail-pair media-left">
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/tracker-main.png" data-alt-ru="360 Tracker — главный экран" data-alt-en="360 Tracker — the main screen" alt="360 Tracker — главный экран" loading="lazy">
+              <img src="assets/process/tracker-main.png" data-alt-ru="360 Tracker · главный экран" data-alt-en="360 Tracker · the main screen" alt="360 Tracker · главный экран" loading="lazy">
             </button>
           </div>
           <div class="detail-pair-text"><p><span data-lang="ru">Спроектирован вокруг интерактивной карты: члены семьи в реальном времени с актуальным статусом, быстрое переключение между людьми и местами, быстрые действия и построение маршрута прямо внутри приложения, по логике, аналогичной картографическим сервисам.</span><span data-lang="en">Designed around an interactive map: family members shown in real time with their current status, quick switching between people and places, quick actions, and route building right inside the app, following logic similar to mapping services.</span></p></div>
         </div>
-        <p><span data-lang="ru">Переключение между людьми и местами покрывает выбор через карточки, а не поведение самой карты, когда несколько меток стоят близко друг к другу. Кластеризация меток и приоритет выбора при пересечении не были спроектированы в рамках MVP — это <strong>направление развития</strong>, которое нужно проектировать и тестировать на реалистичном количестве участников семейного круга (5+ человек), а не на 1–2 меток, показанных на скринах.</span><span data-lang="en">Switching between people and places covers selection through cards, not the map's own behavior when several pins sit close together. Pin clustering and tap-priority when markers overlap weren't designed as part of the MVP — that's a <strong>direction for future work</strong>, one that needs designing and testing against a realistic family-circle size (5+ people), not the 1–2 pins shown in the screenshots.</span></p>
+        <p><span data-lang="ru">Переключение между людьми и местами покрывает выбор через карточки, а не поведение самой карты, когда несколько меток стоят близко друг к другу. Кластеризация меток и приоритет выбора при пересечении не были спроектированы в рамках MVP: это <strong>направление развития</strong>, которое нужно проектировать и тестировать на реалистичном количестве участников семейного круга (5+ человек), а не на 1…2 меток, показанных на скринах.</span><span data-lang="en">Switching between people and places covers selection through cards, not the map's own behavior when several pins sit close together. Pin clustering and tap-priority when markers overlap weren't designed as part of the MVP: that's a <strong>direction for future work</strong>, one that needs designing and testing against a realistic family-circle size (5+ people), not the 1…2 pins shown in the screenshots.</span></p>
       </div>
 
       <div class="detail-block">
         <div class="detail-head"><span class="detail-num">09</span><h2><span data-lang="ru">Скрыть геолокацию</span><span data-lang="en">Hiding location</span></h2></div>
         <div class="detail-pair">
-          <div class="detail-pair-text"><p><span data-lang="ru">Гипотеза: возможность временно скрывать местоположение повысит доверие к продукту и снизит ощущение контроля. Тестирование показало: респонденты позитивно восприняли саму возможность скрытия, но в родительском сценарии это вызвало вопросы: теряется контроль над ребёнком.</span><span data-lang="en">Hypothesis: the ability to temporarily hide location would increase trust in the product and reduce the feeling of being controlled. Testing showed respondents responded positively to the option itself, but in the parent scenario it raised concerns — control over the child is lost.</span></p></div>
+          <div class="detail-pair-text"><p><span data-lang="ru">Гипотеза: возможность временно скрывать местоположение повысит доверие к продукту и снизит ощущение контроля. Тестирование показало: респонденты позитивно восприняли саму возможность скрытия, но в родительском сценарии это вызвало вопросы: теряется контроль над ребёнком.</span><span data-lang="en">Hypothesis: the ability to temporarily hide location would increase trust in the product and reduce the feeling of being controlled. Testing showed respondents responded positively to the option itself, but in the parent scenario it raised concerns: control over the child is lost.</span></p></div>
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/tracker-privacy.png" data-alt-ru="360 Tracker — скрыть геолокацию" data-alt-en="360 Tracker — hiding location" alt="360 Tracker — скрыть геолокацию" loading="lazy">
+              <img src="assets/process/tracker-privacy.png" data-alt-ru="360 Tracker · скрыть геолокацию" data-alt-en="360 Tracker · hiding location" alt="360 Tracker · скрыть геолокацию" loading="lazy">
             </button>
           </div>
         </div>
@@ -407,10 +409,10 @@
         <div class="detail-pair media-left">
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/tracker-history.png" data-alt-ru="360 Tracker — история поездок" data-alt-en="360 Tracker — trip history" alt="360 Tracker — история поездок" loading="lazy">
+              <img src="assets/process/tracker-history.png" data-alt-ru="360 Tracker · история поездок" data-alt-en="360 Tracker · trip history" alt="360 Tracker · история поездок" loading="lazy">
             </button>
           </div>
-          <div class="detail-pair-text"><p><span data-lang="ru">Добавили историю поездок за последние 30 дней с возможностью просматривать собственные маршруты. Функция доступна в рамках премиум-подписки и не отображается другим участникам семейного круга. Это расширило сценарии использования без усложнения базового опыта. Сама граница «30 дней» — стартовая гипотеза монетизации, а не результат количественного теста цены; сколько дней истории пользователи реально готовы оплачивать, не проверялось.</span><span data-lang="en">We added trip history for the last 30 days with the ability to view your own routes. The feature is available as part of the premium subscription and isn't shown to other members of the family circle. This expanded the usage scenarios without complicating the basic experience. The "30 days" boundary itself is a starting monetization hypothesis, not the result of a quantitative pricing test — how many days of history users are actually willing to pay for was never tested.</span></p></div>
+          <div class="detail-pair-text"><p><span data-lang="ru">Добавили историю поездок за последние 30 дней с возможностью просматривать собственные маршруты. Функция доступна в рамках премиум-подписки и не отображается другим участникам семейного круга. Это расширило сценарии использования без усложнения базового опыта. Сама граница «30 дней» является стартовой гипотезой монетизации, а не результатом количественного теста цены; сколько дней истории пользователи реально готовы оплачивать, не проверялось.</span><span data-lang="en">We added trip history for the last 30 days with the ability to view your own routes. The feature is available as part of the premium subscription and isn't shown to other members of the family circle. This expanded the usage scenarios without complicating the basic experience. The "30 days" boundary itself is a starting monetization hypothesis, not the result of a quantitative pricing test; how many days of history users are actually willing to pay for was never tested.</span></p></div>
         </div>
       </div>
 
@@ -420,7 +422,7 @@
           <div class="detail-pair-text"><p><span data-lang="ru">Добавила функцию создания геозон, где родитель может вручную нарисовать или выбрать на карте область допустимого перемещения ребёнка. При выходе за пределы зоны отправляется уведомление.</span><span data-lang="en">I added a geofence-creation feature, where a parent can manually draw or select on the map an area within which the child is allowed to move. A notification is sent when the child leaves the zone.</span></p></div>
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/tracker-geofence.png" data-alt-ru="360 Tracker — геозоны" data-alt-en="360 Tracker — geofences" alt="360 Tracker — геозоны" loading="lazy">
+              <img src="assets/process/tracker-geofence.png" data-alt-ru="360 Tracker · геозоны" data-alt-en="360 Tracker · geofences" alt="360 Tracker · геозоны" loading="lazy">
             </button>
           </div>
         </div>
@@ -431,12 +433,12 @@
         <div class="detail-pair media-left">
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/tracker-final.png" data-alt-ru="360 Tracker — финальный концепт" data-alt-en="360 Tracker — the final concept" alt="360 Tracker — финальный концепт" loading="lazy">
+              <img src="assets/process/tracker-final.png" data-alt-ru="360 Tracker · финальный концепт" data-alt-en="360 Tracker · the final concept" alt="360 Tracker · финальный концепт" loading="lazy">
             </button>
           </div>
           <div class="detail-pair-text">
             <p><span data-lang="ru">Включает базовые сценарии семейной безопасности и коммуникации: отслеживание геолокации в реальном времени, геофенсинг, уведомления о перемещениях и встроенный чат для общения внутри семейного круга. Все ключевые функции конкурентных приложений адаптированы под единый пользовательский опыт.</span><span data-lang="en">Includes the basic family safety and communication scenarios: real-time location tracking, geofencing, movement notifications, and a built-in chat for communication within the family circle. All the key features of competing apps were adapted into a single, unified user experience.</span></p>
-            <p><span data-lang="ru">Глубина проработки в этом кейсе неравномерна: геолокация и приватность (разделы 06–11) получили полноценное исследование и тестирование гипотез, а экстренные уведомления и чат показаны в финальном концепте как часть единого экрана, но отдельно не разбирались — тот же выбор фокуса ресурсов, что и в разделе 03 (анализ конкурентов вместо глубинных интервью).</span><span data-lang="en">This case's depth is uneven: geolocation and privacy (sections 06–11) got full research and hypothesis testing, while emergency alerts and chat appear in the final concept as part of one unified screen but weren't broken out and reasoned through separately — the same resourcing choice as in section 03 (competitor analysis instead of in-depth interviews).</span></p>
+            <p><span data-lang="ru">Глубина проработки в этом кейсе неравномерна: геолокация и приватность (разделы 06…11) получили полноценное исследование и тестирование гипотез, а экстренные уведомления и чат показаны в финальном концепте как часть единого экрана, но отдельно не разбирались: тот же выбор фокуса ресурсов, что и в разделе 03 (анализ конкурентов вместо глубинных интервью).</span><span data-lang="en">This case's depth is uneven: geolocation and privacy (sections 06…11) got full research and hypothesis testing, while emergency alerts and chat appear in the final concept as part of one unified screen but weren't broken out and reasoned through separately: the same resourcing choice as in section 03 (competitor analysis instead of in-depth interviews).</span></p>
           </div>
         </div>
       </div>
@@ -455,8 +457,8 @@
         <div class="outcome-card" style="margin-top:16px">
           <span class="outcome-kicker"><span data-lang="ru">Направление развития / гипотеза для следующей проверки</span><span data-lang="en">Direction for future work / hypothesis to test next</span></span>
           <ul class="outcome-list is-expected">
-            <li><span data-lang="ru">Готовность пользователей платить именно за эти сценарии — не измерена; freemium-границы (30 дней) нужно проверять на реальных платежах, а не считать валидированными</span><span data-lang="en">Users' actual willingness to pay for these specific scenarios hasn't been measured; the freemium boundaries (30 days) need testing against real payments, not treated as already validated</span></li>
-            <li><span data-lang="ru">Кластеризация меток на карте при большом семейном круге — не спроектирована, см. раздел 08</span><span data-lang="en">Map-pin clustering for a large family circle — not designed yet, see section 08</span></li>
+            <li><span data-lang="ru">Готовность пользователей платить именно за эти сценарии не измерена; freemium-границы (30 дней) нужно проверять на реальных платежах, а не считать валидированными</span><span data-lang="en">Users' actual willingness to pay for these specific scenarios hasn't been measured; the freemium boundaries (30 days) need testing against real payments, not treated as already validated</span></li>
+            <li><span data-lang="ru">Кластеризация меток на карте при большом семейном круге не спроектирована, см. раздел 08</span><span data-lang="en">Map-pin clustering for a large family circle is not designed yet, see section 08</span></li>
           </ul>
         </div>
       </div>

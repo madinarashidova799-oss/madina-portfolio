@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){if(localStorage.getItem('site-lang')==='en')document.documentElement.classList.add('lang-en');})();</script>
-<title data-ru="Namaste — Мадина Рашидова" data-en="Namaste — Madina Rashidova">Namaste — Мадина Рашидова</title>
+<title data-ru="Namaste: Мадина Рашидова" data-en="Namaste: Madina Rashidova">Namaste: Мадина Рашидова</title>
 <link rel="icon" type="image/png" href="favicon.png">
-<meta name="description" content="Namaste — MVP мобильного приложения для йоги, фитнеса и медитации за 3 месяца. Разбор процесса: анализ рынка, айдентика, итоги." data-ru="Namaste — MVP мобильного приложения для йоги, фитнеса и медитации за 3 месяца. Разбор процесса: анализ рынка, айдентика, итоги." data-en="Namaste — an MVP of a mobile app for yoga, fitness, and meditation in 3 months. Process breakdown: market analysis, identity, outcomes.">
+<meta name="description" content="Namaste: MVP мобильного приложения для йоги, фитнеса и медитации за 3 месяца. Разбор процесса: анализ рынка, айдентика, итоги." data-ru="Namaste: MVP мобильного приложения для йоги, фитнеса и медитации за 3 месяца. Разбор процесса: анализ рынка, айдентика, итоги." data-en="Namaste: an MVP of a mobile app for yoga, fitness, and meditation in 3 months. Process breakdown: market analysis, identity, outcomes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,600&display=swap" rel="stylesheet">
@@ -58,7 +58,9 @@
     z-index: 100; display: flex; align-items: center;
     background: var(--nav-bg); border-radius: 100px; padding: 8px 8px 8px 22px;
     box-shadow: var(--shadow-control);
+    transition: transform 0.28s cubic-bezier(0.22,1,0.36,1), opacity 0.28s cubic-bezier(0.22,1,0.36,1);
   }
+  .site-nav.is-nav-hidden { transform: translateX(-50%) translateY(-140%); opacity: 0; pointer-events: none; }
   .site-nav .nav-name {
     font-family: var(--mono); font-size: 0.85rem; font-weight: 500;
     color: #fff; margin-right: 8px; white-space: nowrap;
@@ -298,7 +300,7 @@
         <p class="case-dek"><span data-lang="ru">MVP мобильного приложения для йоги, фитнеса и медитации за 3 месяца. Разбор процесса: анализ рынка, айдентика, итоги.</span><span data-lang="en">An MVP of a mobile app for yoga, fitness, and meditation in 3 months. Process breakdown: market analysis, identity, outcomes.</span></p>
         <div class="metrics">
           <div class="metric"><div class="value">4</div><div class="label"><span data-lang="ru">конкурента в анализе</span><span data-lang="en">competitors analyzed</span></div></div>
-          <div class="metric"><div class="value">reuse</div><div class="label"><span data-lang="ru">логика — из предыдущего проекта</span><span data-lang="en">logic reused from a previous project</span></div></div>
+          <div class="metric"><div class="value">reuse</div><div class="label"><span data-lang="ru">логика взята из предыдущего проекта</span><span data-lang="en">logic reused from a previous project</span></div></div>
         </div>
       </div>
 
@@ -312,7 +314,7 @@
           <div class="detail-pair-text"><p><span data-lang="ru">Проект нужно было реализовать в сжатые сроки, поэтому вместо глубинных исследований сфокусировалась на анализе рынка: Down Dog, Yoga for Beginners, Yoga Fit и Daily Yoga по ключевым продуктовым показателям, напрямую влияющим на пользовательский опыт.</span><span data-lang="en">The project had to be delivered on a tight timeline, so instead of in-depth research I focused on market analysis: Down Dog, Yoga for Beginners, Yoga Fit, and Daily Yoga, across key product metrics that directly affect user experience.</span></p></div>
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/namaste-competitors.png" data-alt-ru="Namaste — сравнение конкурентов" data-alt-en="Namaste — competitor comparison" alt="Namaste — сравнение конкурентов" loading="lazy">
+              <img src="assets/process/namaste-competitors.png" data-alt-ru="Namaste: сравнение конкурентов" data-alt-en="Namaste: competitor comparison" alt="Namaste: сравнение конкурентов" loading="lazy">
             </button>
           </div>
         </div>
@@ -331,17 +333,17 @@
           <div class="detail-pair-text"><p><span data-lang="ru">Ключевой ценностью категории определили персонализированное планирование тренировок. Этот сценарий стал основой архитектуры продукта. Важно было сохранить баланс между простотой входа для новичков и вариативностью для продвинутых, не перегружая интерфейс количеством направлений. Отдельным ограничением стал отказ от мультиформатного контента и случайных тренировок в пользу заранее подобранных видеоуроков от тренеров, чтобы сохранить ощущение «живого» и качественно подобранного опыта.</span><span data-lang="en">We defined personalized workout planning as the category's core value. This scenario became the foundation of the product's architecture. It was important to keep the balance between an easy entry point for beginners and enough variety for advanced users, without overloading the interface with too many directions. A deliberate constraint was ruling out multi-format content and randomized workouts in favor of pre-curated video lessons from trainers, to preserve a "live," carefully curated feel.</span></p></div>
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/namaste-directions.png" data-alt-ru="Namaste — направления йоги" data-alt-en="Namaste — yoga styles" alt="Namaste — направления йоги" loading="lazy">
+              <img src="assets/process/namaste-directions.png" data-alt-ru="Namaste: направления йоги" data-alt-en="Namaste: yoga styles" alt="Namaste: направления йоги" loading="lazy">
             </button>
           </div>
         </div>
         <div class="detail-pair media-left">
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/namaste-progression.png" data-alt-ru="Namaste — уровни сложности" data-alt-en="Namaste — difficulty levels" alt="Namaste — уровни сложности" loading="lazy">
+              <img src="assets/process/namaste-progression.png" data-alt-ru="Namaste: уровни сложности" data-alt-en="Namaste: difficulty levels" alt="Namaste: уровни сложности" loading="lazy">
             </button>
           </div>
-          <div class="detail-pair-text"><p><span data-lang="ru">В основе продукта: базовые практики (Хатха-йога, Йога Айенгара) и более динамичные направления для пользователей с высокой нагрузкой (Аштанга, Виньяса-флоу). Для каждого направления предусмотрены три уровня сложности, начинающий, продвинутый и мастер, что даёт понятную прогрессию внутри приложения.</span><span data-lang="en">At the product's core: basic practices (Hatha yoga, Iyengar yoga) and more dynamic styles for users wanting a higher intensity (Ashtanga, Vinyasa flow). Each style has three difficulty levels — beginner, advanced, and master — giving a clear sense of progression within the app.</span></p></div>
+          <div class="detail-pair-text"><p><span data-lang="ru">В основе продукта: базовые практики (Хатха-йога, Йога Айенгара) и более динамичные направления для пользователей с высокой нагрузкой (Аштанга, Виньяса-флоу). Для каждого направления предусмотрены три уровня сложности, начинающий, продвинутый и мастер, что даёт понятную прогрессию внутри приложения.</span><span data-lang="en">At the product's core: basic practices (Hatha yoga, Iyengar yoga) and more dynamic styles for users wanting a higher intensity (Ashtanga, Vinyasa flow). Each style has three difficulty levels (beginner, advanced, and master), giving a clear sense of progression within the app.</span></p></div>
         </div>
       </div>
       <div class="detail-block">
@@ -350,14 +352,14 @@
           <div class="detail-pair-text"><p><span data-lang="ru">Вопрос: за счёт чего продукт может выделиться на фоне конкурентов при существующих ограничениях, не усложняя основной сценарий тренировок. Гипотеза: расширение за счёт смежных health-функций повысит вовлечённость и усилит восприятие приложения как комплексного инструмента заботы о себе. В условиях ограниченных ресурсов оценивала направления расширения через сложность реализации, пользовательскую ценность и влияние на монетизацию.</span><span data-lang="en">Question: what could help the product stand out from competitors within the existing constraints, without complicating the core workout scenario. Hypothesis: expanding into adjacent health features would increase engagement and strengthen the app's positioning as a comprehensive self-care tool. Given limited resources, I evaluated expansion directions by implementation complexity, user value, and impact on monetization.</span></p></div>
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/namaste-health-table.png" data-alt-ru="Namaste — оценка health-функций" data-alt-en="Namaste — scoring the health features" alt="Namaste — оценка health-функций" loading="lazy">
+              <img src="assets/process/namaste-health-table.png" data-alt-ru="Namaste: оценка health-функций" data-alt-en="Namaste: scoring the health features" alt="Namaste: оценка health-функций" loading="lazy">
             </button>
           </div>
         </div>
         <div class="detail-pair media-left">
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/namaste-health.png" data-alt-ru="Namaste — health-функции" data-alt-en="Namaste — the health features" alt="Namaste — health-функции" loading="lazy">
+              <img src="assets/process/namaste-health.png" data-alt-ru="Namaste: health-функции" data-alt-en="Namaste: the health features" alt="Namaste: health-функции" loading="lazy">
             </button>
           </div>
           <div class="detail-pair-text"><p><span data-lang="ru">Решение: интегрировать трекер сна и потребления воды. Реализацию упростило то, что ранее уже был запущен персонализированный трекер сна: переиспользовала его логику, адаптировав под новый контекст, и добавила отслеживание воды как дополнительный показатель. На тестировании респонденты позитивно отреагировали на расширение функциональности.</span><span data-lang="en">Decision: integrate a sleep and water-intake tracker. Implementation was simplified by the fact that a personalized sleep tracker had already been launched previously: I reused its logic, adapting it to the new context, and added water tracking as an additional metric. In testing, respondents responded positively to the expanded functionality.</span></p></div>
@@ -365,13 +367,13 @@
       </div>
       <div class="detail-block">
         <div class="detail-head"><span class="detail-num">06</span><h2><span data-lang="ru">Финальный концепт</span><span data-lang="en">Final concept</span></h2></div>
-        <p><span data-lang="ru">На этих экранах пользователь видит и запускает свой следующий шаг: выбранное направление и уровень сложности из раздела 04 и health-виджеты (сон, вода) из раздела 05 собраны в один экран ключевых действий — тот самый core workout scenario, вокруг которого построена архитектура продукта (раздел 04). Пользователь не выбирает направление и не открывает трекер отдельно — оба сценария доступны из одной точки входа, без лишних переходов.</span><span data-lang="en">These screens are where the user sees and starts their next step: the style and difficulty level from section 04 and the health widgets (sleep, water) from section 05 come together on one key-actions screen — the core workout scenario the product's architecture (section 04) is built around. The user doesn't pick a style and open the tracker separately — both are reachable from one entry point, with no extra navigation.</span></p>
+        <p><span data-lang="ru">На этих экранах пользователь видит и запускает свой следующий шаг: выбранное направление и уровень сложности из раздела 04 и health-виджеты (сон, вода) из раздела 05 собраны в один экран ключевых действий: тот самый core workout scenario, вокруг которого построена архитектура продукта (раздел 04). Пользователь не выбирает направление и не открывает трекер отдельно: оба сценария доступны из одной точки входа, без лишних переходов.</span><span data-lang="en">These screens are where the user sees and starts their next step: the style and difficulty level from section 04 and the health widgets (sleep, water) from section 05 come together on one key-actions screen: the core workout scenario the product's architecture (section 04) is built around. The user doesn't pick a style and open the tracker separately: both are reachable from one entry point, with no extra navigation.</span></p>
         <p><span data-lang="ru">Это прямая проверка гипотезы раздела 04: что персонализированное планирование тренировок и health-функции можно совместить на одном экране без перегрузки интерфейса лишними направлениями.</span><span data-lang="en">This is the direct test of section 04's hypothesis: that personalized workout planning and the health features could share one screen without overloading the interface with too many directions.</span></p>
         <button class="case-image-trigger" type="button">
-          <img src="assets/process/namaste-keyactions.png" data-alt-ru="Namaste — экран ключевых действий" data-alt-en="Namaste — the key-actions screen" alt="Namaste — экран ключевых действий" loading="lazy">
+          <img src="assets/process/namaste-keyactions.png" data-alt-ru="Namaste: экран ключевых действий" data-alt-en="Namaste: the key-actions screen" alt="Namaste: экран ключевых действий" loading="lazy">
         </button>
         <button class="case-image-trigger" type="button">
-          <img src="assets/process/namaste-actions.png" data-alt-ru="Namaste — ключевые действия" data-alt-en="Namaste — key actions" alt="Namaste — ключевые действия" loading="lazy">
+          <img src="assets/process/namaste-actions.png" data-alt-ru="Namaste: ключевые действия" data-alt-en="Namaste: key actions" alt="Namaste: ключевые действия" loading="lazy">
         </button>
       </div>
       <div class="detail-block">

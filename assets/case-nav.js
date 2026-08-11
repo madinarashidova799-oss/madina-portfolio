@@ -127,6 +127,47 @@
     });
   }
 
+  // Case pages are long enough that the fixed top nav will, at some scroll
+  // position, sit directly over body content (metrics, headings, paragraphs)
+  // — not just the metrics block, any block, since the nav is a permanently
+  // opaque pill with no scroll awareness. Hiding it on scroll-down and
+  // bringing it back on scroll-up (or near the top) is the standard fix for
+  // that class of problem, rather than nudging spacing around one block.
+  function initNavAutoHide() {
+    var nav = document.querySelector('.site-nav');
+    if (!nav) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var lastY = window.pageYOffset;
+    var ticking = false;
+
+    function update() {
+      var y = window.pageYOffset;
+      var scrollingDown = y > lastY;
+      if (y < 40 || !scrollingDown) {
+        nav.classList.remove('is-nav-hidden');
+      } else if (y > 120) {
+        nav.classList.add('is-nav-hidden');
+      }
+      lastY = y;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }, { passive: true });
+
+    // A hidden nav keeps its links in tab order (opacity/pointer-events, not
+    // display:none) — bring it back the moment focus lands inside it so a
+    // keyboard user is never left tabbing into an invisible control.
+    nav.addEventListener('focusin', function () { nav.classList.remove('is-nav-hidden'); });
+  }
+
+  initNavAutoHide();
+
   var dock = document.querySelector('.case-floating-nav');
   if (dock) {
     initNavLabel(dock);

@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){if(localStorage.getItem('site-lang')==='en')document.documentElement.classList.add('lang-en');})();</script>
-<title data-ru="Обо мне — Мадина Рашидова" data-en="About — Madina Rashidova">Обо мне — Мадина Рашидова</title>
+<title data-ru="Обо мне: Мадина Рашидова" data-en="About: Madina Rashidova">Обо мне: Мадина Рашидова</title>
 <link rel="icon" type="image/png" href="favicon.png">
-<meta name="description" data-ru="Мадина Рашидова — продуктовый дизайнер с опытом в fintech, banking и мобильных продуктах." data-en="Madina Rashidova — product designer with experience in fintech, banking, and mobile products." content="Мадина Рашидова — продуктовый дизайнер с опытом в fintech, banking и мобильных продуктах.">
+<meta name="description" data-ru="Мадина Рашидова: продуктовый дизайнер с опытом в fintech, banking и мобильных продуктах." data-en="Madina Rashidova: product designer with experience in fintech, banking, and mobile products." content="Мадина Рашидова: продуктовый дизайнер с опытом в fintech, banking и мобильных продуктах.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,600&display=swap" rel="stylesheet">
@@ -69,6 +69,7 @@
     white-space: nowrap; transition: background 0.2s ease, color 0.2s ease;
   }
   .site-nav a.nav-link:hover, .site-nav a.nav-link:focus-visible { background: rgba(255,255,255,0.12); color: #fff; }
+  .site-nav .nav-name:focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 6px; }
   .site-nav a.nav-link[aria-current="page"] { background: rgba(255,255,255,0.14); color: #fff; }
   .lang-toggle {
     font-family: var(--mono); font-size: 0.8rem; font-weight: 500;
@@ -88,7 +89,21 @@
   html.lang-en [data-lang="ru"] { display: none; }
   html.lang-en [data-lang="en"] { display: inline; }
 
-  .about-page { padding: 152px 0 96px; max-width: 720px; }
+  .about-layout { padding: 152px 0 96px; display: flex; gap: clamp(48px, 6vw, 96px); align-items: flex-start; }
+  .about-page { max-width: 720px; min-width: 0; flex: 1 1 auto; }
+  .about-rail { display: none; }
+  @media (min-width: 1100px) {
+    .about-rail {
+      display: flex; flex-direction: column; gap: 16px;
+      flex: 1; max-width: 320px; position: sticky; top: 140px;
+    }
+  }
+  .about-stat {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-medium);
+    padding: 20px 22px; box-shadow: var(--shadow-soft);
+  }
+  .about-stat__value { font-family: var(--mono); font-size: 1.5rem; font-weight: 700; color: var(--text-strong); }
+  .about-stat__label { font-size: 0.85rem; color: var(--text-dim); margin-top: 4px; line-height: 1.4; }
   .back-link {
     display: inline-block; font-family: var(--mono); font-size: 0.82rem;
     color: var(--text-dim); margin-bottom: 40px; padding-bottom: 2px;
@@ -109,12 +124,17 @@
   }
   .about-section p { font-size: 1rem; color: var(--text-dim); line-height: 1.7; max-width: 60ch; }
   .about-section p + p { margin-top: 12px; }
+  .about-section p a { color: var(--text-strong); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 2px; transition: text-decoration-color 0.2s ease; }
+  .about-section p a:hover, .about-section p a:focus-visible { text-decoration-color: var(--text-strong); }
+  .about-section p a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+  .about-section--cta { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--line); }
+  .about-section--cta h2 { font-size: clamp(1.3rem, 2.2vw, 1.6rem); }
   .about-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
   .about-list li { position: relative; padding-left: 22px; font-size: 1rem; color: var(--text-dim); line-height: 1.6; }
   .about-list li::before { content: "→"; position: absolute; left: 0; color: var(--text-strong); font-family: var(--mono); }
 
-  .about-tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
-  .about-tools span {
+  .about-tools { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .about-tools li {
     background: var(--surface); border: 1px solid var(--line); color: var(--text);
     font-family: var(--mono); font-size: 0.82rem; padding: 6px 14px; border-radius: 999px;
   }
@@ -122,14 +142,16 @@
   .about-cases { list-style: none; display: flex; flex-direction: column; gap: 2px; margin-top: 4px; }
   .about-cases a {
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    padding: 14px 4px; border-top: 1px solid var(--line);
-    font-family: var(--display); font-weight: 700; font-size: 1rem; color: var(--text);
+    padding: 16px 4px; border-top: 1px solid var(--line);
     transition: color 0.2s ease;
   }
   .about-cases li:first-child a { border-top: none; }
-  .about-cases a:hover, .about-cases a:focus-visible { color: var(--text-dim); }
+  .about-cases__text { display: flex; flex-direction: column; gap: 2px; }
+  .about-cases__name { font-family: var(--display); font-weight: 700; font-size: 1rem; color: var(--text); }
+  .about-cases__desc { font-family: var(--sans); font-weight: 400; font-size: 0.85rem; color: var(--text-dim); }
+  .about-cases a:hover .about-cases__name, .about-cases a:focus-visible .about-cases__name { color: var(--text-dim); }
   .about-cases a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
-  .about-cases .arrow { font-family: var(--mono); font-weight: 400; color: var(--text-dim-2); transition: transform 0.2s ease; }
+  .about-cases .arrow { font-family: var(--mono); font-weight: 400; color: var(--text-dim-2); transition: transform 0.2s ease; flex-shrink: 0; }
   .about-cases a:hover .arrow, .about-cases a:focus-visible .arrow { transform: translateX(4px); }
 
   .about-contacts {
@@ -155,6 +177,14 @@
     font-family: var(--mono); font-size: 0.78rem; color: var(--text-dim);
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .back-link, .site-nav a.nav-link, .lang-toggle, .contact-btn, .about-cases a, .about-cases .arrow {
+      transition: none;
+    }
+    .contact-btn:hover { transform: none; }
+  }
+
 </style>
 </head>
 <body>
@@ -168,6 +198,7 @@
   </nav>
 
   <div class="page">
+    <div class="about-layout">
     <div class="about-page">
       <a class="back-link" href="index.html"><span data-lang="ru">← На главную</span><span data-lang="en">← Home</span></a>
       <h1 class="about-title"><span data-lang="ru">Мадина Рашидова</span><span data-lang="en">Madina Rashidova</span></h1>
@@ -175,7 +206,7 @@
 
       <section class="about-section">
         <h2><span data-lang="ru">Кто я и чем занимаюсь</span><span data-lang="en">Who I am and what I do</span></h2>
-        <p><span data-lang="ru">Я проектирую сложные административные интерфейсы и продукты с большими объёмами данных — панели управления, личные кабинеты, MVP с нуля. Ниже — коротко о том, как я работаю; подробные разборы процесса — в разделе «Работы».</span><span data-lang="en">I design complex admin interfaces and products with large volumes of data — dashboards, personal accounts, MVPs built from scratch. Below is a short summary of how I work; full process breakdowns live in "Work."</span></p>
+        <p><span data-lang="ru">Я проектирую сложные административные интерфейсы и продукты с большими объёмами данных: панели управления, личные кабинеты, MVP с нуля. Ниже коротко расскажу, как я работаю; подробные разборы процесса находятся в разделе «Работы».</span><span data-lang="en">I design complex admin interfaces and products with large volumes of data: dashboards, personal accounts, MVPs built from scratch. Below is a short summary of how I work; full process breakdowns live in "Work."</span></p>
       </section>
 
       <section class="about-section">
@@ -189,35 +220,59 @@
 
       <section class="about-section">
         <h2><span data-lang="ru">Подход к работе</span><span data-lang="en">How I work</span></h2>
-        <p><span data-lang="ru">Каждый кейс в портфолио начинается с конкретной бизнес-цели, а не только с визуала — интерфейс должен снижать реальную операционную нагрузку или закрывать конкретный пользовательский сценарий. Решения опираются на интервью, анализ конкурентов или бизнес-анализ, в зависимости от того, что позволяют сроки проекта. На этапе разработки работаю в тесной связке с инженерами: провожу дизайн-ревью и слежу, чтобы финальный продукт соответствовал изначальной идее.</span><span data-lang="en">Every case in this portfolio starts from a concrete business goal, not just visuals — the interface has to reduce a real operational load or resolve a specific user scenario. Decisions are grounded in interviews, competitor analysis, or business analysis, depending on what the project's timeline allows. During development I work closely with engineers: running design reviews and making sure the final product matches the original idea.</span></p>
+        <p><span data-lang="ru">Каждый кейс в портфолио начинается с конкретной бизнес-цели, а не только с визуала: интерфейс должен снижать реальную операционную нагрузку или закрывать конкретный пользовательский сценарий. Решения опираются на интервью, анализ конкурентов или бизнес-анализ, в зависимости от того, что позволяют сроки проекта. На этапе разработки работаю в тесной связке с инженерами: провожу дизайн-ревью и слежу, чтобы финальный продукт соответствовал изначальной идее.</span><span data-lang="en">Every case in this portfolio starts from a concrete business goal, not just visuals: the interface has to reduce a real operational load or resolve a specific user scenario. Decisions are grounded in interviews, competitor analysis, or business analysis, depending on what the project's timeline allows. During development I work closely with engineers: running design reviews and making sure the final product matches the original idea.</span></p>
       </section>
 
       <section class="about-section">
         <h2><span data-lang="ru">Опыт с финтехом, AI и сложными системами</span><span data-lang="en">Experience with fintech, AI, and complex systems</span></h2>
-        <p><span data-lang="ru">Текущее место — Профинанс / FIBO Group (Product Designer, 2024 — сейчас). До этого — Alif Bank (UX/UI Designer, 2022–2024), где спроектировала редизайн партнёрской админ-панели банка (кейс Alif Partners), и Foreesco Group (Product Designer, part-time, 2024–2025). Отдельный кейс, EAJ Trader — MVP личного кабинета трейдера.</span><span data-lang="en">Current role — Профинанс / FIBO Group (Product Designer, 2024 — present). Before that — Alif Bank (UX/UI Designer, 2022–2024), where I designed the bank's partner admin panel redesign (the Alif Partners case), and Foreesco Group (Product Designer, part-time, 2024–2025). A separate case, EAJ Trader, is a trader's personal dashboard MVP.</span></p>
-        <p><span data-lang="ru">AI-инструменты — часть моего процесса, а не отдельная продуктовая специализация: этот сайт сделан с Claude Code, а Codex и GPT — в моём обычном рабочем наборе (см. иконки на главной).</span><span data-lang="en">AI tools are part of my process, not a separate product specialty: this site itself was built with Claude Code, and Codex and GPT are part of my regular toolkit (see the icons on the homepage).</span></p>
+        <p><span data-lang="ru">Сейчас работаю в Профинанс / FIBO Group. До этого — Alif Bank, где спроектировала редизайн партнёрской админ-панели банка (кейс Alif Partners), и Foreesco Group, где разрабатывала EAJ Trader — MVP личного кабинета трейдера. Точные даты и результаты по каждой роли — в разделе <a href="index.html#experience">«Опыт»</a> на главной странице.</span><span data-lang="en">Currently I work at Профинанс / FIBO Group. Before that — Alif Bank, where I designed the bank's partner admin panel redesign (the Alif Partners case), and Foreesco Group, where I worked on EAJ Trader, a trader's personal dashboard MVP. Exact dates and results for each role are in the <a href="index.html#experience">"Experience"</a> section on the homepage.</span></p>
+        <p><span data-lang="ru">AI-инструменты входят в мой процесс, а не являются отдельной продуктовой специализацией: этот сайт сделан с Claude Code, а Codex и GPT входят в мой обычный рабочий набор (см. иконки на главной).</span><span data-lang="en">AI tools are part of my process, not a separate product specialty: this site itself was built with Claude Code, and Codex and GPT are part of my regular toolkit (see the icons on the homepage).</span></p>
       </section>
 
       <section class="about-section">
         <h2><span data-lang="ru">Инструменты и компетенции</span><span data-lang="en">Tools and skills</span></h2>
-        <div class="about-tools">
-          <span>Figma</span><span>Photoshop</span><span>Illustrator</span><span>Notion</span>
-          <span>Claude Code</span><span>Codex</span><span>GPT</span><span>Behance</span>
-          <span>Tilda</span><span>GitHub</span><span>Blender</span>
-        </div>
+        <ul class="about-tools">
+          <li>Figma</li><li>Photoshop</li><li>Illustrator</li><li>Notion</li>
+          <li>Claude Code</li><li>Codex</li><li>GPT</li><li>Behance</li>
+          <li>Tilda</li><li>GitHub</li><li>Blender</li>
+        </ul>
       </section>
 
       <section class="about-section">
         <h2><span data-lang="ru">Работы</span><span data-lang="en">Work</span></h2>
         <ul class="about-cases">
-          <li><a href="case-alif-partners.html">Alif Partners<span class="arrow" aria-hidden="true">→</span></a></li>
-          <li><a href="case-eaj-trader.html">EAJ Trader<span class="arrow" aria-hidden="true">→</span></a></li>
-          <li><a href="case-namaste.html">Namaste<span class="arrow" aria-hidden="true">→</span></a></li>
-          <li><a href="case-360-tracker.html">360 Tracker<span class="arrow" aria-hidden="true">→</span></a></li>
+          <li><a href="case-alif-partners.html">
+            <span class="about-cases__text">
+              <span class="about-cases__name">Alif Partners</span>
+              <span class="about-cases__desc"><span data-lang="ru">Редизайн партнёрской админ-панели банка</span><span data-lang="en">Bank partner admin panel redesign</span></span>
+            </span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a></li>
+          <li><a href="case-eaj-trader.html">
+            <span class="about-cases__text">
+              <span class="about-cases__name">EAJ Trader</span>
+              <span class="about-cases__desc"><span data-lang="ru">MVP личного кабинета трейдера</span><span data-lang="en">Trader's personal dashboard MVP</span></span>
+            </span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a></li>
+          <li><a href="case-namaste.html">
+            <span class="about-cases__text">
+              <span class="about-cases__name">Namaste</span>
+              <span class="about-cases__desc"><span data-lang="ru">MVP приложения для йоги и медитаций</span><span data-lang="en">Yoga and meditation app MVP</span></span>
+            </span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a></li>
+          <li><a href="case-360-tracker.html">
+            <span class="about-cases__text">
+              <span class="about-cases__name">360 Tracker</span>
+              <span class="about-cases__desc"><span data-lang="ru">MVP приложения для безопасности семьи</span><span data-lang="en">Family-safety app MVP</span></span>
+            </span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a></li>
         </ul>
       </section>
 
-      <section class="about-section">
+      <section class="about-section about-section--cta">
         <h2><span data-lang="ru">Связаться</span><span data-lang="en">Get in touch</span></h2>
         <div class="about-contacts">
           <a class="contact-btn" href="https://t.me/Madina_Rashidova" target="_blank" rel="noopener">
@@ -234,6 +289,22 @@
           </a>
         </div>
       </section>
+    </div>
+
+    <aside class="about-rail" aria-hidden="true">
+      <div class="about-stat">
+        <div class="about-stat__value"><span data-lang="ru">с 2022</span><span data-lang="en">since 2022</span></div>
+        <div class="about-stat__label"><span data-lang="ru">в fintech и banking</span><span data-lang="en">in fintech and banking</span></div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat__value">4</div>
+        <div class="about-stat__label"><span data-lang="ru">кейса в портфолио</span><span data-lang="en">cases in this portfolio</span></div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat__value">3</div>
+        <div class="about-stat__label"><span data-lang="ru">домена: fintech · banking · trading</span><span data-lang="en">domains: fintech · banking · trading</span></div>
+      </div>
+    </aside>
     </div>
   </div>
 

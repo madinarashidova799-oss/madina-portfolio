@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){if(localStorage.getItem('site-lang')==='en')document.documentElement.classList.add('lang-en');})();</script>
-<title data-ru="Мадина Рашидова — Продуктовый дизайнер" data-en="Madina Rashidova — Product Designer">Мадина Рашидова — Продуктовый дизайнер</title>
+<title data-ru="Мадина Рашидова · Продуктовый дизайнер" data-en="Madina Rashidova · Product Designer">Мадина Рашидова · Продуктовый дизайнер</title>
 <link rel="icon" type="image/png" href="favicon.png">
-<meta name="description" data-ru="Мадина Рашидова — продуктовый дизайнер с опытом в fintech, banking и мобильных продуктах. Портфолио с разбором процесса: Alif Partners, EAJ Trader, 360 Tracker, Namaste." data-en="Madina Rashidova — product designer with experience in fintech, banking, and mobile products. A portfolio walking through the process behind Alif Partners, EAJ Trader, 360 Tracker, and Namaste." content="Мадина Рашидова — продуктовый дизайнер с опытом в fintech, banking и мобильных продуктах. Портфолио с разбором процесса: Alif Partners, EAJ Trader, 360 Tracker, Namaste.">
+<meta name="description" data-ru="Мадина Рашидова, продуктовый дизайнер с опытом в fintech, banking и мобильных продуктах. Портфолио с разбором процесса: Alif Partners, EAJ Trader, 360 Tracker, Namaste." data-en="Madina Rashidova, a product designer with experience in fintech, banking, and mobile products. A portfolio walking through the process behind Alif Partners, EAJ Trader, 360 Tracker, and Namaste." content="Мадина Рашидова, продуктовый дизайнер с опытом в fintech, banking и мобильных продуктах. Портфолио с разбором процесса: Alif Partners, EAJ Trader, 360 Tracker, Namaste.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,600&display=swap" rel="stylesheet">
@@ -133,7 +133,7 @@
     --hero-glass-shadow: var(--shadow-soft);
     position: relative; z-index: 0; height: 1080px; padding: 0 clamp(20px, 5vw, 56px);
     display: flex; align-items: center; justify-content: center;
-    text-align: center; overflow: hidden; background: var(--hero-bg);
+    text-align: center; overflow: visible; background: var(--hero-bg);
   }
   @media (max-width: 900px) {
     .hero { height: auto; padding: 140px clamp(20px, 5vw, 56px) 64px; }
@@ -150,12 +150,17 @@
     container-type: inline-size; container-name: orbit;
     position: relative; width: min(98vw, 1900px); min-height: 56.25cqw;
     margin: 0 auto; display: flex; align-items: center; justify-content: center;
-    overflow: hidden;
+    overflow: visible;
   }
   /* below 900px the text column can no longer share the orbit's own cqw scale
      without becoming unreadably narrow (see DESIGN.md § Hero / Orbit Stage) —
-     so logos are dropped and only the rings carry the motif; overflow stays
-     hidden so a ring extending past the viewport is clipped, never scrolled to */
+     so logos are dropped and only the rings carry the motif. Overflow is
+     visible on purpose (see DESIGN.md § Hero / Orbit Stage — Layer System):
+     the outer rings are taller than this box by design (r5 spans ~77cqw,
+     the box is 56.25cqw), and used to get a hard clip right at this box's
+     edge. Now they bleed past it and the next section (higher in DOM order,
+     same z-index stacking level, opaque background) naturally paints over
+     the tail — no visible seam, no extra empty space added to "fix" it. */
 
   .orbit-rings { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
   .orbit-ring-line {
@@ -376,10 +381,35 @@
       linear-gradient(100deg, rgba(8,8,10,.62) 0%, rgba(8,8,10,.28) 34%, rgba(8,8,10,0) 58%),
       linear-gradient(0deg, rgba(8,8,10,.58) 0%, rgba(8,8,10,0) 42%);
   }
-  .project-showcase--eaj .project-showcase__scrim {
-    background:
-      linear-gradient(120deg, rgba(6,6,8,.68) 0%, rgba(6,6,8,.3) 32%, rgba(6,6,8,0) 56%),
-      linear-gradient(0deg, rgba(6,6,8,.3) 0%, rgba(6,6,8,0) 40%);
+  /* EAJ abandons the shared full-bleed-photo-with-overlay-text pattern the
+     other three scenes use. The earlier version of this cover cropped the
+     laptop under `object-fit: cover` no matter how the crop point was tuned
+     — the fix requested here is structural, not another crop adjustment:
+     a real two-column split, image left / text right, so nothing ever
+     overlaps and nothing ever crops. `object-fit: contain` shows the whole
+     laptop, unstretched, at the cost of not filling its box edge-to-edge —
+     that gap is intentionally invisible: the photo's own background is a
+     sampled, verified flat #000, so the scene and media box are painted the
+     same pure black (the one deliberate exception to DESIGN.md §3's "no pure
+     black surfaces" rule — that rule is about designed UI chrome, not about
+     matching a photo's own background so a letterboxed edge disappears). */
+  .project-showcase--eaj { background: #000; }
+  .project-showcase--eaj .project-showcase__scrim { display: none; }
+  .project-showcase--eaj .project-showcase__media { background: #000; }
+  @media (min-width: 761px) {
+    .project-showcase--eaj {
+      display: flex; align-items: center;
+      gap: clamp(32px, 5vw, 64px);
+    }
+    .project-showcase--eaj .project-showcase__media {
+      position: relative; inset: auto; overflow: visible;
+      flex: 0 0 62%; width: 62%; height: 100%;
+      display: flex; align-items: flex-end; justify-content: flex-start;
+    }
+    .project-showcase--eaj .project-showcase__media img {
+      position: relative; inset: auto; width: 100%; height: 100%;
+      object-fit: contain; object-position: left bottom;
+    }
   }
   /* Namaste — light scene (scoped exception: dark text on a light scrim, inverse dark CTA) */
   .project-showcase--namaste .project-showcase__media img { object-position: 58% 32%; }
@@ -438,7 +468,18 @@
     padding: clamp(104px, 11vw, 152px) clamp(20px, 6vw, 80px) clamp(56px, 7vw, 88px);
   }
   .project-showcase--alif .project-showcase__content { justify-content: flex-end; }
-  .project-showcase--eaj .project-showcase__content { justify-content: flex-start; }
+  @media (min-width: 761px) {
+    /* Content is a flex sibling of the media column now (see the EAJ
+       two-column rules above), not an overlay stacked on top of it — it
+       needs its own natural height, not the shared full-bleed-overlay
+       padding/min-height, so the parent's `align-items: center` can center
+       it against the laptop instead of pinning it to the padding box. */
+    .project-showcase--eaj .project-showcase__content {
+      flex: 0 0 38%; width: 38%; min-height: 0;
+      padding: 0 clamp(20px, 4vw, 64px) 0 0;
+      justify-content: center;
+    }
+  }
   /* Text/CTA reveal — baseline is always fully visible/settled (opacity:1,
      no offset); under `.js-stage-active` each element's opacity/translateY
      instead follows its own CSS custom property, written every frame by the
@@ -463,9 +504,10 @@
   /* Alif — tablet fills most of the frame at center 42%; keep the column
      modest so it never reaches the tablet's left edge or the hand. */
   .project-showcase--alif .project-showcase__body { max-width: min(480px, 34vw); }
-  /* EAJ — laptop sits right-of-center (object-position 76% 55%); a wider
-     column would run text across its screen. */
-  .project-showcase--eaj .project-showcase__body { margin-top: 48px; max-width: min(420px, 32vw); }
+  /* EAJ's text column is a separate flex sibling of the image now (not an
+     overlay), so there's no photo underneath it left to run across — the
+     cap here is just readable line length within the ~38%-wide column. */
+  .project-showcase--eaj .project-showcase__body { max-width: 440px; }
   /* Namaste — phone is centered; keep the left column clear of its frame. */
   .project-showcase--namaste .project-showcase__body { max-width: min(460px, 34vw); }
   /* Tracker — phone + both portrait pins sit center-left; keep the right
@@ -574,6 +616,9 @@
     .project-showcase__media img { object-position: center 28%; }
     .project-showcase--namaste .project-showcase__media img { object-position: center 12%; }
     .project-showcase--tracker .project-showcase__media img { object-position: 42% 22%; }
+    /* EAJ keeps the same no-crop requirement on mobile as desktop — contain,
+       not cover, so the laptop is never cut off in the top image band. */
+    .project-showcase--eaj .project-showcase__media img { object-fit: contain; object-position: center bottom; }
     .project-showcase__scrim { display: none; }
     .projects-stage-wrap .project-showcase__content {
       position: absolute; inset: 56% 0 0 0; z-index: 3; min-height: 0;
@@ -621,12 +666,47 @@
     }
   }
 
-  .experience { padding: var(--space-9) 0 96px; }
-  .exp-item { padding: 16px 0; border-top: 1px solid var(--line); }
+  .experience { padding: var(--space-9) 0 96px; scroll-margin-top: var(--fixed-nav-top-safe-area, 120px); }
+  .exp-item { border-top: 1px solid var(--line); }
   .work-heading + .exp-item { border-top: none; }
+  /* Each role is a native <details> disclosure — expands on click/Enter/Space
+     with zero extra JS, and keeps the collapsed state (date/company/role)
+     fully readable and keyboard-focusable via <summary> for free. */
+  .exp-summary {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 16px; padding: 16px 0; cursor: pointer; list-style: none;
+  }
+  .exp-summary::-webkit-details-marker { display: none; }
+  .exp-summary::marker { content: ''; }
+  .exp-summary:focus-visible { outline: 2px solid var(--text); outline-offset: 6px; border-radius: 4px; }
   .exp-date { display: block; font-family: var(--mono); font-size: 0.78rem; color: var(--text-dim-2); }
   .exp-company { display: block; font-size: 1rem; font-weight: 700; margin-top: 4px; }
   .exp-role { display: block; font-size: 0.88rem; color: var(--text-dim); margin-top: 2px; }
+  .exp-summary__chevron {
+    flex-shrink: 0; margin-top: 4px; color: var(--text-dim-2);
+    transition: transform 0.25s ease;
+  }
+  .exp-item details[open] .exp-summary__chevron { transform: rotate(180deg); }
+  .exp-detail { padding: 0 0 28px; display: flex; flex-direction: column; gap: 20px; }
+  .exp-detail__intro { font-size: 0.92rem; line-height: 1.62; color: var(--text-dim); max-width: 640px; }
+  .exp-detail__block h4 {
+    font-family: var(--mono); font-size: 0.76rem; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--text-dim-2); margin-bottom: 10px;
+  }
+  .exp-detail__list { display: flex; flex-direction: column; gap: 8px; padding-left: 20px; max-width: 640px; }
+  .exp-detail__list li { font-size: 0.9rem; line-height: 1.58; color: var(--text-dim); }
+  .exp-detail__list li::marker { color: var(--text-dim-2); }
+  /* Block-level RU/EN toggle for multi-paragraph/list content — deliberately
+     a separate attribute from the sitewide `[data-lang]` (which toggles
+     `display:inline`, wrong for <h4>/<ul>), so this never has to fight the
+     generic rule's specificity. Driven by the same html.lang-en class i18n.js
+     already sets; no JS changes needed. */
+  [data-lang-block] { display: none; }
+  html:not(.lang-en) [data-lang-block="ru"] { display: block; }
+  html.lang-en [data-lang-block="en"] { display: block; }
+  @media (prefers-reduced-motion: reduce) {
+    .exp-summary__chevron { transition: none; }
+  }
   footer.page-footer {
     border-top: 1px solid var(--line); padding: 32px 0;
     font-family: var(--mono); font-size: 0.78rem; color: var(--text-dim-2);
@@ -735,7 +815,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     <div class="projects-stage">
       <a class="project-showcase project-showcase--alif" href="case-alif-partners.html" data-showcase>
         <div class="project-showcase__media">
-          <img src="assets/alif-partners-showcase.jpg" data-alt-ru="Alif Partners — планшет с админ-панелью Stores для партнёров банка" data-alt-en="Alif Partners — a tablet showing the Stores admin panel for bank partners" alt="Alif Partners — планшет с админ-панелью Stores для партнёров банка" loading="lazy" width="2400" height="1600" style="object-position: center 42%;">
+          <img src="assets/alif-partners-showcase.jpg" data-alt-ru="Alif Partners: планшет с админ-панелью Stores для партнёров банка" data-alt-en="Alif Partners: a tablet showing the Stores admin panel for bank partners" alt="Alif Partners: планшет с админ-панелью Stores для партнёров банка" loading="lazy" width="2400" height="1600" style="object-position: center 42%;">
         </div>
         <div class="project-showcase__scrim" aria-hidden="true"></div>
         <div class="project-showcase__content">
@@ -748,7 +828,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
               </div>
               <div class="project-showcase__meta"><span data-lang="ru">Alif Bank · Web + Mobile · 4 месяца</span><span data-lang="en">Alif Bank · Web + Mobile · 4 months</span></div>
             </div>
-            <p class="project-showcase__desc"><span data-lang="ru">Редизайн админ-панели для партнёрской сети Alif Bank: снизили нагрузку на колл-центр и модераторов, партнёры стали самостоятельнее в ключевых операциях.</span><span data-lang="en">Redesigned the partner admin panel for Alif Bank's fast-growing network — cut the load on the call center and moderators, and gave partners more independence in key operations.</span></p>
+            <p class="project-showcase__desc"><span data-lang="ru">Редизайн админ-панели для партнёрской сети Alif Bank: снизили нагрузку на колл-центр и модераторов, партнёры стали самостоятельнее в ключевых операциях.</span><span data-lang="en">Redesigned the partner admin panel for Alif Bank's fast-growing network: cut the load on the call center and moderators, and gave partners more independence in key operations.</span></p>
             <span class="project-showcase__cta-wrap">
               <span class="project-showcase__cta"><span data-lang="ru">Подробнее</span><span data-lang="en">See details</span><span class="arrow" aria-hidden="true">→</span></span>
             </span>
@@ -758,7 +838,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
       <a class="project-showcase project-showcase--eaj" href="case-eaj-trader.html" data-showcase>
         <div class="project-showcase__media">
-          <img src="assets/eaj-trader-showcase.jpg" data-alt-ru="EAJ Trader — ноутбук с дашбордом личного кабинета трейдера" data-alt-en="EAJ Trader — a laptop showing the trader's personal dashboard" alt="EAJ Trader — ноутбук с дашбордом личного кабинета трейдера" loading="lazy" width="2400" height="1600" style="object-position: 76% 55%;">
+          <img src="assets/eaj-trader-cover.png" data-alt-ru="EAJ Trader: ноутбук с дашбордом личного кабинета трейдера" data-alt-en="EAJ Trader: a laptop showing the trader's personal dashboard" alt="EAJ Trader: ноутбук с дашбордом личного кабинета трейдера" loading="lazy" width="3000" height="2000">
         </div>
         <div class="project-showcase__scrim" aria-hidden="true"></div>
         <div class="project-showcase__content">
@@ -771,7 +851,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
               </div>
               <div class="project-showcase__meta"><span data-lang="ru">Web · MVP за 2 месяца</span><span data-lang="en">Web · MVP in 2 months</span></div>
             </div>
-            <p class="project-showcase__desc"><span data-lang="ru">MVP личного кабинета трейдера с нуля: определили ключевые сегменты пользователей и спроектировали архитектуру кабинета под быстрые и частые финансовые операции.</span><span data-lang="en">Built a trader's personal dashboard MVP from scratch — defined key user segments and shaped a dashboard architecture built for fast, frequent financial operations.</span></p>
+            <p class="project-showcase__desc"><span data-lang="ru">MVP личного кабинета трейдера с нуля: определили ключевые сегменты пользователей и спроектировали архитектуру кабинета под быстрые и частые финансовые операции.</span><span data-lang="en">Built a trader's personal dashboard MVP from scratch: defined key user segments and shaped a dashboard architecture built for fast, frequent financial operations.</span></p>
             <span class="project-showcase__cta-wrap">
               <span class="project-showcase__cta"><span data-lang="ru">Подробнее</span><span data-lang="en">See details</span><span class="arrow" aria-hidden="true">→</span></span>
             </span>
@@ -781,7 +861,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
       <a class="project-showcase project-showcase--namaste" href="case-namaste.html" data-showcase>
         <div class="project-showcase__media">
-          <img src="assets/namaste-showcase.jpg" data-alt-ru="Namaste — приложение для йоги, фитнеса и медитации" data-alt-en="Namaste — a yoga, fitness, and meditation app" alt="Namaste — приложение для йоги, фитнеса и медитации" loading="lazy" width="1920" height="1080">
+          <img src="assets/namaste-showcase.jpg" data-alt-ru="Namaste: приложение для йоги, фитнеса и медитации" data-alt-en="Namaste: a yoga, fitness, and meditation app" alt="Namaste: приложение для йоги, фитнеса и медитации" loading="lazy" width="1920" height="1080">
         </div>
         <div class="project-showcase__scrim" aria-hidden="true"></div>
         <div class="project-showcase__content">
@@ -794,7 +874,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
               </div>
               <div class="project-showcase__meta"><span data-lang="ru">iOS · MVP за 3 месяца</span><span data-lang="en">iOS · MVP in 3 months</span></div>
             </div>
-            <p class="project-showcase__desc"><span data-lang="ru">Концепция, айдентика и интерфейсы MVP приложения для йоги и медитаций — от анализа конкурентов до базового сценария тренировок в тесной связке с разработкой.</span><span data-lang="en">Concept, identity, and interfaces for a yoga and meditation app MVP — from competitor research to the core workout scenario, working closely with engineering.</span></p>
+            <p class="project-showcase__desc"><span data-lang="ru">Концепция, айдентика и интерфейсы MVP приложения для йоги и медитаций: от анализа конкурентов до базового сценария тренировок в тесной связке с разработкой.</span><span data-lang="en">Concept, identity, and interfaces for a yoga and meditation app MVP: from competitor research to the core workout scenario, working closely with engineering.</span></p>
             <span class="project-showcase__cta-wrap">
               <span class="project-showcase__cta"><span data-lang="ru">Подробнее</span><span data-lang="en">See details</span><span class="arrow" aria-hidden="true">→</span></span>
             </span>
@@ -804,7 +884,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
       <a class="project-showcase project-showcase--tracker" href="case-360-tracker.html" data-showcase>
         <div class="project-showcase__media">
-          <img src="assets/tracker-showcase.jpg" data-alt-ru="360 Tracker — приложение для отслеживания членов семьи" data-alt-en="360 Tracker — an app for tracking family members" alt="360 Tracker — приложение для отслеживания членов семьи" loading="lazy" width="1920" height="1080">
+          <img src="assets/tracker-showcase.jpg" data-alt-ru="360 Tracker: приложение для отслеживания членов семьи" data-alt-en="360 Tracker: an app for tracking family members" alt="360 Tracker: приложение для отслеживания членов семьи" loading="lazy" width="1920" height="1080">
         </div>
         <div class="project-showcase__scrim" aria-hidden="true"></div>
         <div class="project-showcase__content">
@@ -817,7 +897,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
               </div>
               <div class="project-showcase__meta"><span data-lang="ru">iOS · MVP за 6 месяцев</span><span data-lang="en">iOS · MVP in 6 months</span></div>
             </div>
-            <p class="project-showcase__desc"><span data-lang="ru">MVP приложения для безопасности семьи с геолокацией, экстренными оповещениями и быстрой коммуникацией — проверили концепцию через юзабилити-тестирование и freemium-модель монетизации.</span><span data-lang="en">A family-safety app MVP combining geolocation, emergency alerts, and quick communication — validated through usability testing and a freemium monetization model.</span></p>
+            <p class="project-showcase__desc"><span data-lang="ru">MVP приложения для безопасности семьи с геолокацией, экстренными оповещениями и быстрой коммуникацией: проверили концепцию через юзабилити-тестирование и freemium-модель монетизации.</span><span data-lang="en">A family-safety app MVP combining geolocation, emergency alerts, and quick communication: validated through usability testing and a freemium monetization model.</span></p>
             <span class="project-showcase__cta-wrap">
               <span class="project-showcase__cta"><span data-lang="ru">Подробнее</span><span data-lang="en">See details</span><span class="arrow" aria-hidden="true">→</span></span>
             </span>
@@ -828,22 +908,167 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   </section>
 
   <div class="page">
-    <section class="experience">
+    <section class="experience" id="experience">
       <div class="work-heading"><span data-lang="ru">Опыт</span><span data-lang="en">Experience</span></div>
       <div class="exp-item">
-        <span class="exp-date"><span data-lang="ru">2024 — сейчас</span><span data-lang="en">2024 — present</span></span>
-        <span class="exp-company">Профинанс / FIBO Group</span>
-        <span class="exp-role">Product Designer</span>
+        <details>
+          <summary class="exp-summary">
+            <span class="exp-summary__main">
+              <span class="exp-date"><span data-lang="ru">с июня 2024 по настоящее время</span><span data-lang="en">June 2024 to present</span></span>
+              <span class="exp-company">Профинанс / FIBO Group</span>
+              <span class="exp-role"><span data-lang="ru">Продуктовый дизайнер</span><span data-lang="en">Product Designer</span></span>
+            </span>
+            <svg class="exp-summary__chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 6L8 10.5L12.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="exp-detail">
+            <p class="exp-detail__intro" data-lang-block="ru">Работаю с ключевым партнёром компании FIBO Group, международным брокером и поставщиком торговых решений на финансовых рынках. Отвечаю за развитие клиентских и внутренних цифровых продуктов компании: мобильного приложения Fibo Forex (iOS/Android), клиентского кабинета, корпоративного сайта, маркетинговых лендингов и новых продуктовых направлений.</p>
+            <p class="exp-detail__intro" data-lang-block="en">I work with FIBO Group, the company's key partner (an international broker and provider of trading solutions in financial markets). I'm responsible for developing the company's client-facing and internal digital products: the Fibo Forex mobile app (iOS/Android), the client dashboard, the corporate website, marketing landing pages, and new product directions.</p>
+            <div class="exp-detail__block">
+              <h4 data-lang-block="ru">Обязанности</h4>
+              <h4 data-lang-block="en">Responsibilities</h4>
+              <ul class="exp-detail__list" data-lang-block="ru">
+                <li>Развитие и поддержка единой дизайн-системы для Web, iOS и Android.</li>
+                <li>Проектирование пользовательских сценариев для мобильных и веб-продуктов.</li>
+                <li>Проведение UX-аудитов, конкурентного анализа и пользовательских исследований.</li>
+                <li>Формирование CJM, User Flow и информационной архитектуры продуктов.</li>
+                <li>Проработка новых продуктовых инициатив и проверка гипотез.</li>
+                <li>Подготовка интерфейсных решений и сопровождение разработки.</li>
+                <li>Проведение дизайн-ревью и взаимодействие с продуктовыми командами.</li>
+              </ul>
+              <ul class="exp-detail__list" data-lang-block="en">
+                <li>Growing and maintaining a unified design system for Web, iOS, and Android.</li>
+                <li>Designing user flows for mobile and web products.</li>
+                <li>Running UX audits, competitive analysis, and user research.</li>
+                <li>Building CJMs, user flows, and information architecture for products.</li>
+                <li>Shaping new product initiatives and validating hypotheses.</li>
+                <li>Preparing interface solutions and supporting development.</li>
+                <li>Running design reviews and collaborating with product teams.</li>
+              </ul>
+            </div>
+            <div class="exp-detail__block">
+              <h4 data-lang-block="ru">Результаты</h4>
+              <h4 data-lang-block="en">Results</h4>
+              <ul class="exp-detail__list" data-lang-block="ru">
+                <li>Создала и внедрила единую дизайн-систему для клиентского кабинета, корпоративного сайта FIBO Group и мобильного приложения Fibo Forex. Сократила время проектирования новых функций на 15% благодаря стандартизации компонентов и унификации процессов.</li>
+                <li>Снизила количество UI-багов и несоответствий между платформами.</li>
+                <li>Провела комплексный UX/UI-аудит мобильного приложения Fibo Forex, которое развивалось без системного дизайн-сопровождения с 2022 года. Сформировала roadmap развития продукта и инициировала запуск новых направлений: финансовый календарь, партнёрская программа, IB-счета, кэшбэк-механики и элементы геймификации для повышения Retention и привлечения новых клиентов.</li>
+                <li>Перестроила информационную архитектуру аналитических сервисов и экономического календаря на основе глубинных интервью и анализа пользовательского поведения. Упростила навигацию и доступ к рыночной информации, что позволило увеличить Session Duration на 9%.</li>
+                <li>Спроектировала новый продукт EAJ Trader с нуля: от пользовательских сценариев и структуры сервиса до клиентского кабинета и дизайн-системы. Продукт находится на этапе подготовки к запуску и ориентирован на привлечение новых клиентов компании.</li>
+              </ul>
+              <ul class="exp-detail__list" data-lang-block="en">
+                <li>Created and rolled out a unified design system for the client dashboard, the FIBO Group corporate website, and the Fibo Forex mobile app. Cut new-feature design time by 15% through component standardization and unified processes.</li>
+                <li>Reduced the number of UI bugs and cross-platform inconsistencies.</li>
+                <li>Ran a comprehensive UX/UI audit of the Fibo Forex mobile app, which had grown without systematic design support since 2022. Built a product roadmap and initiated new directions: a financial calendar, an affiliate program, IB accounts, cashback mechanics, and gamification elements to boost retention and attract new clients.</li>
+                <li>Rebuilt the information architecture of the analytics services and economic calendar based on in-depth interviews and behavior analysis. Simplified navigation and access to market information, increasing session duration by 9%.</li>
+                <li>Designed the new EAJ Trader product from scratch: from user flows and service structure to the client dashboard and design system. The product is in pre-launch preparation and aimed at attracting new clients for the company.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
       </div>
       <div class="exp-item">
-        <span class="exp-date">2024 — 2025</span>
-        <span class="exp-company">Foreesco Group</span>
-        <span class="exp-role">Product Designer · part-time</span>
+        <details>
+          <summary class="exp-summary">
+            <span class="exp-summary__main">
+              <span class="exp-date"><span data-lang="ru">с февраля 2024 по март 2025 (1 год 2 месяца)</span><span data-lang="en">February 2024 to March 2025 (1 yr 2 mo)</span></span>
+              <span class="exp-company">Foreesco Group</span>
+              <span class="exp-role"><span data-lang="ru">Продуктовый дизайнер · part-time</span><span data-lang="en">Product Designer · part-time</span></span>
+            </span>
+            <svg class="exp-summary__chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 6L8 10.5L12.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="exp-detail">
+            <p class="exp-detail__intro" data-lang-block="ru">Foreesco занимается разработкой кастомных B2C мобильных приложений для iOS и Android. Работала одновременно над несколькими мобильными продуктами, отвечая за полный цикл проектирования: исследования, формирование гипотез, UX/UI-дизайн и сопровождение разработки.</p>
+            <p class="exp-detail__intro" data-lang-block="en">Foreesco is a product studio building custom B2C mobile apps for iOS and Android. I worked on several mobile products at once, owning the full design cycle: research, hypothesis generation, UX/UI design, and development support.</p>
+            <div class="exp-detail__block">
+              <h4 data-lang-block="ru">Обязанности</h4>
+              <h4 data-lang-block="en">Responsibilities</h4>
+              <ul class="exp-detail__list" data-lang-block="ru">
+                <li>Проведение CustDev и UX-исследований.</li>
+                <li>Конкурентный анализ и поиск продуктовых возможностей.</li>
+                <li>Формирование и проверка продуктовых гипотез.</li>
+                <li>Проектирование пользовательских сценариев и информационной архитектуры.</li>
+                <li>Создание мобильных интерфейсов и дизайн-концепций.</li>
+                <li>Сопровождение команд разработки и запусков.</li>
+              </ul>
+              <ul class="exp-detail__list" data-lang-block="en">
+                <li>Running CustDev interviews and UX research.</li>
+                <li>Competitive analysis and identifying product opportunities.</li>
+                <li>Forming and validating product hypotheses.</li>
+                <li>Designing user flows and information architecture.</li>
+                <li>Creating mobile interfaces and design concepts.</li>
+                <li>Supporting development teams and product launches.</li>
+              </ul>
+            </div>
+            <div class="exp-detail__block">
+              <h4 data-lang-block="ru">Результаты</h4>
+              <h4 data-lang-block="en">Results</h4>
+              <ul class="exp-detail__list" data-lang-block="ru">
+                <li>Спроектировала MVP мобильного приложения 360 Tracker: провела исследования, определила структуру продукта и ключевые пользовательские сценарии.</li>
+                <li>Спроектировала фитнес-приложение Namaste, включая систему персонализированных тренировок и пользовательских сценариев.</li>
+                <li>Подготовила MVP для тестирования пользовательского спроса и проверки ключевых продуктовых гипотез.</li>
+              </ul>
+              <ul class="exp-detail__list" data-lang-block="en">
+                <li>Designed the 360 Tracker mobile app MVP: ran research and defined the product structure and key user flows.</li>
+                <li>Designed the Namaste fitness app, including a personalized workout system and user flows.</li>
+                <li>Prepared MVPs for testing user demand and validating key product hypotheses.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
       </div>
       <div class="exp-item">
-        <span class="exp-date">2022 — 2024</span>
-        <span class="exp-company">Alif Bank</span>
-        <span class="exp-role">UX/UI Designer</span>
+        <details>
+          <summary class="exp-summary">
+            <span class="exp-summary__main">
+              <span class="exp-date"><span data-lang="ru">с апреля 2022 по июнь 2024 (2 года 3 месяца)</span><span data-lang="en">April 2022 to June 2024 (2 yr 3 mo)</span></span>
+              <span class="exp-company">Alif Bank</span>
+              <span class="exp-role"><span data-lang="ru">UX/UI дизайнер</span><span data-lang="en">UX/UI Designer</span></span>
+            </span>
+            <svg class="exp-summary__chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 6L8 10.5L12.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <div class="exp-detail">
+            <p class="exp-detail__intro" data-lang-block="ru">Alif Bank входит в число крупнейших цифровых банков Центральной Азии с многомиллионной аудиторией пользователей. Экосистема банка включает приложение для физических лиц, маркетплейс B2C-сервисов, партнёрские платформы и внутренние продукты для сотрудников банка. Работала над B2B, B2C и внутренними цифровыми сервисами банка.</p>
+            <p class="exp-detail__intro" data-lang-block="en">Alif Bank is one of the largest digital banks in Central Asia, with a multi-million user base. The bank's ecosystem includes a retail app, a B2C services marketplace, partner platforms, and internal products for bank employees. I worked across the bank's B2B, B2C, and internal digital services.</p>
+            <div class="exp-detail__block">
+              <h4 data-lang-block="ru">Обязанности</h4>
+              <h4 data-lang-block="en">Responsibilities</h4>
+              <ul class="exp-detail__list" data-lang-block="ru">
+                <li>Исследование пользовательского опыта и проведение UX-аудитов.</li>
+                <li>Построение CJM и проектирование пользовательских сценариев.</li>
+                <li>Проектирование мобильных и веб-интерфейсов.</li>
+                <li>Разработка внутренних банковских сервисов и B2B-продуктов.</li>
+                <li>Подготовка прототипов и дизайн-концепций.</li>
+                <li>Проведение дизайн-ревью и сопровождение разработки.</li>
+                <li>Взаимодействие с бизнесом, аналитиками и продуктовыми командами.</li>
+              </ul>
+              <ul class="exp-detail__list" data-lang-block="en">
+                <li>Researching user experience and running UX audits.</li>
+                <li>Building CJMs and designing user flows.</li>
+                <li>Designing mobile and web interfaces.</li>
+                <li>Developing internal banking services and B2B products.</li>
+                <li>Preparing prototypes and design concepts.</li>
+                <li>Running design reviews and supporting development.</li>
+                <li>Collaborating with business stakeholders, analysts, and product teams.</li>
+              </ul>
+            </div>
+            <div class="exp-detail__block">
+              <h4 data-lang-block="ru">Результаты</h4>
+              <h4 data-lang-block="en">Results</h4>
+              <ul class="exp-detail__list" data-lang-block="ru">
+                <li>Спроектировала B2B-платформу Alif Partners для сети из более чем 2000 партнёров банка, цифровизировав процессы оформления рассрочки. Это позволило сократить нагрузку на модераторов и колл-центр, ускорить обработку заявок и положительно повлияло на Task Completion Rate, Conversion Rate оформления рассрочки и Time to Approval.</li>
+                <li>Спроектировала внутреннюю платформу Alif Audit для проведения собраний, голосований и согласования решений совета директоров, переведя процессы из бумажного документооборота, Excel и электронной почты в единый цифровой продукт. В результате улучшились показатели Time to Decision, Process Efficiency и User Adoption.</li>
+                <li>Спроектировала систему автоматизированного взаимодействия с должниками Autocall через интеграцию с банковскими системами, что позволило автоматизировать коммуникацию с клиентами, сократить объём ручных операций сотрудников и повысить эффективность процессов взыскания. Основное влияние на Operational Efficiency, Cost per Case и Agent Productivity.</li>
+                <li>Разработала раздел Visa Privileges для мобильного приложения Alif Mobi, повысив доступность информации о преимуществах премиальных карт. После запуска количество держателей карт Visa увеличилось на 7%, а снижение количества обращений по вопросам привилегий положительно повлияло на Support Ticket Volume и Customer Self-Service Rate.</li>
+              </ul>
+              <ul class="exp-detail__list" data-lang-block="en">
+                <li>Designed the Alif Partners B2B platform for a network of over 2,000 bank partners, digitizing installment-plan processing. This reduced the load on moderators and the call center, sped up application processing, and positively impacted Task Completion Rate, installment Conversion Rate, and Time to Approval.</li>
+                <li>Designed the internal Alif Audit platform for board meetings, voting, and decision approval, moving processes off paper, Excel, and email into a single digital product, which improved Time to Decision, Process Efficiency, and User Adoption.</li>
+                <li>Designed the Autocall system for automated communication with debtors via integration with banking systems, automating client communication, reducing manual staff workload, and improving collections efficiency. Mainly impacted Operational Efficiency, Cost per Case, and Agent Productivity.</li>
+                <li>Developed the Visa Privileges section for the Alif Mobi mobile app, improving access to information about premium card benefits. After launch, the number of Visa cardholders grew by 7%, and fewer support inquiries about privileges positively impacted Support Ticket Volume and Customer Self-Service Rate.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
       </div>
     </section>
   </div>

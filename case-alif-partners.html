@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>(function(){if(localStorage.getItem('site-lang')==='en')document.documentElement.classList.add('lang-en');})();</script>
-<title data-ru="Alif Partners — Мадина Рашидова" data-en="Alif Partners — Madina Rashidova">Alif Partners — Мадина Рашидова</title>
+<title data-ru="Alif Partners · Мадина Рашидова" data-en="Alif Partners · Madina Rashidova">Alif Partners · Мадина Рашидова</title>
 <link rel="icon" type="image/png" href="favicon.png">
-<meta name="description" content="Alif Partners — редизайн админ-панели для партнёрской сети Alif Bank. Разбор процесса: исследование, решение, итоги." data-ru="Alif Partners — редизайн админ-панели для партнёрской сети Alif Bank. Разбор процесса: исследование, решение, итоги." data-en="Alif Partners — a redesign of the admin panel for Alif Bank's partner network. A breakdown of the process: research, solution, results.">
+<meta name="description" content="Alif Partners. Редизайн админ-панели для партнёрской сети Alif Bank. Разбор процесса: исследование, решение, итоги." data-ru="Alif Partners. Редизайн админ-панели для партнёрской сети Alif Bank. Разбор процесса: исследование, решение, итоги." data-en="Alif Partners. A redesign of the admin panel for Alif Bank's partner network. A breakdown of the process: research, solution, results.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,600&display=swap" rel="stylesheet">
@@ -58,7 +58,9 @@
     z-index: 100; display: flex; align-items: center;
     background: var(--nav-bg); border-radius: 100px; padding: 8px 8px 8px 22px;
     box-shadow: var(--shadow-control);
+    transition: transform 0.28s cubic-bezier(0.22,1,0.36,1), opacity 0.28s cubic-bezier(0.22,1,0.36,1);
   }
+  .site-nav.is-nav-hidden { transform: translateX(-50%) translateY(-140%); opacity: 0; pointer-events: none; }
   .site-nav .nav-name {
     font-family: var(--mono); font-size: 0.85rem; font-weight: 500;
     color: #fff; margin-right: 8px; white-space: nowrap;
@@ -134,10 +136,25 @@
   .case-tags { display: flex; gap: 8px; flex-wrap: wrap; font-size: 0.78rem; }
   .case-tags span { background: var(--surface); border: 1px solid var(--line); color: var(--case-accent); padding: 5px 12px; border-radius: 999px; }
   .case-dek { margin-top: 16px; font-size: 1rem; color: var(--text-dim); max-width: 62ch; line-height: 1.55; }
-  .metrics { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
-  .metric { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-medium); padding: 14px 18px; min-width: 140px; box-shadow: var(--shadow-soft); }
-  .metric .value { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; color: var(--case-accent); }
-  .metric .label { font-size: 0.8rem; color: var(--text-dim); margin-top: 2px; }
+  /* Text → cards gap: 32px floor, 40px on desktop — one clamp() covers both
+     instead of a separate breakpoint rule, matching how --page-padding and
+     other site-wide spacing already scale. */
+  .metrics {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5);
+    margin-top: clamp(32px, 4vw, 40px); margin-bottom: 40px; width: 100%;
+  }
+  .metric {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-large);
+    padding: clamp(20px, 2.6vw, 28px); box-shadow: var(--shadow-soft); min-width: 0;
+  }
+  .metric .value { font-family: var(--mono); font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700; color: var(--case-accent); line-height: 1.1; }
+  .metric .label { font-size: 0.9rem; color: var(--text-dim); margin-top: 8px; line-height: 1.4; }
+  @media (max-width: 860px) {
+    .metrics { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 32px; }
+  }
+  @media (max-width: 560px) {
+    .metrics { grid-template-columns: 1fr; margin-bottom: 24px; }
+  }
 
   .case-facts {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px 24px;
@@ -150,10 +167,95 @@
   .goal-list li { position: relative; padding-left: 24px; font-size: 0.95rem; color: var(--text-dim); line-height: 1.5; }
   .goal-list li::before { content: "→"; position: absolute; left: 0; color: var(--case-accent); font-family: var(--mono); }
 
-  .case-conclusion { font-size: clamp(1.05rem, 1.6vw, 1.25rem); font-weight: 600; color: var(--text); line-height: 1.5; max-width: 56ch; }
+  /* Result section — a visual summary, not another wall of paragraphs: a lead
+     claim, three cards (auto-height, never fixed), and a clearly separate
+     "scope boundary" note that reads as a note, not a fourth card. */
+  /* Both the boxed-card version and the two-column editorial version turned
+     out to be more composition than this needed — just one plain paragraph
+     now, typographically identical to every other case description on the
+     page. Only spacing is scoped here (32px after the heading, per this
+     section's own ask) — font-size/weight/line-height/color/max-width are
+     deliberately left unset so `.detail-block p` below is the only thing
+     that styles the text itself. */
+  .detail-block .result-summary-text { margin-top: 32px; margin-bottom: 0; }
 
-  .detail-block { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--line); }
-  .detail-head { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 24px; }
+  .result-cards {
+    display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: var(--space-5);
+    margin-top: clamp(48px, 5vw, 64px);
+  }
+  .result-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-large);
+    padding: clamp(24px, 3vw, 32px); display: flex; flex-direction: column; gap: var(--space-4);
+    min-width: 0; box-shadow: var(--shadow-soft);
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  .result-card.is-inview { opacity: 1; transform: translateY(0); }
+  .result-card__num { font-family: var(--display); font-weight: 700; font-size: clamp(1.8rem, 3vw, 2.4rem); color: var(--line); line-height: 1; }
+  .result-card__title { font-family: var(--display); font-weight: 700; font-size: 1.15rem; letter-spacing: -0.01em; color: var(--text); }
+  .result-card--lead .result-card__title { font-size: clamp(1.25rem, 2vw, 1.4rem); }
+  .result-card__text { font-size: 0.95rem; color: var(--text-dim); line-height: 1.6; }
+  @media (max-width: 860px) {
+    .result-cards { grid-template-columns: 1fr; }
+  }
+
+  .result-note {
+    margin-top: clamp(48px, 5vw, 64px); padding: var(--space-5) var(--space-6);
+    background: var(--line-faint); border-left: 3px solid var(--line-strong); border-radius: var(--radius-medium);
+    display: flex; flex-direction: column; gap: var(--space-2);
+  }
+  .result-note__label { font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); }
+  .result-note__text { font-size: 0.9rem; color: var(--text-dim); line-height: 1.55; max-width: 60ch; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .result-card { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* "Как измерить эффект" — 2×2 grid of real metrics-to-watch, not invented
+     numbers. No dividers, no green: each card is one sentence plus one
+     neutral dark-pill accent (the same nav-bg/pill vocabulary used for the
+     top nav and CTAs elsewhere), not a table row. */
+  .metric-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5);
+    margin-top: clamp(32px, 3vw, 40px);
+  }
+  .metric-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-large);
+    padding: clamp(24px, 3vw, 32px); display: flex; flex-direction: column; gap: 0;
+    min-width: 0; box-shadow: var(--shadow-soft);
+  }
+  .metric-card__goal { font-family: var(--mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); }
+  /* `.detail-block p` (generic paragraph rule) also matches this `<p>` and
+     sets its own margin-bottom: 18px. Flex items never collapse margins the
+     way normal block siblings do, so that inherited bottom margin would
+     otherwise stack on top of `.metric-card__caption`'s margin-top instead
+     of merging with it — zero it here so the caption's own margin is the
+     only thing controlling the gap. */
+  .metric-card .metric-card__sentence { margin-top: 12px; margin-bottom: 0; font-size: 1.02rem; color: var(--text); line-height: 1.6; }
+  /* Order is goal -> sentence -> caption -> accent: the secondary label reads
+     before the pill it describes, and the pill is the card's last element
+     (no margin-top: auto anymore — that was only needed to pin the caption
+     to the bottom when it was last; nothing to pin now). */
+  .metric-card__caption { margin-top: clamp(24px, 2.5vw, 32px); font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); }
+  .metric-card__accent {
+    margin-top: 10px;
+    display: inline-flex; align-self: flex-start; max-width: 100%;
+    background: var(--nav-bg); color: #f8f8f8;
+    font-family: var(--sans); font-size: 0.85rem; font-weight: 600; line-height: 1.35;
+    padding: 8px 16px; border-radius: var(--radius-pill);
+  }
+  @media (max-width: 720px) {
+    .metric-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Between major numbered sections (01, 02, 03…) — 96-144px, distinct from
+     the 48-72px rhythm between semantic groups inside one section. */
+  .detail-block { margin-top: clamp(96px, 9vw, 128px); padding-top: var(--space-7); border-top: 1px solid var(--line); }
+  .detail-head { display: flex; align-items: flex-start; gap: 20px; margin-bottom: var(--space-7); }
+  /* Scoped to the "Результат" heading only — this section's plain lead
+     paragraph wants exactly 32px after the title, not the sitewide 48px
+     every other section's heading uses before its own content. */
+  .detail-head.detail-head--tight { margin-bottom: 0; }
   .detail-num {
     font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 4.2vw, 2.8rem);
     color: var(--line); line-height: 0.8; flex-shrink: 0; letter-spacing: 0;
@@ -161,7 +263,7 @@
   .detail-head h2 { font-family: var(--display); font-size: 1.4rem; line-height: 1.15; font-weight: 700; letter-spacing: -0.025em; padding-top: 8px; }
   .detail-block p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.65; max-width: 60ch; margin-bottom: 18px; }
   .detail-block > p:last-child { margin-bottom: 0; }
-  .detail-block img { display: block; width: 100%; height: auto; border-radius: var(--radius-large); margin-bottom: 18px; }
+  .detail-block img { display: block; width: 100%; height: auto; border-radius: var(--radius-large); margin-bottom: 18px; object-fit: contain; }
   .case-image-trigger {
     display: block; width: 100%; padding: 0; margin: 0; border: 0; background: none;
     cursor: pointer; font: inherit; color: inherit; text-align: inherit;
@@ -169,14 +271,29 @@
   .case-image-trigger:focus-visible {
     outline: 3px solid var(--text-strong); outline-offset: 3px; border-radius: var(--radius-large);
   }
+  /* Every replacement screenshot ships with a transparent background (real
+     window-capture crops, drop shadow baked into the alpha edge) — a bare
+     `<img>` on the page's own #f8f8f8 would let that shadow float with
+     nothing under it. `--surface` + padding gives it the same card-on-page
+     treatment `.detail-pair-media` already uses for the two-column rows,
+     so the image's own transparent margin reads as intentional, not empty. */
+  .detail-media-frame {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-large);
+    padding: clamp(20px, 3vw, 32px); margin-top: clamp(32px, 3vw, 40px); margin-bottom: clamp(32px, 3vw, 40px);
+  }
+  .detail-media-frame .case-image-trigger { display: block; }
+  .detail-media-frame img { margin-bottom: 0; border-radius: var(--radius-medium); }
 
   /* asymmetric text+media row — the "unusual grid" pairing for squarer screenshots */
-  .detail-pair { display: grid; grid-template-columns: 5fr 7fr; gap: 36px; align-items: center; margin-bottom: 18px; }
+  .detail-pair { display: grid; grid-template-columns: 5fr 7fr; gap: 36px; align-items: center; margin-top: clamp(32px, 3vw, 40px); margin-bottom: 18px; }
   .detail-pair.media-left { grid-template-columns: 7fr 5fr; }
   .detail-pair.media-left .detail-pair-media { order: -1; }
   .detail-pair-text p { margin-bottom: 0; max-width: none; }
-  .detail-pair-media { border-radius: var(--radius-large); overflow: hidden; background: var(--surface); border: 1px solid var(--line); }
-  .detail-pair-media img { margin: 0; border-radius: 0; }
+  .detail-pair-media {
+    border-radius: var(--radius-large); overflow: hidden; background: var(--surface); border: 1px solid var(--line);
+    padding: clamp(20px, 3vw, 32px);
+  }
+  .detail-pair-media img { margin: 0; border-radius: var(--radius-medium); object-fit: contain; }
   .detail-pair-media .case-image-trigger:focus-visible,
   .detail-mosaic .case-image-trigger:focus-visible { outline-offset: -3px; }
   .detail-mosaic { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 18px; }
@@ -194,19 +311,6 @@
   }
   .problem-statement p { font-size: clamp(1.15rem, 2.2vw, 1.5rem); font-weight: 600; font-style: italic; color: var(--text); line-height: 1.4; max-width: 42ch; }
 
-  .outcome-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-medium); padding: 22px 24px; box-shadow: var(--shadow-soft); }
-  .outcome-kicker { display: block; font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--case-accent); }
-  .outcome-list { list-style: none; margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 4px 24px; }
-  .outcome-list li { position: relative; padding: 10px 0 10px 26px; border-top: 1px solid var(--line); font-size: 0.95rem; color: var(--text); }
-  .outcome-list li:first-child { border-top: none; padding-top: 0; }
-  .outcome-list li::before { content: "✓"; position: absolute; left: 0; color: var(--case-accent); font-family: var(--mono); }
-  /* Used for outcome lists that are an expected/to-be-measured effect, not a confirmed result — an arrow, not a checkmark, so the visual doesn't imply "done". */
-  .outcome-list.is-expected li::before { content: "→"; }
-  @media (max-width: 720px) {
-    .outcome-list { grid-template-columns: 1fr; }
-    .outcome-list li { border-top: 1px solid var(--line); padding-top: 10px; }
-    .outcome-list li:first-child { border-top: none; padding-top: 0; }
-  }
 
   /* ===== Case floating dock (like + next case) — shared across all case pages =====
      Two independent glass controls, fixed to the viewport like the top nav —
@@ -218,7 +322,7 @@
   .case-floating-nav {
     position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom));
     transform: translateX(-50%) translateY(12px);
-    z-index: 110; display: flex; align-items: center; gap: 10px;
+    z-index: 110; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px;
     max-width: calc(100vw - 32px);
     opacity: 0;
     transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1);
@@ -226,7 +330,7 @@
   .case-floating-nav.is-inview { opacity: 1; transform: translateX(-50%) translateY(0); }
   body.lightbox-open .case-floating-nav { opacity: 0; pointer-events: none; }
 
-  .case-like, .case-next {
+  .case-like, .case-next, .case-home {
     background: rgba(255, 255, 255, 0.62);
     border: 1px solid rgba(255, 255, 255, 0.72);
     box-shadow:
@@ -237,8 +341,25 @@
     border-radius: var(--radius-pill);
   }
   @supports not (backdrop-filter: blur(1px)) {
-    .case-like, .case-next { background: rgba(248, 248, 248, 0.94); }
+    .case-like, .case-next, .case-home { background: rgba(248, 248, 248, 0.94); }
   }
+
+  /* Same shape/dimensions as .case-like (icon-less text pill) — the "icon" is
+     the same plain arrow glyph the site already uses for directional links
+     (nav labels, the top back-link, .case-next__arrow), not a new SVG. */
+  .case-home {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--sans); font-size: 0.92rem; font-weight: 600; color: #171717;
+    padding-inline: 20px; min-height: 56px;
+    flex-shrink: 0;
+    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s cubic-bezier(0.22,1,0.36,1);
+  }
+  .case-home:hover { background: rgba(255,255,255,0.85); box-shadow: var(--shadow-control); }
+  .case-home:focus-visible { outline: 2px solid var(--text-strong); outline-offset: 2px; }
+  .case-home:active { transform: scale(0.96); }
+  .case-home__arrow { font-family: var(--mono); color: var(--text-dim); transition: transform 0.2s cubic-bezier(0.22,1,0.36,1); }
+  .case-home:hover .case-home__arrow, .case-home:focus-visible .case-home__arrow { transform: translateX(-4px); }
+  .case-home__label { white-space: nowrap; }
 
   .case-like {
     display: inline-flex; align-items: center; gap: 10px;
@@ -281,9 +402,9 @@
 
   @media (max-width: 720px) {
     .case-floating-nav { bottom: max(14px, env(safe-area-inset-bottom)); gap: 8px; }
-    .case-like { min-height: 48px; padding-inline: 16px; }
+    .case-like, .case-home { min-height: 48px; padding-inline: 16px; }
     .case-next { min-height: 48px; padding-inline: 16px; max-width: min(220px, 52vw); }
-    .case-next__label {
+    .case-next__label, .case-home__label {
       position: absolute; width: 1px; height: 1px; overflow: hidden;
       clip: rect(0,0,0,0); white-space: nowrap;
     }
@@ -291,7 +412,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .case-floating-nav { transition: none; opacity: 1; transform: translateX(-50%); }
-    .case-like__icon, .case-next__arrow, .case-like, .case-next { transition: none; }
+    .case-like__icon, .case-next__arrow, .case-like, .case-next, .case-home, .case-home__arrow { transition: none; }
     .case-like.is-pulsing .case-like__icon { animation: none; }
   }
 </style>
@@ -334,10 +455,7 @@
           <div class="metric"><div class="value">$1 <span data-lang="ru">млрд</span><span data-lang="en">bn</span></div><div class="label"><span data-lang="ru">объём рынка BNPL в 2024 году</span><span data-lang="en">BNPL market size in 2024</span></div></div>
         </div>
         <p><span data-lang="ru">С ростом числа партнёров, заказов и операций текущая админ-панель перестала справляться с нагрузкой. Партнёры и модераторы тратили всё больше времени на ручные действия, а банк получал растущую операционную нагрузку.</span><span data-lang="en">As the number of partners, orders, and operations grew, the existing admin panel stopped keeping up with the load. Partners and moderators spent more and more time on manual actions, and the bank absorbed a growing operational burden.</span></p>
-        <button class="case-image-trigger" type="button">
-          <img src="assets/process/alif-context.png" data-alt-ru="Alif Partners — контекст: рост партнёрской сети" data-alt-en="Alif Partners — context: the partner network's growth" alt="Alif Partners — контекст: рост партнёрской сети" loading="lazy">
-        </button>
-        <p><span data-lang="ru">Главная бизнес-цель проекта — сделать партнёрскую сеть масштабируемой без пропорционального роста нагрузки на банк. Проект должен был помочь банку:</span><span data-lang="en">The project's main business goal was to make the partner network scalable without a proportional increase in the bank's load. The project needed to help the bank:</span></p>
+        <p><span data-lang="ru">Главная бизнес-цель проекта заключалась в том, чтобы сделать партнёрскую сеть масштабируемой без пропорционального роста нагрузки на банк. Проект должен был помочь банку:</span><span data-lang="en">The project's main business goal was to make the partner network scalable without a proportional increase in the bank's load. The project needed to help the bank:</span></p>
         <ul class="goal-list">
           <li><span data-lang="ru">быстрее подключать и обслуживать партнёров</span><span data-lang="en">onboard and service partners faster</span></li>
           <li><span data-lang="ru">снизить количество ручных операций</span><span data-lang="en">reduce the number of manual operations</span></li>
@@ -349,11 +467,13 @@
       <div class="detail-block">
         <div class="detail-head"><span class="detail-num">02</span><h2><span data-lang="ru">Исследование</span><span data-lang="en">Research</span></h2></div>
         <p><span data-lang="ru">Мы начали с исследования текущей админ-панели и реальных сценариев работы модераторов и партнёров.</span><span data-lang="en">We started by researching the existing admin panel and the real scenarios moderators and partners work through.</span></p>
-        <p><span data-lang="ru">Провели глубинные интервью с 8 модераторами, которые ежедневно работают в системе. В целом интерфейс был им знаком, а базовые задачи — оформление заказов, добавление товаров и изменение цен — не вызывали критических сложностей. Но почти все процессы были завязаны на ручные действия.</span><span data-lang="en">We ran in-depth interviews with 8 moderators who work in the system daily. Overall the interface was familiar to them, and basic tasks — processing orders, adding products, changing prices — didn't cause critical difficulties. But almost every process relied on manual action.</span></p>
-        <button class="case-image-trigger" type="button">
-          <img src="assets/process/alif-interviews.png" data-alt-ru="Alif Partners — интервью с модераторами" data-alt-en="Alif Partners — interviews with moderators" alt="Alif Partners — интервью с модераторами" loading="lazy">
-        </button>
-        <p><span data-lang="ru">Отдельно мы провели интервью с партнёрами, чтобы понять их работу с заказами и доставкой. Главная проблема — партнёры не всегда понимали, когда поступает заявка с маркетплейса, и ждали звонка от колл-центра. Это создавало задержки и снижало контроль над заказами.</span><span data-lang="en">Separately, we interviewed partners to understand how they work with orders and delivery. The main problem: partners didn't always know when a marketplace order came in and waited for a call from the call center. This created delays and reduced their control over orders.</span></p>
+        <p><span data-lang="ru">Провели глубинные интервью с 8 модераторами, которые ежедневно работают в системе. В целом интерфейс был им знаком, а базовые задачи (оформление заказов, добавление товаров и изменение цен) не вызывали критических сложностей. Но почти все процессы были завязаны на ручные действия.</span><span data-lang="en">We ran in-depth interviews with 8 moderators who work in the system daily. Overall the interface was familiar to them, and basic tasks (processing orders, adding products, changing prices) didn't cause critical difficulties. But almost every process relied on manual action.</span></p>
+        <div class="detail-media-frame">
+          <button class="case-image-trigger" type="button">
+            <img src="assets/process/alif-research-table.png" data-alt-ru="Alif Partners · таблица результатов интервью с модераторами и партнёрами" data-alt-en="Alif Partners · a table of results from interviews with moderators and partners" alt="Alif Partners · таблица результатов интервью с модераторами и партнёрами" loading="lazy">
+          </button>
+        </div>
+        <p><span data-lang="ru">Отдельно мы провели интервью с партнёрами, чтобы понять их работу с заказами и доставкой. Главная проблема: партнёры не всегда понимали, когда поступает заявка с маркетплейса, и ждали звонка от колл-центра. Это создавало задержки и снижало контроль над заказами.</span><span data-lang="en">Separately, we interviewed partners to understand how they work with orders and delivery. The main problem: partners didn't always know when a marketplace order came in and waited for a call from the call center. This created delays and reduced their control over orders.</span></p>
         <p><span data-lang="ru">Дополнительным ограничением были терминалы: из-за их количества и возможных сбоев оформление заказов замедлялось и иногда приводило к отменам.</span><span data-lang="en">An additional constraint was the terminals: their limited number and occasional glitches slowed order processing and sometimes led to cancellations.</span></p>
         <p><span data-lang="ru">Главный вывод исследования: система работала, но не была готова к росту. Партнёрам не хватало самостоятельности, а банк продолжал закрывать слишком много операционных действий через модераторов, колл-центр и фронт-офис.</span><span data-lang="en">The research's main conclusion: the system worked, but wasn't ready to grow. Partners lacked independence, and the bank kept closing too many operational actions through moderators, the call center, and the front office.</span></p>
       </div>
@@ -367,9 +487,11 @@
       <div class="detail-block">
         <div class="detail-head"><span class="detail-num">04</span><h2><span data-lang="ru">Новая структура админки</span><span data-lang="en">New admin panel structure</span></h2></div>
         <p><span data-lang="ru">Переработала структуру админ-панели: навигация переехала из бокового сайдбара в верхнюю часть интерфейса. Новая структура включает разделы «Магазины», «Товары», «Заявки», «Доставка», «Отзывы» и отдельный раздел «Модерация» для сотрудников банка.</span><span data-lang="en">I reworked the admin panel's structure: navigation moved from the side sidebar to the top of the interface. The new structure includes the "Stores," "Products," "Requests," "Delivery," and "Reviews" sections, plus a separate "Moderation" section for bank staff.</span></p>
-        <button class="case-image-trigger" type="button">
-          <img src="assets/process/alif-solution.png" data-alt-ru="Alif Partners — новая структура админки" data-alt-en="Alif Partners — the admin panel's new structure" alt="Alif Partners — новая структура админки" loading="lazy">
-        </button>
+        <div class="detail-media-frame">
+          <button class="case-image-trigger" type="button">
+            <img src="assets/process/alif-admin-structure.png" data-alt-ru="Alif Partners · новая структура админки" data-alt-en="Alif Partners · the admin panel's new structure" alt="Alif Partners · новая структура админки" loading="lazy">
+          </button>
+        </div>
         <p><span data-lang="ru">Так интерфейс стал строиться вокруг задач партнёра, а не только вокруг внутренних процессов банка.</span><span data-lang="en">This way the interface started to be built around the partner's tasks, not just the bank's internal processes.</span></p>
       </div>
       <div class="detail-block">
@@ -377,13 +499,13 @@
         <div class="detail-pair media-left">
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/alif-chat.png" data-alt-ru="Alif Partners — единый чат с банком" data-alt-en="Alif Partners — a single chat with the bank" alt="Alif Partners — единый чат с банком" loading="lazy">
+              <img src="assets/process/alif-chat.png" data-alt-ru="Alif Partners · единый чат с банком" data-alt-en="Alif Partners · a single chat with the bank" alt="Alif Partners · единый чат с банком" loading="lazy">
             </button>
           </div>
           <div class="detail-pair-text">
             <p><span data-lang="ru">Добавила единый канал коммуникации с банком в виде чата. Он объединяет взаимодействие с модераторами, отделом партнёров и колл-центром.</span><span data-lang="en">I added a single communication channel with the bank in the form of a chat. It combines interaction with moderators, the partner department, and the call center.</span></p>
             <p><span data-lang="ru">В этот же контур добавлены уведомления по важным событиям: новые заявки, изменения статусов и низкий остаток товара.</span><span data-lang="en">The same channel also carries notifications for important events: new requests, status changes, and low stock.</span></p>
-            <p><span data-lang="ru">Это помогает партнёру быстрее реагировать, а банку — сократить количество разрозненных обращений.</span><span data-lang="en">This helps the partner react faster, and helps the bank cut down on scattered, one-off requests.</span></p>
+            <p><span data-lang="ru">Это помогает партнёру быстрее реагировать, а банку помогает сократить количество разрозненных обращений.</span><span data-lang="en">This helps the partner react faster, and helps the bank cut down on scattered, one-off requests.</span></p>
           </div>
         </div>
       </div>
@@ -397,7 +519,7 @@
           </div>
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/alif-product-search.png" data-alt-ru="Alif Partners — процесс добавления товара" data-alt-en="Alif Partners — the product-adding flow" alt="Alif Partners — процесс добавления товара" loading="lazy">
+              <img src="assets/process/alif-product-search.png" data-alt-ru="Alif Partners · процесс добавления товара" data-alt-en="Alif Partners · the product-adding flow" alt="Alif Partners · процесс добавления товара" loading="lazy">
             </button>
           </div>
         </div>
@@ -405,9 +527,11 @@
       <div class="detail-block">
         <div class="detail-head"><span class="detail-num">07</span><h2><span data-lang="ru">Ценовой контекст</span><span data-lang="en">Price context</span></h2></div>
         <p><span data-lang="ru">На интервью партнёры рассказали, что при формировании цены ориентируются на конкурентов.</span><span data-lang="en">In interviews, partners said that when setting prices they look at competitors.</span></p>
-        <button class="case-image-trigger" type="button">
-          <img src="assets/process/alif-price-insight.png" data-alt-ru="Alif Partners — сравнение цен конкурентов" data-alt-en="Alif Partners — competitor price comparison" alt="Alif Partners — сравнение цен конкурентов" loading="lazy">
-        </button>
+        <div class="detail-media-frame">
+          <button class="case-image-trigger" type="button">
+            <img src="assets/process/alif-price-insight.png" data-alt-ru="Alif Partners · сравнение цен конкурентов" data-alt-en="Alif Partners · competitor price comparison" alt="Alif Partners · сравнение цен конкурентов" loading="lazy">
+          </button>
+        </div>
         <p><span data-lang="ru">В процесс добавления товара я добавила блок с ценами на аналогичные позиции. Партнёр сразу видит рыночный диапазон и принимает решение по стоимости в момент создания карточки.</span><span data-lang="en">I added a block showing prices for similar items into the product-adding flow. The partner immediately sees the market range and makes a pricing decision the moment they create the listing.</span></p>
         <p><span data-lang="ru">Это помогает быстрее создавать конкурентный оффер внутри маркетплейса.</span><span data-lang="en">This helps create a competitive offer within the marketplace faster.</span></p>
       </div>
@@ -417,7 +541,7 @@
         <div class="detail-pair media-left">
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/alif-delivery.png" data-alt-ru="Alif Partners — раздел доставки" data-alt-en="Alif Partners — the delivery section" alt="Alif Partners — раздел доставки" loading="lazy">
+              <img src="assets/process/alif-delivery.png" data-alt-ru="Alif Partners · раздел доставки" data-alt-en="Alif Partners · the delivery section" alt="Alif Partners · раздел доставки" loading="lazy">
             </button>
           </div>
           <div class="detail-pair-text"><p><span data-lang="ru">Нужно было перенести процесс в админку, но сохранить текущую бизнес-логику оформления заказов и все необходимые данные, чтобы переход не повлиял на корректность работы. Процесс оформления заявок, который ранее проходил через терминалы, был перенесён в админку и адаптирован под её дизайн, сохранив всю бизнес-логику.</span><span data-lang="en">The process needed to move into the admin panel while preserving the existing business logic for processing orders and all the necessary data, so the transition wouldn't affect how correctly it worked. The request-processing flow that used to run through terminals was moved into the admin panel and adapted to its design, preserving all the business logic.</span></p></div>
@@ -430,40 +554,73 @@
           <div class="detail-pair-text"><p><span data-lang="ru">Дополнительно спроектировала мобильную версию с полным функционалом, чтобы партнёры могли работать с заявками, доставкой и уведомлениями не только за компьютером, но и в магазине, на складе или на выдаче.</span><span data-lang="en">I additionally designed a full-featured mobile version so partners could work with requests, delivery, and notifications not just at a computer, but in-store, in the warehouse, or at pickup.</span></p></div>
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
-              <img src="assets/process/alif-mobile.png" data-alt-ru="Alif Partners — мобильная версия" data-alt-en="Alif Partners — the mobile version" alt="Alif Partners — мобильная версия" loading="lazy">
+              <img src="assets/process/alif-mobile.png" data-alt-ru="Alif Partners · мобильная версия" data-alt-en="Alif Partners · the mobile version" alt="Alif Partners · мобильная версия" loading="lazy">
             </button>
           </div>
         </div>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">10</span><h2><span data-lang="ru">Результат</span><span data-lang="en">Result</span></h2></div>
-        <p><span data-lang="ru">Удалось переосмыслить админ-панель из внутреннего инструмента банка в продукт для самостоятельной работы партнёров.</span><span data-lang="en">The admin panel was reimagined from the bank's internal tool into a product for partners' independent work.</span></p>
-        <p><span data-lang="ru">Часть процессов перешла на сторону партнёров: они могут сами работать с товарами, заявками, доставкой и коммуникацией с банком. Внутренние команды сохранили контроль, но перестали быть обязательным участником каждого операционного действия.</span><span data-lang="en">Part of the processes moved to the partners' side: they can now handle products, requests, delivery, and communication with the bank themselves. Internal teams kept control but stopped being a required participant in every operational action.</span></p>
-        <p><span data-lang="ru">Остатки товара упоминаются в кейсе только на уровне уведомлений (см. раздел 05 — единый чат сообщает о низком остатке). Отдельного экрана управления складом/остатками в этом проекте не было — это честно обозначено здесь, а не показано отсутствующим макетом.</span><span data-lang="en">Stock is covered in this case only at the notification level (see section 05 — the unified chat flags low stock). There was no dedicated stock-management screen in this project's scope — noted honestly here rather than illustrated with a screen that doesn't exist.</span></p>
-      </div>
-      <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">11</span><h2><span data-lang="ru">Ожидаемый эффект</span><span data-lang="en">Expected impact</span></h2></div>
-        <p><span data-lang="ru">Решение — новая структура админки, единый чат, поиск товара, блок цен конкурентов, перенос заявок на доставку и мобильная версия — реализовано и используется партнёрами и модераторами. У меня нет доступа к пост-запуск метрикам банка, поэтому ниже — направления, по которым нужно оценивать результат, а не подтверждённые цифры.</span><span data-lang="en">The solution — the new admin structure, unified chat, product search, competitor-pricing block, delivery requests moved into the panel, and the mobile version — is shipped and in use by partners and moderators. I don't have access to the bank's post-launch metrics, so what follows are the directions the result should be evaluated against, not confirmed numbers.</span></p>
-        <div class="outcome-card">
-          <span class="outcome-kicker"><span data-lang="ru">Метрики для проверки после запуска</span><span data-lang="en">Metrics to check after launch</span></span>
-          <ul class="outcome-list is-expected">
-            <li><span data-lang="ru">Ручная нагрузка на модераторов, колл-центр и фронт-офис — должна снизиться</span><span data-lang="en">Manual load on moderators, the call center, and the front office — expected to drop</span></li>
-            <li><span data-lang="ru">Время обработки заявок и доставки — должно сократиться</span><span data-lang="en">Processing time for requests and delivery — expected to shorten</span></li>
-            <li><span data-lang="ru">Потери заявок из-за неактуальных данных — должны снизиться</span><span data-lang="en">Lost requests caused by outdated data — expected to fall</span></li>
-            <li><span data-lang="ru">Доля успешно завершённых заказов — должна вырасти</span><span data-lang="en">The share of successfully completed orders — expected to rise</span></li>
-            <li><span data-lang="ru">Готовность продукта к масштабированию — заложена в архитектуре, не проверена ростом на новых партнёров и зарубежные офисы</span><span data-lang="en">The product's readiness to scale — built into the architecture, not yet proven by actual growth to new partners and overseas offices</span></li>
-          </ul>
+        <div class="detail-head detail-head--tight"><span class="detail-num">10</span><h2><span data-lang="ru">Результат</span><span data-lang="en">Result</span></h2></div>
+        <p class="result-summary-text"><span data-lang="ru">Админ-панель стала единым рабочим пространством, в котором партнёры самостоятельно управляют товарами, заявками, доставкой и коммуникацией, а банк сохраняет контроль над процессами.</span><span data-lang="en">The admin panel became a single workspace where partners independently manage products, requests, delivery, and communication, while the bank keeps control over the processes.</span></p>
+        <div class="result-cards">
+          <div class="result-card result-card--lead">
+            <span class="result-card__num" aria-hidden="true">01</span>
+            <h4 class="result-card__title"><span data-lang="ru">Самостоятельная работа</span><span data-lang="en">Independent work</span></h4>
+            <p class="result-card__text"><span data-lang="ru">Партнёры могут управлять товарами, проводить продажи, работать с заявками и оформлять доставку в одном интерфейсе.</span><span data-lang="en">Partners can manage products, process sales, handle requests, and arrange delivery in a single interface.</span></p>
+          </div>
+          <div class="result-card">
+            <span class="result-card__num" aria-hidden="true">02</span>
+            <h4 class="result-card__title"><span data-lang="ru">Единый рабочий процесс</span><span data-lang="en">One shared workflow</span></h4>
+            <p class="result-card__text"><span data-lang="ru">Товары, заявки, доставка и коммуникация с банком больше не разделены между разными каналами.</span><span data-lang="en">Products, requests, delivery, and communication with the bank are no longer split across separate channels.</span></p>
+          </div>
+          <div class="result-card">
+            <span class="result-card__num" aria-hidden="true">03</span>
+            <h4 class="result-card__title"><span data-lang="ru">Контроль без ручного участия</span><span data-lang="en">Control without manual involvement</span></h4>
+            <p class="result-card__text"><span data-lang="ru">Команда банка сохраняет прозрачность процессов, но перестаёт быть обязательным участником каждого действия.</span><span data-lang="en">The bank's team keeps visibility into the process but stops being a required participant in every action.</span></p>
+          </div>
+        </div>
+        <div class="result-note">
+          <span class="result-note__label"><span data-lang="ru">Граница решения</span><span data-lang="en">Scope boundary</span></span>
+          <p class="result-note__text"><span data-lang="ru">Уведомления о низком остатке вошли в общий сценарий. Отдельный интерфейс управления складом в рамках проекта не проектировался.</span><span data-lang="en">Low-stock notifications became part of the general scenario. A separate warehouse-management interface wasn't designed as part of this project.</span></p>
         </div>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">12</span><h2><span data-lang="ru">Вывод</span><span data-lang="en">Conclusion</span></h2></div>
-        <p class="case-conclusion"><span data-lang="ru">Проект выполнил исходную задачу: админ-панель перепроектирована вокруг самостоятельной работы партнёров, а не только внутренних процессов банка. Стала ли сеть от этого более масштабируемой на практике — вопрос метрик из раздела 11, а не готовый вывод.</span><span data-lang="en">The project delivered on its original task: the admin panel was rebuilt around partners' independent work, not just the bank's internal processes. Whether that actually made the network more scalable in practice is a question for the metrics in section 11, not a settled conclusion.</span></p>
+        <div class="detail-head"><span class="detail-num">11</span><h2><span data-lang="ru">Как измерить эффект</span><span data-lang="en">How to measure the effect</span></h2></div>
+        <p><span data-lang="ru">Решение реализовано и используется партнёрами и модераторами. У меня нет доступа к пост-запусковой аналитике банка, поэтому ниже указаны метрики для оценки эффекта.</span><span data-lang="en">The solution is shipped and in use by partners and moderators. I don't have access to the bank's post-launch analytics, so what follows are metrics for evaluating the effect.</span></p>
+        <div class="metric-grid">
+          <div class="metric-card">
+            <span class="metric-card__goal"><span data-lang="ru">Операционная нагрузка</span><span data-lang="en">Operational load</span></span>
+            <p class="metric-card__sentence"><span data-lang="ru">Проверяем, сокращается ли количество ручных операций сотрудников банка и время модераторов на сопровождение одной заявки.</span><span data-lang="en">We're checking whether the number of manual operations by bank staff and the moderator time spent per request are actually decreasing.</span></p>
+            <span class="metric-card__caption"><span data-lang="ru">Метрика для проверки</span><span data-lang="en">Metric to verify</span></span>
+            <span class="metric-card__accent"><span data-lang="ru">Меньше ручной работы со стороны банка</span><span data-lang="en">Less manual work on the bank's side</span></span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-card__goal"><span data-lang="ru">Скорость обработки</span><span data-lang="en">Processing speed</span></span>
+            <p class="metric-card__sentence"><span data-lang="ru">Измеряем время от создания заявки до передачи в доставку и среднее время её обработки партнёром.</span><span data-lang="en">We're measuring the time from request creation to handoff to delivery, and the average time a partner takes to process it.</span></p>
+            <span class="metric-card__caption"><span data-lang="ru">Метрика для проверки</span><span data-lang="en">Metric to verify</span></span>
+            <span class="metric-card__accent"><span data-lang="ru">Быстрее от заявки до доставки</span><span data-lang="en">Faster from request to delivery</span></span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-card__goal"><span data-lang="ru">Качество заказов</span><span data-lang="en">Order quality</span></span>
+            <p class="metric-card__sentence"><span data-lang="ru">Сравниваем долю отмен из-за неактуальных данных и количество заказов, завершённых без вмешательства банка.</span><span data-lang="en">We're comparing the share of cancellations caused by outdated data against the number of orders completed without the bank's involvement.</span></p>
+            <span class="metric-card__caption"><span data-lang="ru">Метрика для проверки</span><span data-lang="en">Metric to verify</span></span>
+            <span class="metric-card__accent"><span data-lang="ru">Меньше отмен, больше самостоятельных завершений</span><span data-lang="en">Fewer cancellations, more independent completions</span></span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-card__goal"><span data-lang="ru">Масштабируемость</span><span data-lang="en">Scalability</span></span>
+            <p class="metric-card__sentence"><span data-lang="ru">Отслеживаем количество партнёров на одного модератора и нагрузку команды при подключении новых магазинов и офисов.</span><span data-lang="en">We're tracking the number of partners per moderator and the team's load when onboarding new stores and offices.</span></p>
+            <span class="metric-card__caption"><span data-lang="ru">Метрика для проверки</span><span data-lang="en">Metric to verify</span></span>
+            <span class="metric-card__accent"><span data-lang="ru">Рост сети без пропорционального роста команды</span><span data-lang="en">The network grows without proportional team growth</span></span>
+          </div>
+        </div>
       </div>
-
-      <a class="back-link" href="index.html" style="margin-top:48px"><span data-lang="ru">← Все работы</span><span data-lang="en">← All work</span></a>
     </div>
 
     <nav class="case-floating-nav">
+      <a class="case-home" href="index.html">
+        <span class="case-home__arrow" aria-hidden="true">←</span>
+        <span class="case-home__label"><span data-lang="ru">Главная страница</span><span data-lang="en">Homepage</span></span>
+      </a>
       <button class="case-like" type="button" data-case-id="alif-partners" aria-pressed="false" aria-label="Поставить лайк кейсу Alif Partners">
         <svg class="case-like__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
           <path d="M12 20.5s-7.2-4.5-9.8-8.9C.5 8.4 1.9 4.5 5.6 4.5c2.2 0 3.8 1.4 4.9 3.1 1.1-1.7 2.7-3.1 4.9-3.1 3.7 0 5.1 3.9 2.4 7.1-2.6 4.4-9.8 8.9-9.8 8.9z"/>
@@ -490,5 +647,28 @@
   <script src="assets/i18n.js"></script>
   <script src="assets/lightbox.js"></script>
   <script src="assets/case-nav.js"></script>
+  <script>
+    // Soft, one-time, staggered reveal for the "Результат" cards — scoped to
+    // this page only (the other three case pages weren't asked for this).
+    // Reduced-motion gets the safe baseline: fully visible immediately.
+    (function () {
+      var cards = document.querySelectorAll('.result-card');
+      if (!cards.length) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        cards.forEach(function (c) { c.classList.add('is-inview'); });
+        return;
+      }
+      var list = Array.prototype.slice.call(cards);
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var index = list.indexOf(entry.target);
+          setTimeout(function () { entry.target.classList.add('is-inview'); }, index * 90);
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.2 });
+      list.forEach(function (c) { observer.observe(c); });
+    })();
+  </script>
 </body>
 </html>

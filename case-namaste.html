@@ -208,29 +208,79 @@
   .result-note__label { font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); }
   .result-note__text { font-size: 0.9rem; color: var(--text-dim); line-height: 1.55; max-width: 60ch; }
 
-  .metric-grid {
+  .detail-head.detail-head--tight { margin-bottom: 0; }
+
+  /* "Как измерить эффект" — shared across all four case pages. One short
+     intro paragraph plus a compact 2x2 grid of cards, each holding only an
+     indicator name and its product metric — no impact line, no inner tint
+     box. Everything sits flush on one left edge: flex column,
+     align-items: flex-start, text-align: left, no per-child margin-left/
+     padding-left, no transform offsets, no absolute positioning. */
+  .impact-cards {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5);
+    margin-top: clamp(24px, 2.5vw, 32px);
+  }
+  .impact-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-medium);
+    padding: clamp(16px, 1.8vw, 20px); display: flex; flex-direction: column;
+    align-items: flex-start; text-align: left; gap: 4px; min-width: 0;
+  }
+  .impact-card__eyebrow {
+    font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2);
+  }
+  .impact-card__stage { font-family: var(--display); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; color: var(--text); }
+  .impact-card__metric-label {
+    margin-top: 8px; font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2);
+  }
+  .impact-card .impact-card__metric { margin: 2px 0 0; max-width: none; font-size: 0.9rem; color: var(--text-dim); line-height: 1.5; }
+  @media (max-width: 720px) {
+    .impact-cards { grid-template-columns: 1fr; }
+  }
+
+  /* Health-features comparison — replaces a table screenshot with a real,
+     same-system card grid (.metric-card's surface/border/radius/shadow),
+     plus a Namaste-specific accent: the two MVP cards get a soft tint in
+     --live's own RGB (2f6b52), the site's one existing "calm green" token.
+     Status is always spelled out in .health-card__status text, never color
+     alone; the dot rows are aria-hidden decoration, the "N из 10" text next
+     to them is the only thing a screen reader needs. */
+  .health-comparison { margin-top: clamp(40px, 4vw, 56px); }
+  .health-comparison__title {
+    font-family: var(--display); font-weight: 700; font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+    letter-spacing: -0.02em; line-height: 1.2; color: var(--text);
+  }
+  .health-comparison__title + p { margin-top: 12px; }
+  .health-comparison__conclusion { margin-top: clamp(32px, 3vw, 40px); color: var(--text); font-weight: 500; }
+  .health-cards {
     display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5);
     margin-top: clamp(32px, 3vw, 40px);
   }
-  .metric-card {
+  .health-card {
     background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-large);
-    padding: clamp(24px, 3vw, 32px); display: flex; flex-direction: column; gap: 0;
+    padding: clamp(24px, 3vw, 32px); display: flex; flex-direction: column; gap: var(--space-4);
     min-width: 0; box-shadow: var(--shadow-soft);
   }
-  .metric-card__goal { font-family: var(--mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); }
-  .metric-card .metric-card__sentence { margin-top: 12px; margin-bottom: 0; font-size: 1.02rem; color: var(--text); line-height: 1.6; }
-  .metric-card__caption { margin-top: clamp(24px, 2.5vw, 32px); font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); }
-  .metric-card__accent {
-    margin-top: 10px;
+  .health-card--selected { background: rgba(47, 107, 82, 0.06); border-color: rgba(47, 107, 82, 0.2); }
+  .health-card__title { font-family: var(--display); font-weight: 700; font-size: 1.15rem; letter-spacing: -0.01em; color: var(--text); }
+  .health-card__scale { display: flex; flex-direction: column; gap: var(--space-3); }
+  .health-card__row { display: flex; flex-direction: column; gap: 6px; }
+  .health-card__row dt { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); }
+  .health-card__row dd { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 0.92rem; color: var(--text); line-height: 1.3; }
+  .health-card__dots { display: inline-flex; gap: 3px; flex-shrink: 0; }
+  .health-card__dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--line-strong); }
+  .health-card__dots span.is-filled { background: var(--text-strong); }
+  .health-card__status {
+    margin-top: auto;
     display: inline-flex; align-self: flex-start; max-width: 100%;
-    background: var(--nav-bg); color: #f8f8f8;
     font-family: var(--sans); font-size: 0.85rem; font-weight: 600; line-height: 1.35;
     padding: 8px 16px; border-radius: var(--radius-pill);
   }
+  .health-card__status--mvp { background: var(--nav-bg); color: #f8f8f8; }
+  .health-card__status--after { background: var(--line-faint); color: var(--text-dim); border: 1px solid var(--line-strong); }
+  .health-card__status--depends { background: transparent; color: var(--text-dim); border: 1px dashed var(--line-strong); }
   @media (max-width: 720px) {
-    .metric-grid { grid-template-columns: 1fr; }
+    .health-cards { grid-template-columns: 1fr; }
   }
-  .detail-head.detail-head--tight { margin-bottom: 0; }
 
   /* ===== Case floating dock (like + next case) — shared across all case pages =====
      Two independent glass controls, fixed to the viewport like the top nav —
@@ -407,13 +457,85 @@
       </div>
       <div class="detail-block">
         <div class="detail-head"><span class="detail-num">05</span><h2><span data-lang="ru">Health-функции</span><span data-lang="en">Health features</span></h2></div>
-        <div class="detail-pair">
-          <div class="detail-pair-text"><p><span data-lang="ru">Вопрос: за счёт чего продукт может выделиться на фоне конкурентов при существующих ограничениях, не усложняя основной сценарий тренировок. Гипотеза: расширение за счёт смежных health-функций повысит вовлечённость и покажет приложение не только инструментом тренировок, но и более широкой заботы о себе. В условиях ограниченных ресурсов я оценивала направления расширения по трём критериям: сложность реализации, пользовательская ценность и влияние на монетизацию.</span><span data-lang="en">Question: what could help the product stand out from competitors within the existing constraints, without complicating the core workout scenario. Hypothesis: expanding into adjacent health features would increase engagement and position the app as more than just a workout tool, extending it toward broader self-care. Given limited resources, I evaluated expansion directions against three criteria: implementation complexity, user value, and impact on monetization.</span></p></div>
-          <div class="detail-pair-media">
-            <button class="case-image-trigger" type="button">
-              <img src="assets/process/namaste-health-table.png" data-alt-ru="Namaste: оценка health-функций" data-alt-en="Namaste: scoring the health features" alt="Namaste: оценка health-функций" loading="lazy">
-            </button>
+        <p><span data-lang="ru">Вопрос: за счёт чего продукт может выделиться на фоне конкурентов при существующих ограничениях, не усложняя основной сценарий тренировок. Гипотеза: расширение за счёт смежных health-функций повысит вовлечённость и покажет приложение не только инструментом тренировок, но и более широкой заботы о себе. В условиях ограниченных ресурсов я оценивала направления расширения по трём критериям: сложность реализации, пользовательская ценность и влияние на монетизацию.</span><span data-lang="en">Question: what could help the product stand out from competitors within the existing constraints, without complicating the core workout scenario. Hypothesis: expanding into adjacent health features would increase engagement and position the app as more than just a workout tool, extending it toward broader self-care. Given limited resources, I evaluated expansion directions against three criteria: implementation complexity, user value, and impact on monetization.</span></p>
+        <div class="health-comparison">
+          <h3 class="health-comparison__title"><span data-lang="ru">Какие health-функции вошли в&nbsp;MVP</span><span data-lang="en">Which health features made it into&nbsp;the&nbsp;MVP</span></h3>
+          <p><span data-lang="ru">Мы сравнили четыре функции по сложности реализации, пользовательской ценности и потенциалу монетизации. Для первой версии выбрали сценарии, которые дают пользователю заметную ценность и не создают чрезмерную техническую нагрузку.</span><span data-lang="en">We compared four features by implementation complexity, user value, and monetization potential. For the first version, we picked scenarios that give the user noticeable value without creating excessive technical load.</span></p>
+          <div class="health-cards">
+            <div class="health-card health-card--selected">
+              <h4 class="health-card__title"><span data-lang="ru">Трекер сна</span><span data-lang="en">Sleep tracker</span></h4>
+              <dl class="health-card__scale">
+                <div class="health-card__row">
+                  <dt><span data-lang="ru">Сложность разработки</span><span data-lang="en">Implementation complexity</span></dt>
+                  <dd><span data-lang="ru">8 из 10</span><span data-lang="en">8 of 10</span><span class="health-card__dots" aria-hidden="true"><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span></span><span></span></span></dd>
+                </div>
+                <div class="health-card__row">
+                  <dt><span data-lang="ru">Пользовательская ценность</span><span data-lang="en">User value</span></dt>
+                  <dd><span data-lang="ru">7 из 10</span><span data-lang="en">7 of 10</span><span class="health-card__dots" aria-hidden="true"><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span></span><span></span><span></span></span></dd>
+                </div>
+                <div class="health-card__row">
+                  <dt><span data-lang="ru">Потенциал монетизации</span><span data-lang="en">Monetization potential</span></dt>
+                  <dd><span data-lang="ru">7 из 10</span><span data-lang="en">7 of 10</span><span class="health-card__dots" aria-hidden="true"><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span></span><span></span><span></span></span></dd>
+                </div>
+              </dl>
+              <span class="health-card__status health-card__status--mvp"><span data-lang="ru">В MVP</span><span data-lang="en">In the MVP</span></span>
+            </div>
+            <div class="health-card health-card--selected">
+              <h4 class="health-card__title"><span data-lang="ru">Потребление воды</span><span data-lang="en">Water intake</span></h4>
+              <dl class="health-card__scale">
+                <div class="health-card__row">
+                  <dt><span data-lang="ru">Сложность разработки</span><span data-lang="en">Implementation complexity</span></dt>
+                  <dd><span data-lang="ru">2 из 10</span><span data-lang="en">2 of 10</span><span class="health-card__dots" aria-hidden="true"><span class="is-filled"></span><span class="is-filled"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></dd>
+                </div>
+                <div class="health-card__row">
+                  <dt><span data-lang="ru">Пользовательская ценность</span><span data-lang="en">User value</span></dt>
+                  <dd><span data-lang="ru">9 из 10</span><span data-lang="en">9 of 10</span><span class="health-card__dots" aria-hidden="true"><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span></span></span></dd>
+                </div>
+                <div class="health-card__row">
+                  <dt><span data-lang="ru">Потенциал монетизации</span><span data-lang="en">Monetization potential</span></dt>
+                  <dd><span data-lang="ru">8 из 10</span><span data-lang="en">8 of 10</span><span class="health-card__dots" aria-hidden="true"><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span></span><span></span></span></dd>
+                </div>
+              </dl>
+              <span class="health-card__status health-card__status--mvp"><span data-lang="ru">В MVP</span><span data-lang="en">In the MVP</span></span>
+            </div>
+            <div class="health-card">
+              <h4 class="health-card__title"><span data-lang="ru">Счётчик КБЖУ</span><span data-lang="en">Calorie and macro counter</span></h4>
+              <dl class="health-card__scale">
+                <div class="health-card__row">
+                  <dt><span data-lang="ru">Сложность разработки</span><span data-lang="en">Implementation complexity</span></dt>
+                  <dd><span data-lang="ru">9 из 10</span><span data-lang="en">9 of 10</span><span class="health-card__dots" aria-hidden="true"><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span></span></span></dd>
+                </div>
+                <div class="health-card__row">
+                  <dt><span data-lang="ru">Пользовательская ценность</span><span data-lang="en">User value</span></dt>
+                  <dd><span data-lang="ru">10 из 10</span><span data-lang="en">10 of 10</span><span class="health-card__dots" aria-hidden="true"><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span></span></dd>
+                </div>
+                <div class="health-card__row">
+                  <dt><span data-lang="ru">Потенциал монетизации</span><span data-lang="en">Monetization potential</span></dt>
+                  <dd><span data-lang="ru">9 из 10</span><span data-lang="en">9 of 10</span><span class="health-card__dots" aria-hidden="true"><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span></span></span></dd>
+                </div>
+              </dl>
+              <span class="health-card__status health-card__status--after"><span data-lang="ru">После MVP</span><span data-lang="en">After the MVP</span></span>
+            </div>
+            <div class="health-card">
+              <h4 class="health-card__title"><span data-lang="ru">Шагомер и активность</span><span data-lang="en">Step counter and activity</span></h4>
+              <dl class="health-card__scale">
+                <div class="health-card__row">
+                  <dt><span data-lang="ru">Сложность разработки</span><span data-lang="en">Implementation complexity</span></dt>
+                  <dd><span data-lang="ru">7 из 10</span><span data-lang="en">7 of 10</span><span class="health-card__dots" aria-hidden="true"><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span></span><span></span><span></span></span></dd>
+                </div>
+                <div class="health-card__row">
+                  <dt><span data-lang="ru">Пользовательская ценность</span><span data-lang="en">User value</span></dt>
+                  <dd><span data-lang="ru">8 из 10</span><span data-lang="en">8 of 10</span><span class="health-card__dots" aria-hidden="true"><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span></span><span></span></span></dd>
+                </div>
+                <div class="health-card__row">
+                  <dt><span data-lang="ru">Потенциал монетизации</span><span data-lang="en">Monetization potential</span></dt>
+                  <dd><span data-lang="ru">6 из 10</span><span data-lang="en">6 of 10</span><span class="health-card__dots" aria-hidden="true"><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span></span><span></span><span></span><span></span></span></dd>
+                </div>
+              </dl>
+              <span class="health-card__status health-card__status--depends"><span data-lang="ru">Зависит от интеграций</span><span data-lang="en">Depends on integrations</span></span>
+            </div>
           </div>
+          <p class="health-comparison__conclusion"><span data-lang="ru">В первую версию вошли трекер сна и контроль воды. Счётчик КБЖУ отложили из-за высокой сложности, а сценарий активности оставили до проработки интеграций с Apple Health и носимыми устройствами.</span><span data-lang="en">The first version included the sleep tracker and water tracking. The calorie and macro counter was postponed due to its high complexity, and the activity scenario was left until integrations with Apple Health and wearables are worked out.</span></p>
         </div>
         <div class="detail-pair media-left">
           <div class="detail-pair-media">
@@ -457,19 +579,31 @@
       </div>
       <div class="detail-block">
         <div class="detail-head"><span class="detail-num">08</span><h2><span data-lang="ru">Как измерить эффект</span><span data-lang="en">How to measure the effect</span></h2></div>
-        <p><span data-lang="ru">MVP запущен для пользователей. Данных пост-запусковой аналитики в этом кейсе нет, поэтому ниже перечислены метрики, которые имеет смысл отслеживать.</span><span data-lang="en">The MVP has launched for users. There's no post-launch analytics data for this case, so what follows are metrics worth tracking.</span></p>
-        <div class="metric-grid">
-          <div class="metric-card">
-            <span class="metric-card__goal"><span data-lang="ru">Вовлечённость</span><span data-lang="en">Engagement</span></span>
-            <p class="metric-card__sentence"><span data-lang="ru">Проверяем, как health-виджеты (сон, вода) влияют на частоту возвращения в приложение.</span><span data-lang="en">We're checking how the health widgets (sleep, water) affect how often people come back to the app.</span></p>
-            <span class="metric-card__caption"><span data-lang="ru">Метрика для проверки</span><span data-lang="en">Metric to verify</span></span>
-            <span class="metric-card__accent"><span data-lang="ru">Выше вовлечённость за счёт health-функций</span><span data-lang="en">Higher engagement from the health features</span></span>
+        <p><span data-lang="ru">Проверяем путь пользователя от первой тренировки до регулярных занятий, оплаты и продления подписки.</span><span data-lang="en">We're checking the user's path from the first workout to regular practice, payment, and subscription renewal.</span></p>
+        <div class="impact-cards">
+          <div class="impact-card">
+            <span class="impact-card__eyebrow"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
+            <h4 class="impact-card__stage"><span data-lang="ru">Первая ценность</span><span data-lang="en">First value</span></h4>
+            <span class="impact-card__metric-label"><span data-lang="ru">Продуктовая метрика</span><span data-lang="en">Product metric</span></span>
+            <p class="impact-card__metric"><span data-lang="ru">Доля новых пользователей, завершивших первую тренировку.</span><span data-lang="en">The share of new users who completed their first workout.</span></p>
           </div>
-          <div class="metric-card">
-            <span class="metric-card__goal"><span data-lang="ru">Прогрессия</span><span data-lang="en">Progression</span></span>
-            <p class="metric-card__sentence"><span data-lang="ru">Отслеживаем, как пользователи проходят через уровни сложности: начинающий, продвинутый, мастер.</span><span data-lang="en">We're tracking how users move through the difficulty levels: beginner, advanced, master.</span></p>
-            <span class="metric-card__caption"><span data-lang="ru">Метрика для проверки</span><span data-lang="en">Metric to verify</span></span>
-            <span class="metric-card__accent"><span data-lang="ru">Понятная и рабочая прогрессия внутри направлений</span><span data-lang="en">Clear, working progression within each style</span></span>
+          <div class="impact-card">
+            <span class="impact-card__eyebrow"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
+            <h4 class="impact-card__stage"><span data-lang="ru">Формирование привычки</span><span data-lang="en">Habit formation</span></h4>
+            <span class="impact-card__metric-label"><span data-lang="ru">Продуктовая метрика</span><span data-lang="en">Product metric</span></span>
+            <p class="impact-card__metric"><span data-lang="ru">Retention D7 и D30 после первой тренировки.</span><span data-lang="en">D7 and D30 retention after the first workout.</span></p>
+          </div>
+          <div class="impact-card">
+            <span class="impact-card__eyebrow"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
+            <h4 class="impact-card__stage"><span data-lang="ru">Конверсия в подписку</span><span data-lang="en">Subscription conversion</span></h4>
+            <span class="impact-card__metric-label"><span data-lang="ru">Продуктовая метрика</span><span data-lang="en">Product metric</span></span>
+            <p class="impact-card__metric"><span data-lang="ru">Доля пользователей, оформивших подписку после пробного периода.</span><span data-lang="en">The share of users who subscribed after the trial period.</span></p>
+          </div>
+          <div class="impact-card">
+            <span class="impact-card__eyebrow"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
+            <h4 class="impact-card__stage"><span data-lang="ru">Продление</span><span data-lang="en">Renewal</span></h4>
+            <span class="impact-card__metric-label"><span data-lang="ru">Продуктовая метрика</span><span data-lang="en">Product metric</span></span>
+            <p class="impact-card__metric"><span data-lang="ru">Доля продлений и отток после первого платёжного периода.</span><span data-lang="en">The renewal rate and churn after the first billing period.</span></p>
           </div>
         </div>
       </div>

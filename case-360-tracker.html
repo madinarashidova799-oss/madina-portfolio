@@ -208,29 +208,34 @@
   .result-note__label { font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); }
   .result-note__text { font-size: 0.9rem; color: var(--text-dim); line-height: 1.55; max-width: 60ch; }
 
-  .metric-grid {
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5);
-    margin-top: clamp(32px, 3vw, 40px);
-  }
-  .metric-card {
-    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-large);
-    padding: clamp(24px, 3vw, 32px); display: flex; flex-direction: column; gap: 0;
-    min-width: 0; box-shadow: var(--shadow-soft);
-  }
-  .metric-card__goal { font-family: var(--mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); }
-  .metric-card .metric-card__sentence { margin-top: 12px; margin-bottom: 0; font-size: 1.02rem; color: var(--text); line-height: 1.6; }
-  .metric-card__caption { margin-top: clamp(24px, 2.5vw, 32px); font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); }
-  .metric-card__accent {
-    margin-top: 10px;
-    display: inline-flex; align-self: flex-start; max-width: 100%;
-    background: var(--nav-bg); color: #f8f8f8;
-    font-family: var(--sans); font-size: 0.85rem; font-weight: 600; line-height: 1.35;
-    padding: 8px 16px; border-radius: var(--radius-pill);
-  }
-  @media (max-width: 720px) {
-    .metric-grid { grid-template-columns: 1fr; }
-  }
   .detail-head.detail-head--tight { margin-bottom: 0; }
+
+  /* "Как измерить эффект" — shared across all four case pages. One short
+     intro paragraph plus a compact 2x2 grid of cards, each holding only an
+     indicator name and its product metric — no impact line, no inner tint
+     box. Everything sits flush on one left edge: flex column,
+     align-items: flex-start, text-align: left, no per-child margin-left/
+     padding-left, no transform offsets, no absolute positioning. */
+  .impact-cards {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5);
+    margin-top: clamp(24px, 2.5vw, 32px);
+  }
+  .impact-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-medium);
+    padding: clamp(16px, 1.8vw, 20px); display: flex; flex-direction: column;
+    align-items: flex-start; text-align: left; gap: 4px; min-width: 0;
+  }
+  .impact-card__eyebrow {
+    font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2);
+  }
+  .impact-card__stage { font-family: var(--display); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; color: var(--text); }
+  .impact-card__metric-label {
+    margin-top: 8px; font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2);
+  }
+  .impact-card .impact-card__metric { margin: 2px 0 0; max-width: none; font-size: 0.9rem; color: var(--text-dim); line-height: 1.5; }
+  @media (max-width: 720px) {
+    .impact-cards { grid-template-columns: 1fr; }
+  }
 
   .detail-list { display: flex; flex-direction: column; gap: 12px; }
   .detail-list-item { display: flex; gap: 10px; align-items: flex-start; }
@@ -529,19 +534,31 @@
       </div>
       <div class="detail-block">
         <div class="detail-head"><span class="detail-num">14</span><h2><span data-lang="ru">Как измерить эффект</span><span data-lang="en">How to measure the effect</span></h2></div>
-        <p><span data-lang="ru">MVP запущен и используется тестовой аудиторией. Ниже перечислены метрики, которые ещё предстоит проверить, а не подтверждённые результаты.</span><span data-lang="en">The MVP has launched and is in use by a test audience. What follows are metrics still to be verified, not confirmed results.</span></p>
-        <div class="metric-grid">
-          <div class="metric-card">
-            <span class="metric-card__goal"><span data-lang="ru">Готовность платить</span><span data-lang="en">Willingness to pay</span></span>
-            <p class="metric-card__sentence"><span data-lang="ru">Проверяем, готовы ли пользователи платить именно за премиум-сценарии: историю поездок и расширенные функции.</span><span data-lang="en">We're checking whether users are willing to pay specifically for premium scenarios: trip history and extended features.</span></p>
-            <span class="metric-card__caption"><span data-lang="ru">Метрика для проверки</span><span data-lang="en">Metric to verify</span></span>
-            <span class="metric-card__accent"><span data-lang="ru">Подтверждённый спрос на премиум-подписку</span><span data-lang="en">Confirmed demand for the premium subscription</span></span>
+        <p><span data-lang="ru">Проверяем путь от первой настройки сценария безопасности до регулярного использования, премиум-подписки и её продления.</span><span data-lang="en">We're checking the path from first setting up the safety scenario to regular use, the premium subscription, and its renewal.</span></p>
+        <div class="impact-cards">
+          <div class="impact-card">
+            <span class="impact-card__eyebrow"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
+            <h4 class="impact-card__stage"><span data-lang="ru">Активация</span><span data-lang="en">Activation</span></h4>
+            <span class="impact-card__metric-label"><span data-lang="ru">Продуктовая метрика</span><span data-lang="en">Product metric</span></span>
+            <p class="impact-card__metric"><span data-lang="ru">Доля пользователей, завершивших настройку основного сценария безопасности.</span><span data-lang="en">The share of users who completed setting up the core safety scenario.</span></p>
           </div>
-          <div class="metric-card">
-            <span class="metric-card__goal"><span data-lang="ru">Граница freemium</span><span data-lang="en">Freemium boundary</span></span>
-            <p class="metric-card__sentence"><span data-lang="ru">Тестируем на реальных платежах, актуальна ли 30-дневная граница истории поездок как платная опция.</span><span data-lang="en">We're testing against real payments whether the 30-day trip history boundary holds up as a paid option.</span></p>
-            <span class="metric-card__caption"><span data-lang="ru">Метрика для проверки</span><span data-lang="en">Metric to verify</span></span>
-            <span class="metric-card__accent"><span data-lang="ru">Оптимальная граница бесплатного и платного доступа</span><span data-lang="en">The right line between free and paid access</span></span>
+          <div class="impact-card">
+            <span class="impact-card__eyebrow"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
+            <h4 class="impact-card__stage"><span data-lang="ru">Регулярное использование</span><span data-lang="en">Regular use</span></h4>
+            <span class="impact-card__metric-label"><span data-lang="ru">Продуктовая метрика</span><span data-lang="en">Product metric</span></span>
+            <p class="impact-card__metric"><span data-lang="ru">Retention активированных пользователей.</span><span data-lang="en">Retention of activated users.</span></p>
+          </div>
+          <div class="impact-card">
+            <span class="impact-card__eyebrow"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
+            <h4 class="impact-card__stage"><span data-lang="ru">Конверсия в премиум</span><span data-lang="en">Premium conversion</span></h4>
+            <span class="impact-card__metric-label"><span data-lang="ru">Продуктовая метрика</span><span data-lang="en">Product metric</span></span>
+            <p class="impact-card__metric"><span data-lang="ru">Доля активированных пользователей, оформивших подписку.</span><span data-lang="en">The share of activated users who subscribed.</span></p>
+          </div>
+          <div class="impact-card">
+            <span class="impact-card__eyebrow"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
+            <h4 class="impact-card__stage"><span data-lang="ru">Продление</span><span data-lang="en">Renewal</span></h4>
+            <span class="impact-card__metric-label"><span data-lang="ru">Продуктовая метрика</span><span data-lang="en">Product metric</span></span>
+            <p class="impact-card__metric"><span data-lang="ru">Доля продлений и отток после первого платёжного периода.</span><span data-lang="en">The renewal rate and churn after the first billing period.</span></p>
           </div>
         </div>
       </div>

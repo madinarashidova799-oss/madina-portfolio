@@ -352,23 +352,34 @@
     .result-cards { grid-template-columns: 1fr; }
   }
 
-  /* Launch metrics (§ Что отслеживаем после запуска) — four concrete,
-     named metrics, not directional promises: number, direction label,
-     the metric's own name, then a one-line explanation. Color is limited
-     to the number + at most one priority card's background (Активация,
-     the funnel-entry gate), per this round's "color aids hierarchy, not
-     a repaint" brief. */
-  .launch-metrics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: clamp(24px, 2.5vw, 32px); }
-  .launch-metric { background: #fff; border: 1px solid var(--line); border-radius: var(--radius-large); padding: clamp(20px, 2.4vw, 24px); }
-  .launch-metric--priority { background: var(--accent-blue-bg); border-color: rgba(27, 96, 217, 0.22); }
-  .launch-metric__num { display: block; font-family: var(--mono); font-weight: 700; font-size: 0.85rem; color: var(--accent-blue); }
-  .launch-metric__direction { display: block; font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim-2); margin-top: 8px; }
-  .launch-metric__name { display: block; font-family: var(--display); font-weight: 700; font-size: 1rem; color: var(--text); margin-top: 6px; line-height: 1.35; }
-  .launch-metric .launch-metric__desc { font-size: 0.85rem; color: var(--text-dim); margin: 8px 0 0; line-height: 1.5; }
-  @media (max-width: 640px) {
-    .launch-metrics-grid { grid-template-columns: 1fr; }
-  }
   .detail-head.detail-head--tight { margin-bottom: 0; }
+
+  /* "Как измерить эффект" — shared across all four case pages. One short
+     intro paragraph plus a compact 2x2 grid of cards, each holding only an
+     indicator name and its product metric — no impact line, no inner tint
+     box. Everything sits flush on one left edge: flex column,
+     align-items: flex-start, text-align: left, no per-child margin-left/
+     padding-left, no transform offsets, no absolute positioning. */
+  .impact-cards {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5);
+    margin-top: clamp(24px, 2.5vw, 32px);
+  }
+  .impact-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-medium);
+    padding: clamp(16px, 1.8vw, 20px); display: flex; flex-direction: column;
+    align-items: flex-start; text-align: left; gap: 4px; min-width: 0;
+  }
+  .impact-card__eyebrow {
+    font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2);
+  }
+  .impact-card__stage { font-family: var(--display); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; color: var(--text); }
+  .impact-card__metric-label {
+    margin-top: 8px; font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2);
+  }
+  .impact-card .impact-card__metric { margin: 2px 0 0; max-width: none; font-size: 0.9rem; color: var(--text-dim); line-height: 1.5; }
+  @media (max-width: 720px) {
+    .impact-cards { grid-template-columns: 1fr; }
+  }
 
   /* ===== Case floating dock (like + next case) — shared across all case pages =====
      Two independent glass controls, fixed to the viewport like the top nav —
@@ -672,32 +683,32 @@
         </div>
       </div>
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">09</span><h2><span data-lang="ru">Что отслеживаем после запуска</span><span data-lang="en">What we're tracking after launch</span></h2></div>
-        <p><span data-lang="ru">Личный кабинет запущен и уже используется пользователями. На первом этапе команда отслеживает, насколько успешно пользователи проходят основные финансовые сценарии и в каких точках им требуется поддержка.</span><span data-lang="en">The dashboard has launched and is already in use. In this first stage, the team is tracking how successfully users complete the core financial scenarios and where they need support.</span></p>
-        <div class="launch-metrics-grid">
-          <div class="launch-metric launch-metric--priority">
-            <span class="launch-metric__num" aria-hidden="true">01</span>
-            <span class="launch-metric__direction"><span data-lang="ru">Активация</span><span data-lang="en">Activation</span></span>
-            <span class="launch-metric__name"><span data-lang="ru">Доля пользователей, открывших и пополнивших торговый счёт</span><span data-lang="en">Share of users who opened and funded a trading account</span></span>
-            <p class="launch-metric__desc"><span data-lang="ru">Показывает, доходит ли пользователь от входа в кабинет до первого ценностного действия.</span><span data-lang="en">Shows whether the user makes it from entering the dashboard to their first action of value.</span></p>
+        <div class="detail-head"><span class="detail-num">09</span><h2><span data-lang="ru">Как измерить эффект</span><span data-lang="en">How to measure the effect</span></h2></div>
+        <p><span data-lang="ru">Проверяем путь от входа в личный кабинет до открытия, пополнения и регулярного использования торгового счёта.</span><span data-lang="en">We're checking the path from entering the dashboard to opening, funding, and regularly using a trading account.</span></p>
+        <div class="impact-cards">
+          <div class="impact-card">
+            <span class="impact-card__eyebrow"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
+            <h4 class="impact-card__stage"><span data-lang="ru">Открытие счёта</span><span data-lang="en">Account opening</span></h4>
+            <span class="impact-card__metric-label"><span data-lang="ru">Продуктовая метрика</span><span data-lang="en">Product metric</span></span>
+            <p class="impact-card__metric"><span data-lang="ru">Конверсия из входа в кабинет в открытие торгового счёта.</span><span data-lang="en">Conversion from entering the dashboard to opening a trading account.</span></p>
           </div>
-          <div class="launch-metric">
-            <span class="launch-metric__num" aria-hidden="true">02</span>
-            <span class="launch-metric__direction"><span data-lang="ru">Успешность операций</span><span data-lang="en">Operation success</span></span>
-            <span class="launch-metric__name"><span data-lang="ru">Доля успешно завершённых пополнений, выводов и переводов</span><span data-lang="en">Share of successfully completed deposits, withdrawals, and transfers</span></span>
-            <p class="launch-metric__desc"><span data-lang="ru">Помогает увидеть, насколько стабильно пользователи проходят основные финансовые сценарии.</span><span data-lang="en">Helps show how reliably users get through the core financial scenarios.</span></p>
+          <div class="impact-card">
+            <span class="impact-card__eyebrow"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
+            <h4 class="impact-card__stage"><span data-lang="ru">Первое пополнение</span><span data-lang="en">First deposit</span></h4>
+            <span class="impact-card__metric-label"><span data-lang="ru">Продуктовая метрика</span><span data-lang="en">Product metric</span></span>
+            <p class="impact-card__metric"><span data-lang="ru">Конверсия из открытия счёта в первое успешное пополнение.</span><span data-lang="en">Conversion from opening an account to the first successful deposit.</span></p>
           </div>
-          <div class="launch-metric">
-            <span class="launch-metric__num" aria-hidden="true">03</span>
-            <span class="launch-metric__direction"><span data-lang="ru">Скорость сценария</span><span data-lang="en">Scenario speed</span></span>
-            <span class="launch-metric__name"><span data-lang="ru">Медианное время выполнения финансовой операции</span><span data-lang="en">Median time to complete a financial operation</span></span>
-            <p class="launch-metric__desc"><span data-lang="ru">Показывает, сколько времени требуется на пополнение, вывод или перевод между счетами.</span><span data-lang="en">Shows how long a deposit, withdrawal, or transfer between accounts takes.</span></p>
+          <div class="impact-card">
+            <span class="impact-card__eyebrow"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
+            <h4 class="impact-card__stage"><span data-lang="ru">Активное использование</span><span data-lang="en">Active use</span></h4>
+            <span class="impact-card__metric-label"><span data-lang="ru">Продуктовая метрика</span><span data-lang="en">Product metric</span></span>
+            <p class="impact-card__metric"><span data-lang="ru">Доля пополненных счетов с повторными операциями.</span><span data-lang="en">The share of funded accounts with repeat operations.</span></p>
           </div>
-          <div class="launch-metric">
-            <span class="launch-metric__num" aria-hidden="true">04</span>
-            <span class="launch-metric__direction"><span data-lang="ru">Нагрузка на поддержку</span><span data-lang="en">Support load</span></span>
-            <span class="launch-metric__name"><span data-lang="ru">Количество обращений на 100 финансовых операций</span><span data-lang="en">Number of support requests per 100 financial operations</span></span>
-            <p class="launch-metric__desc"><span data-lang="ru">Помогает определить сценарии, в которых пользователям чаще требуется помощь.</span><span data-lang="en">Helps identify the scenarios where users most often need help.</span></p>
+          <div class="impact-card">
+            <span class="impact-card__eyebrow"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
+            <h4 class="impact-card__stage"><span data-lang="ru">Надёжность операций</span><span data-lang="en">Operation reliability</span></h4>
+            <span class="impact-card__metric-label"><span data-lang="ru">Продуктовая метрика</span><span data-lang="en">Product metric</span></span>
+            <p class="impact-card__metric"><span data-lang="ru">Доля успешно завершённых пополнений, выводов и переводов.</span><span data-lang="en">The share of successfully completed deposits, withdrawals, and transfers.</span></p>
           </div>
         </div>
       </div>

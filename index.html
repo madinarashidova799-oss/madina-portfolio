@@ -9,7 +9,7 @@
 <meta name="description" data-ru="Мадина Рашидова, продуктовый дизайнер с опытом в fintech, banking и мобильных продуктах. Портфолио с разбором процесса: Alif Partners, EAJ Trader, 360 Tracker, Namaste." data-en="Madina Rashidova, a product designer with experience in fintech, banking, and mobile products. A portfolio walking through the process behind Alif Partners, EAJ Trader, 360 Tracker, and Namaste." content="Мадина Рашидова, продуктовый дизайнер с опытом в fintech, banking и мобильных продуктах. Портфолио с разбором процесса: Alif Partners, EAJ Trader, 360 Tracker, Namaste.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,600&family=Lora:ital,wght@0,500;0,600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #f8f8f8;
@@ -203,18 +203,20 @@
     position: relative; z-index: 2; display: flex; flex-direction: column;
     align-items: center; gap: 28px; text-align: center;
   }
-  .hero-info { display: flex; flex-direction: column; align-items: center; gap: 32px; max-width: 35cqw; }
-  .hero-copy {
-    position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 16px;
-    opacity: 0; transform: translateY(14px); animation: softIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.9s forwards;
+  /* Single centered column for the whole hero text block — status, name,
+     role and contacts all live here so the composition centers relative to
+     the viewport (via this box's own margin-inline: auto), never relative
+     to the orbit's cqw scale or to any one child's measured width. The
+     job-search status sits above the name, visible by default — see
+     DESIGN.md § Job search status. It's a status indicator, not a control
+     (the three contact pills below already own the "get in touch" action),
+     so it carries no tabindex/interaction of its own. */
+  .hero-content {
+    position: relative; z-index: 2;
+    width: min(100% - 32px, 1100px); margin-inline: auto;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
   }
   @keyframes softIn { to { opacity: 1; transform: translateY(0); } }
-
-  /* name-stack: the job-search status sits above the name, visible by
-     default — see DESIGN.md § Job search status. It's a status indicator,
-     not a control (the three contact pills right below already own the
-     "get in touch" action), so it carries no tabindex/interaction of its own. */
-  .name-stack { position: relative; display: flex; flex-direction: column; align-items: center; gap: 26px; }
   .job-search-status {
     display: inline-flex; align-items: center; gap: 10px; justify-content: center;
     min-height: 44px; padding: 10px 18px 10px 14px; border-radius: 999px;
@@ -241,36 +243,41 @@
     90% { transform: translateX(-1px) rotate(2deg); }
   }
   h1.hero-name {
-    font-family: var(--sans); font-weight: 600; font-size: clamp(1.7rem, 3.6cqw, 4rem);
-    letter-spacing: -0.035em; line-height: 0.95; color: var(--hero-text);
+    font-family: 'Lora', var(--sans); font-weight: 500; font-size: clamp(1.7rem, 3.6cqw, 4rem);
+    letter-spacing: -0.01em; line-height: 0.96; color: var(--hero-text);
+    text-wrap: balance; margin-top: 44px;
+    opacity: 0; filter: blur(6px); transform: translateY(12px);
+    animation: heroNameReveal 700ms cubic-bezier(0.22, 1, 0.36, 1) 0.85s forwards;
   }
-  .type-cursor { display: inline-block; color: var(--hero-text-dim-2); animation: cursorBlink 900ms step-end infinite; }
-  @keyframes cursorBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+  @keyframes heroNameReveal {
+    to { opacity: 1; filter: blur(0); transform: translateY(0); }
+  }
 
-  /* role text, revealed left-to-right on load */
+  /* Role line: one sentence, centered as a whole under the name — not its
+     parts centered separately. Sized to its own content (inline-flex, no
+     width: 100% stretch) and centered by the parent column's own
+     align-items: center (margin-inline: auto is inert on an inline-level
+     box but kept here too, harmless). Baseline-aligned so the static text
+     and the word sit on the same text line, one normal-looking space apart. */
   .hero-role {
     font-family: var(--sans); font-weight: 500; font-size: clamp(1rem, 1.7cqw, 1.6rem);
     color: var(--hero-text-dim); line-height: 1.3;
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.35em;
-    clip-path: inset(-0.3em 100% -0.4em 0);
-    animation: penWrite 1.2s ease-out 1.05s forwards;
+    display: inline-flex; flex-wrap: wrap; align-items: baseline; justify-content: center;
+    text-align: center; gap: 0.25em; max-width: 100%; margin-inline: auto; margin-top: 28px;
+    opacity: 0; transform: translateY(8px);
+    animation: softIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) 1.6s forwards;
   }
-  @keyframes penWrite { to { clip-path: inset(-0.3em 0 -0.4em 0); } }
-  .hero-role.is-static { clip-path: inset(-0.3em 0 -0.4em 0); animation: none; }
   .hero-role__static { white-space: nowrap; }
-  .hero-role__viewport {
-    position: relative; display: flex; align-items: center;
-    height: 1.3em; overflow: hidden;
-    min-width: 11ch; width: var(--hero-role-word-width, 11ch);
-  }
+  /* Fixed to the widest word's width so the row never resizes as words
+     change. The word is left-aligned inside this box (not centered) so it
+     always sits flush against "building" — any reserved slack trails
+     after the word, invisible, never as a gap before it. */
   .hero-role__word {
-    position: absolute; left: 0; top: 0;
-    display: inline-block; white-space: nowrap;
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    transform: translateY(0); opacity: 1;
+    display: inline-block; white-space: nowrap; text-align: left; color: var(--hero-text);
+    min-width: 11ch; width: var(--hero-role-word-width, 11ch);
+    opacity: 1; transition: opacity 200ms ease;
   }
-  .hero-role__word.is-out { transform: translateY(-100%); opacity: 0; }
-  .hero-role__word.is-in-start { transition: none; transform: translateY(100%); opacity: 0; }
+  .hero-role__word.is-fading { opacity: 0; }
   .hero-role .sr-only {
     position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
     overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
@@ -278,8 +285,8 @@
 
   .hero-contacts {
     position: relative; z-index: 2;
-    display: flex; gap: 12px; margin-top: 4px; flex-wrap: wrap; justify-content: center;
-    opacity: 0; transform: translateY(10px); animation: softIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 1.3s forwards;
+    display: flex; gap: 12px; margin-top: 52px; flex-wrap: wrap; justify-content: center;
+    opacity: 0; transform: translateY(10px); animation: softIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 1.85s forwards;
   }
   .contact-btn {
     position: relative;
@@ -303,7 +310,6 @@
   .contact-btn:active { transform: translateY(0); box-shadow: var(--hero-glass-shadow); }
 
   @media (max-width: 900px) {
-    .hero-info { max-width: min(560px, 88vw); }
     h1.hero-name { font-size: clamp(2rem, 8vw, 3rem); }
     .hero-role { font-size: clamp(1.2rem, 5vw, 1.6rem); }
     .contact-btn { font-size: 0.85rem; padding: 12px 20px; }
@@ -311,10 +317,10 @@
 
   @media (prefers-reduced-motion: reduce) {
     .site-nav { animation: none; opacity: 1; }
-    .type-cursor { animation: none; }
-    .hero-role { clip-path: inset(-0.3em 0 -0.4em 0); animation: none; }
-    .hero-role__word { transition: none; transform: none; opacity: 1; }
-    .hero-copy, .hero-contacts { animation: none; opacity: 1; transform: none; }
+    .hero-name { animation: none; opacity: 1; filter: none; transform: none; }
+    .hero-role { animation: none; opacity: 1; transform: none; }
+    .hero-role__word { transition: none; opacity: 1; }
+    .hero-contacts { animation: none; opacity: 1; transform: none; }
     .orbit-ring-line { animation: none; opacity: 1; }
     .logo-card { animation: none; opacity: 1; transform: none; }
     .job-search-status { animation: none; opacity: 1; transform: none; }
@@ -736,7 +742,7 @@
 THESIS: One calm, neutral system carries the whole site — no per-case color-coding, no separate "hero exception." Trust reads through structure, spacing, and craft, not through decoration.
 SOURCE: reference/Main page-web.svg governs the site's character in full — light neutral ground (#f8f8f8), warm dark-brown nav/surfaces, soft wide low-contrast shadows, generous rounded radii. Color is reserved for logos and case covers only, never used as a general UI palette.
 STORY: A hiring manager sees a clean, consistent, confidently restrained interface and reads "this designer has taste and doesn't need noise to prove it."
-FIRST VIEWPORT: reference/Main page-web.svg reproduced structurally — 5-ring orbit stage (11 tool logos on rings 2–4, one shared rAF loop, exact SVG geometry), centered glass hero-info (name, role, description, 3 glass contact pills), nav fading in above it.
+FIRST VIEWPORT: reference/Main page-web.svg reproduced structurally — 5-ring orbit stage (11 tool logos on rings 2–4, one shared rAF loop, exact SVG geometry), centered hero-content column (status, name, role, 3 glass contact pills), nav fading in above it.
 FORM: Unified light system per DESIGN.md, superseding the earlier "Screenprint Overlap" ink-world direction (seed key b57bacc7, source id ink-pigment-printmaking-screenprint-transparent-overlap) across every page, including case studies.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md.
 -->
@@ -795,26 +801,20 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
             </div>
           </div>
 
-          <div class="hero-info">
-            <div class="hero-copy">
-              <div class="name-stack">
-                <span class="job-search-status">
-                  <span class="job-search-status__icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="20" y1="20" x2="15.3" y2="15.3"/></svg>
-                    <span class="job-search-status__live"></span>
-                  </span>
-                  <span data-lang="ru">Ищу продуктовую команду</span><span data-lang="en">Looking for a product team</span>
-                </span>
-                <h1 class="hero-name"><span id="heroNameText" data-ru="Рашидова Мадина" data-en="Madina Rashidova">Рашидова Мадина</span><span class="type-cursor" id="typeCursor">|</span></h1>
-              </div>
-              <div class="hero-role" id="heroRole">
-                <span class="hero-role__static" id="heroRoleStatic" aria-hidden="true" data-ru="Product Designer, создаю" data-en="Product Designer, building">Product Designer, создаю</span>
-                <span class="hero-role__viewport" id="heroRoleViewport" aria-hidden="true">
-                  <span class="hero-role__word" id="heroRoleWord">приложения</span>
-                </span>
-                <span class="sr-only" data-lang="ru">Product Designer, создаю приложения, сайты, прототипы, сервисы и блок-схемы</span>
-                <span class="sr-only" data-lang="en">Product Designer, building apps, websites, prototypes, services, and diagrams</span>
-              </div>
+          <div class="hero-content">
+            <span class="job-search-status">
+              <span class="job-search-status__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="20" y1="20" x2="15.3" y2="15.3"/></svg>
+                <span class="job-search-status__live"></span>
+              </span>
+              <span data-lang="ru">Ищу продуктовую команду</span><span data-lang="en">Looking for a product team</span>
+            </span>
+            <h1 class="hero-name" id="heroNameText" data-ru="Рашидова Мадина" data-en="Madina Rashidova">Рашидова Мадина</h1>
+            <div class="hero-role" id="heroRole">
+              <span class="hero-role__static" id="heroRoleStatic" aria-hidden="true" data-ru="Product Designer, создаю" data-en="Product Designer, building">Product Designer, создаю</span>
+              <span class="hero-role__word" id="heroRoleWord" aria-hidden="true">приложения</span>
+              <span class="sr-only" data-lang="ru">Product Designer, создаю приложения, сайты, прототипы и сервисы</span>
+              <span class="sr-only" data-lang="en">Product Designer, building apps, websites, prototypes, and services</span>
             </div>
             <div class="hero-contacts">
               <a class="contact-btn" href="https://t.me/Madina_Rashidova" target="_blank" rel="noopener">
@@ -1104,25 +1104,15 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   <script src="assets/i18n.js"></script>
   <script src="assets/typography.js"></script>
   <script>
+    // Hero name: appears once via the CSS heroNameReveal keyframe (no JS
+    // animation). This listener only keeps the text in sync on language
+    // toggle — it never re-triggers the reveal.
     (function () {
       var textEl = document.getElementById('heroNameText');
-      var cursorEl = document.getElementById('typeCursor');
-      if (!textEl || !cursorEl) return;
-      var typingDone = false;
+      if (!textEl) return;
       document.addEventListener('langchange', function (e) {
-        if (!typingDone) return;
         textEl.textContent = e.detail.lang === 'en' ? textEl.dataset.en : textEl.dataset.ru;
       });
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { cursorEl.style.display = 'none'; typingDone = true; return; }
-      var startLang = localStorage.getItem('site-lang') || 'ru';
-      var fullText = (startLang === 'en' && textEl.dataset.en) ? textEl.dataset.en : textEl.dataset.ru;
-      textEl.textContent = '';
-      var i = 0;
-      function typeNext() {
-        if (i < fullText.length) { textEl.textContent += fullText.charAt(i); i++; setTimeout(typeNext, 70); }
-        else { typingDone = true; setTimeout(function () { cursorEl.style.display = 'none'; }, 3000); }
-      }
-      typeNext();
     })();
 
     // Hero role line: static "Product Designer, создаю" + one word that
@@ -1132,67 +1122,79 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     (function () {
       var roleEl = document.getElementById('heroRole');
       var staticEl = document.getElementById('heroRoleStatic');
-      var viewportEl = document.getElementById('heroRoleViewport');
       var wordEl = document.getElementById('heroRoleWord');
-      if (!roleEl || !staticEl || !viewportEl || !wordEl) return;
+      if (!roleEl || !staticEl || !wordEl) return;
 
       var WORDS = {
-        ru: ['приложения', 'сайты', 'прототипы', 'сервисы', 'блок-схемы'],
-        en: ['apps', 'websites', 'prototypes', 'services', 'diagrams']
+        ru: ['приложения', 'сайты', 'прототипы', 'сервисы'],
+        en: ['apps', 'websites', 'prototypes', 'services']
       };
       var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var lang = (localStorage.getItem('site-lang') || 'ru') === 'en' ? 'en' : 'ru';
       var idx = 0;
       var timer = null;
+      var generation = 0;
 
-      function sizeViewport() {
+      function sizeWord() {
         var words = WORDS[lang];
         var measurer = wordEl.cloneNode(false);
         measurer.style.position = 'absolute';
         measurer.style.visibility = 'hidden';
         measurer.style.left = '-9999px';
-        measurer.classList.remove('is-out', 'is-in-start');
-        viewportEl.appendChild(measurer);
+        measurer.style.width = 'auto';
+        measurer.classList.remove('is-fading');
+        roleEl.appendChild(measurer);
         var max = 0;
         for (var i = 0; i < words.length; i++) {
           measurer.textContent = words[i];
           max = Math.max(max, measurer.getBoundingClientRect().width);
         }
-        viewportEl.removeChild(measurer);
+        roleEl.removeChild(measurer);
         if (max > 0) roleEl.style.setProperty('--hero-role-word-width', Math.ceil(max) + 'px');
+      }
+
+      // Calm crossfade word swap: fade the current word out (200ms) -> swap
+      // the text -> fade the new word in (200ms) -> a ~2s pause -> repeat.
+      // No highlight, no slide, no scale — opacity only. `gen` guards
+      // against a language switch firing mid-sequence: every step checks
+      // it's still the current generation before touching the DOM, so an
+      // old cycle started in the other language can never clobber a fresh one.
+      function cycle(gen) {
+        if (gen !== generation) return;
+        wordEl.classList.add('is-fading');
+        setTimeout(function () {
+          if (gen !== generation) return;
+          idx = (idx + 1) % WORDS[lang].length;
+          wordEl.textContent = WORDS[lang][idx];
+          wordEl.classList.remove('is-fading');
+          timer = setTimeout(function () { cycle(gen); }, 2000);
+        }, 200);
+      }
+
+      function startCycle() {
+        generation++;
+        var gen = generation;
+        if (timer) clearTimeout(timer);
+        if (!reduceMotion) {
+          timer = setTimeout(function () { cycle(gen); }, 2000);
+        }
       }
 
       function applyLang() {
         staticEl.textContent = lang === 'en' ? staticEl.dataset.en : staticEl.dataset.ru;
-        idx = 0;
-        wordEl.textContent = WORDS[lang][0];
-        sizeViewport();
-      }
-
-      function cycle() {
-        wordEl.classList.add('is-out');
-        setTimeout(function () {
-          idx = (idx + 1) % WORDS[lang].length;
-          wordEl.textContent = WORDS[lang][idx];
-          wordEl.classList.remove('is-out');
-          wordEl.classList.add('is-in-start');
-          void wordEl.offsetHeight;
-          wordEl.classList.remove('is-in-start');
-        }, 400);
+        idx = reduceMotion ? WORDS[lang].length - 1 : 0;
+        wordEl.textContent = WORDS[lang][idx];
+        wordEl.classList.remove('is-fading');
+        sizeWord();
+        startCycle();
       }
 
       applyLang();
 
-      if (reduceMotion) {
-        roleEl.classList.add('is-static');
-      } else {
-        timer = setInterval(cycle, 2400);
-      }
-
       var resizeTimer = null;
       window.addEventListener('resize', function () {
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(sizeViewport, 150);
+        resizeTimer = setTimeout(sizeWord, 150);
       });
 
       document.addEventListener('langchange', function (e) {

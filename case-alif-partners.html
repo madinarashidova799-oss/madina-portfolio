@@ -204,41 +204,31 @@
     .result-card { opacity: 1; transform: none; transition: none; }
   }
 
-  /* "Как измерить эффект" — 2×2 grid of real metrics-to-watch, not invented
-     numbers. No dividers, no green: each card is one sentence plus one
-     neutral dark-pill accent (the same nav-bg/pill vocabulary used for the
-     top nav and CTAs elsewhere), not a table row. */
-  .metric-grid {
+  /* "Как измерить эффект" — shared across all four case pages. One short
+     intro paragraph plus a compact 2x2 grid of cards, each holding only an
+     indicator name and its product metric — no impact line, no inner tint
+     box. Everything sits flush on one left edge: flex column,
+     align-items: flex-start, text-align: left, no per-child margin-left/
+     padding-left, no transform offsets, no absolute positioning. */
+  .impact-cards {
     display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5);
-    margin-top: clamp(32px, 3vw, 40px);
+    margin-top: clamp(24px, 2.5vw, 32px);
   }
-  .metric-card {
-    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-large);
-    padding: clamp(24px, 3vw, 32px); display: flex; flex-direction: column; gap: 0;
-    min-width: 0; box-shadow: var(--shadow-soft);
+  .impact-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-medium);
+    padding: clamp(16px, 1.8vw, 20px); display: flex; flex-direction: column;
+    align-items: flex-start; text-align: left; gap: 4px; min-width: 0;
   }
-  .metric-card__goal { font-family: var(--mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); }
-  /* `.detail-block p` (generic paragraph rule) also matches this `<p>` and
-     sets its own margin-bottom: 18px. Flex items never collapse margins the
-     way normal block siblings do, so that inherited bottom margin would
-     otherwise stack on top of `.metric-card__caption`'s margin-top instead
-     of merging with it — zero it here so the caption's own margin is the
-     only thing controlling the gap. */
-  .metric-card .metric-card__sentence { margin-top: 12px; margin-bottom: 0; font-size: 1.02rem; color: var(--text); line-height: 1.6; }
-  /* Order is goal -> sentence -> caption -> accent: the secondary label reads
-     before the pill it describes, and the pill is the card's last element
-     (no margin-top: auto anymore — that was only needed to pin the caption
-     to the bottom when it was last; nothing to pin now). */
-  .metric-card__caption { margin-top: clamp(24px, 2.5vw, 32px); font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); }
-  .metric-card__accent {
-    margin-top: 10px;
-    display: inline-flex; align-self: flex-start; max-width: 100%;
-    background: var(--nav-bg); color: #f8f8f8;
-    font-family: var(--sans); font-size: 0.85rem; font-weight: 600; line-height: 1.35;
-    padding: 8px 16px; border-radius: var(--radius-pill);
+  .impact-card__eyebrow {
+    font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2);
   }
+  .impact-card__stage { font-family: var(--display); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; color: var(--text); }
+  .impact-card__metric-label {
+    margin-top: 8px; font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2);
+  }
+  .impact-card .impact-card__metric { margin: 2px 0 0; max-width: none; font-size: 0.9rem; color: var(--text-dim); line-height: 1.5; }
   @media (max-width: 720px) {
-    .metric-grid { grid-template-columns: 1fr; }
+    .impact-cards { grid-template-columns: 1fr; }
   }
 
   /* Between major numbered sections (01, 02, 03…) — 96-144px, distinct from
@@ -580,31 +570,31 @@
       </div>
       <div class="detail-block">
         <div class="detail-head"><span class="detail-num">11</span><h2><span data-lang="ru">Как измерить эффект</span><span data-lang="en">How to measure the effect</span></h2></div>
-        <p><span data-lang="ru">Решение реализовано и используется партнёрами и модераторами. У меня нет доступа к пост-запусковой аналитике банка, поэтому ниже указаны метрики для оценки эффекта.</span><span data-lang="en">The solution is shipped and in use by partners and moderators. I don't have access to the bank's post-launch analytics, so what follows are metrics for evaluating the effect.</span></p>
-        <div class="metric-grid">
-          <div class="metric-card">
-            <span class="metric-card__goal"><span data-lang="ru">Операционная нагрузка</span><span data-lang="en">Operational load</span></span>
-            <p class="metric-card__sentence"><span data-lang="ru">Проверяем, сокращается ли количество ручных операций сотрудников банка и время модераторов на сопровождение одной заявки.</span><span data-lang="en">We're checking whether the number of manual operations by bank staff and the moderator time spent per request are actually decreasing.</span></p>
-            <span class="metric-card__caption"><span data-lang="ru">Метрика для проверки</span><span data-lang="en">Metric to verify</span></span>
-            <span class="metric-card__accent"><span data-lang="ru">Меньше ручной работы со стороны банка</span><span data-lang="en">Less manual work on the bank's side</span></span>
+        <p><span data-lang="ru">Проверяем, помогает ли новая админ-панель партнёрам самостоятельно обрабатывать больше заказов без роста ручной нагрузки на банк.</span><span data-lang="en">We're checking whether the new admin panel helps partners handle more orders on their own without increasing the bank's manual workload.</span></p>
+        <div class="impact-cards">
+          <div class="impact-card">
+            <span class="impact-card__eyebrow"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
+            <h4 class="impact-card__stage"><span data-lang="ru">Самостоятельная обработка</span><span data-lang="en">Self-service processing</span></h4>
+            <span class="impact-card__metric-label"><span data-lang="ru">Продуктовая метрика</span><span data-lang="en">Product metric</span></span>
+            <p class="impact-card__metric"><span data-lang="ru">Доля заказов, обработанных партнёром без участия сотрудника банка.</span><span data-lang="en">The share of orders processed by a partner without a bank employee's involvement.</span></p>
           </div>
-          <div class="metric-card">
-            <span class="metric-card__goal"><span data-lang="ru">Скорость обработки</span><span data-lang="en">Processing speed</span></span>
-            <p class="metric-card__sentence"><span data-lang="ru">Измеряем время от создания заявки до передачи в доставку и среднее время её обработки партнёром.</span><span data-lang="en">We're measuring the time from request creation to handoff to delivery, and the average time a partner takes to process it.</span></p>
-            <span class="metric-card__caption"><span data-lang="ru">Метрика для проверки</span><span data-lang="en">Metric to verify</span></span>
-            <span class="metric-card__accent"><span data-lang="ru">Быстрее от заявки до доставки</span><span data-lang="en">Faster from request to delivery</span></span>
+          <div class="impact-card">
+            <span class="impact-card__eyebrow"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
+            <h4 class="impact-card__stage"><span data-lang="ru">Завершение заказа</span><span data-lang="en">Order completion</span></h4>
+            <span class="impact-card__metric-label"><span data-lang="ru">Продуктовая метрика</span><span data-lang="en">Product metric</span></span>
+            <p class="impact-card__metric"><span data-lang="ru">Доля заказов без отмены из-за неактуальных данных.</span><span data-lang="en">The share of orders not canceled due to outdated data.</span></p>
           </div>
-          <div class="metric-card">
-            <span class="metric-card__goal"><span data-lang="ru">Качество заказов</span><span data-lang="en">Order quality</span></span>
-            <p class="metric-card__sentence"><span data-lang="ru">Сравниваем долю отмен из-за неактуальных данных и количество заказов, завершённых без вмешательства банка.</span><span data-lang="en">We're comparing the share of cancellations caused by outdated data against the number of orders completed without the bank's involvement.</span></p>
-            <span class="metric-card__caption"><span data-lang="ru">Метрика для проверки</span><span data-lang="en">Metric to verify</span></span>
-            <span class="metric-card__accent"><span data-lang="ru">Меньше отмен, больше самостоятельных завершений</span><span data-lang="en">Fewer cancellations, more independent completions</span></span>
+          <div class="impact-card">
+            <span class="impact-card__eyebrow"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
+            <h4 class="impact-card__stage"><span data-lang="ru">Скорость обработки</span><span data-lang="en">Processing speed</span></h4>
+            <span class="impact-card__metric-label"><span data-lang="ru">Продуктовая метрика</span><span data-lang="en">Product metric</span></span>
+            <p class="impact-card__metric"><span data-lang="ru">Медианное время от создания заявки до передачи в доставку.</span><span data-lang="en">The median time from request creation to handoff to delivery.</span></p>
           </div>
-          <div class="metric-card">
-            <span class="metric-card__goal"><span data-lang="ru">Масштабируемость</span><span data-lang="en">Scalability</span></span>
-            <p class="metric-card__sentence"><span data-lang="ru">Отслеживаем количество партнёров на одного модератора и нагрузку команды при подключении новых магазинов и офисов.</span><span data-lang="en">We're tracking the number of partners per moderator and the team's load when onboarding new stores and offices.</span></p>
-            <span class="metric-card__caption"><span data-lang="ru">Метрика для проверки</span><span data-lang="en">Metric to verify</span></span>
-            <span class="metric-card__accent"><span data-lang="ru">Рост сети без пропорционального роста команды</span><span data-lang="en">The network grows without proportional team growth</span></span>
+          <div class="impact-card">
+            <span class="impact-card__eyebrow"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
+            <h4 class="impact-card__stage"><span data-lang="ru">Масштабирование сети</span><span data-lang="en">Network scaling</span></h4>
+            <span class="impact-card__metric-label"><span data-lang="ru">Продуктовая метрика</span><span data-lang="en">Product metric</span></span>
+            <p class="impact-card__metric"><span data-lang="ru">Количество активных партнёров и заказов на одного модератора.</span><span data-lang="en">The number of active partners and orders per moderator.</span></p>
           </div>
         </div>
       </div>

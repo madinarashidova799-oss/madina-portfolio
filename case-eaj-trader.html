@@ -135,21 +135,14 @@
     font-family: var(--display); font-size: clamp(2.3rem, 5.4vw, 3.6rem); font-weight: 700;
     line-height: 1.05; letter-spacing: -0.025em;
   }
-  /* Typography unified with case-alif-partners.html's .metrics/.metric — see
-     DESIGN.md item 10 (shared typographic roles across all case pages). */
-  .metrics {
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5);
-    margin-top: clamp(32px, 4vw, 40px); margin-bottom: 40px; width: 100%;
+  /* Shared intro facts block — see case-alif-partners.html's .case-facts,
+     the reference component for this system (DESIGN.md item 10). */
+  .case-facts {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px 24px;
+    margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line);
   }
-  .metric {
-    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-large);
-    padding: clamp(20px, 2.6vw, 28px); box-shadow: var(--shadow-soft); min-width: 0;
-  }
-  .metric .value { font-family: var(--mono); font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700; color: var(--case-accent); line-height: 1.1; }
-  .metric .label { font-size: 0.9rem; color: var(--text-dim); margin-top: 8px; line-height: 1.4; }
-  @media (max-width: 560px) {
-    .metrics { grid-template-columns: 1fr; margin-bottom: 24px; }
-  }
+  .case-facts dt { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); margin-bottom: 4px; }
+  .case-facts dd { font-size: 0.92rem; color: var(--text); line-height: 1.4; }
   /* Spacing unified with case-alif-partners.html (DESIGN.md item 10):
      96-128px between major numbered sections, 48px from heading to body. */
   .detail-block { margin-top: clamp(96px, 9vw, 128px); padding-top: var(--space-7); border-top: 1px solid var(--line); }
@@ -395,7 +388,7 @@
   .case-floating-nav.is-inview { opacity: 1; transform: translateX(-50%) translateY(0); }
   body.lightbox-open .case-floating-nav { opacity: 0; pointer-events: none; }
 
-  .case-like, .case-next, .case-home {
+  .case-like, .case-next, .case-prev {
     background: rgba(255, 255, 255, 0.62);
     border: 1px solid rgba(255, 255, 255, 0.72);
     box-shadow:
@@ -406,22 +399,23 @@
     border-radius: var(--radius-pill);
   }
   @supports not (backdrop-filter: blur(1px)) {
-    .case-like, .case-next, .case-home { background: rgba(248, 248, 248, 0.94); }
+    .case-like, .case-next, .case-prev { background: rgba(248, 248, 248, 0.94); }
   }
 
-  .case-home {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-family: var(--sans); font-size: 0.92rem; font-weight: 600; color: #171717;
-    padding-inline: 20px; min-height: 56px;
-    flex-shrink: 0;
+  .case-prev {
+    display: flex; align-items: center; gap: 12px;
+    padding-inline: 24px; min-height: 56px;
+    max-width: min(360px, 60vw);
     transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s cubic-bezier(0.22,1,0.36,1);
   }
-  .case-home:hover { background: rgba(255,255,255,0.85); box-shadow: var(--shadow-control); }
-  .case-home:focus-visible { outline: 2px solid var(--text-strong); outline-offset: 2px; }
-  .case-home:active { transform: scale(0.96); }
-  .case-home__arrow { font-family: var(--mono); color: var(--text-dim); transition: transform 0.2s cubic-bezier(0.22,1,0.36,1); }
-  .case-home:hover .case-home__arrow, .case-home:focus-visible .case-home__arrow { transform: translateX(-4px); }
-  .case-home__label { white-space: nowrap; }
+  .case-prev:hover, .case-prev:focus-visible { background: rgba(255,255,255,0.88); box-shadow: var(--shadow-control); transform: translateY(-2px); }
+  .case-prev:focus-visible { outline: 2px solid var(--text-strong); outline-offset: 2px; }
+  .case-prev:active { transform: translateY(0); }
+  .case-prev__label { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); }
+  .case-prev__title-row { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+  .case-prev__arrow { flex-shrink: 0; color: #171717; transition: transform 0.25s cubic-bezier(0.22,1,0.36,1); }
+  .case-prev__title { font-family: var(--display); font-weight: 700; font-size: 1.05rem; color: #171717; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .case-prev:hover .case-prev__arrow, .case-prev:focus-visible .case-prev__arrow { transform: translateX(-5px); }
 
   .case-like {
     display: inline-flex; align-items: center; gap: 10px;
@@ -464,9 +458,9 @@
 
   @media (max-width: 720px) {
     .case-floating-nav { bottom: max(14px, env(safe-area-inset-bottom)); gap: 8px; }
-    .case-like, .case-home { min-height: 48px; padding-inline: 16px; }
-    .case-next { min-height: 48px; padding-inline: 16px; max-width: min(220px, 52vw); }
-    .case-next__label, .case-home__label {
+    .case-like { min-height: 48px; padding-inline: 16px; }
+    .case-next, .case-prev { min-height: 48px; padding-inline: 16px; max-width: min(220px, 52vw); }
+    .case-next__label, .case-prev__label {
       position: absolute; width: 1px; height: 1px; overflow: hidden;
       clip: rect(0,0,0,0); white-space: nowrap;
     }
@@ -474,7 +468,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .case-floating-nav { transition: none; opacity: 1; transform: translateX(-50%); }
-    .case-like__icon, .case-next__arrow, .case-like, .case-next, .case-home, .case-home__arrow { transition: none; }
+    .case-like__icon, .case-next__arrow, .case-prev__arrow, .case-like, .case-next, .case-prev { transition: none; }
     .case-like.is-pulsing .case-like__icon { animation: none; }
   }
 </style>
@@ -495,14 +489,15 @@
       <div class="case-header">
         <h1 class="case-title">EAJ Trader</h1>
         <div class="case-meta-group">
-          <div class="case-meta-line"><span data-lang="ru">Web · MVP за 2 месяца</span><span data-lang="en">Web · MVP in 2 months</span></div>
           <div class="case-tags"><span>/0→1</span><span>/trading</span><span>B2C</span></div>
         </div>
         <p class="case-dek"><span data-lang="ru">MVP личного кабинета трейдера с нуля за 2 месяца. Разбор процесса: сегментация пользователей, концепты, итоги.</span><span data-lang="en">An MVP of a trader's personal dashboard built from scratch in 2 months. A breakdown of the process: user segmentation, concepts, outcomes.</span></p>
-        <div class="metrics">
-          <div class="metric"><div class="value">2</div><div class="label"><span data-lang="ru">протестированных концепта отображения счетов</span><span data-lang="en">tested concepts for displaying accounts</span></div></div>
-          <div class="metric"><div class="value">MVP</div><div class="label"><span data-lang="ru">полный цикл продукта</span><span data-lang="en">full product cycle</span></div></div>
-        </div>
+        <dl class="case-facts">
+          <div><dt><span data-lang="ru">Длительность</span><span data-lang="en">Duration</span></dt><dd><span data-lang="ru">2 месяца</span><span data-lang="en">2 months</span></dd></div>
+          <div><dt><span data-lang="ru">Моя роль</span><span data-lang="en">My role</span></dt><dd>Product Designer</dd></div>
+          <div><dt><span data-lang="ru">Пользователи</span><span data-lang="en">Users</span></dt><dd><span data-lang="ru">трейдеры платформы</span><span data-lang="en">platform traders</span></dd></div>
+          <div><dt><span data-lang="ru">Платформы</span><span data-lang="en">Platforms</span></dt><dd>Web</dd></div>
+        </dl>
       </div>
 
       <div class="detail-block">
@@ -710,9 +705,12 @@
     </div>
 
     <nav class="case-floating-nav">
-      <a class="case-home" href="index.html">
-        <span class="case-home__arrow" aria-hidden="true">←</span>
-        <span class="case-home__label"><span data-lang="ru">Главная страница</span><span data-lang="en">Homepage</span></span>
+      <a class="case-prev" href="case-alif-partners.html">
+        <span class="case-prev__arrow" aria-hidden="true">←</span>
+        <span class="case-prev__title-row">
+          <span class="case-prev__label"><span data-lang="ru">Предыдущий кейс</span><span data-lang="en">Previous case</span></span>
+          <span class="case-prev__title">Alif Partners</span>
+        </span>
       </a>
       <button class="case-like" type="button" data-case-id="eaj-trader" aria-pressed="false" aria-label="Поставить лайк кейсу EAJ Trader">
         <svg class="case-like__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">

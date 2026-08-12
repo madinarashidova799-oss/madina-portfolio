@@ -114,21 +114,14 @@
 </style>
 <style>
   :root { --case-accent: var(--text-strong); }
-  .case-page { padding: 152px 0 160px; }
-  .back-link {
-    display: inline-block; font-family: var(--mono); font-size: 0.82rem;
-    color: var(--text-dim); margin-bottom: 40px; padding-bottom: 2px;
-    border-bottom: 1px solid var(--line); transition: color 0.2s ease, border-color 0.2s ease;
-  }
-  .back-link:hover { color: var(--case-accent); border-color: var(--case-accent); }
-  .back-link:focus-visible { outline: 2px solid var(--case-accent); outline-offset: 3px; border-radius: 2px; }
+  .case-page { padding: 128px 0 160px; }
   .case-header { margin-bottom: 48px; padding: 28px clamp(16px,4vw,32px); }
+  .case-meta-group { display: flex; flex-direction: column; gap: 16px; margin-top: 10px; }
   .case-meta-line {
     font-family: var(--mono); font-size: 0.85rem; text-transform: uppercase;
-    letter-spacing: 0.03em; color: var(--text-dim); margin-top: 10px;
+    letter-spacing: 0.03em; color: var(--text-dim);
   }
   .case-name { color: var(--text); font-weight: 700; }
-  .case-tags { font-family: var(--mono); font-size: 0.8rem; color: var(--case-accent); margin-top: 10px; }
   h1.case-title {
     font-family: var(--display); font-size: clamp(2.3rem, 5.4vw, 3.6rem); font-weight: 700;
     line-height: 1.05; letter-spacing: -0.025em;
@@ -323,7 +316,7 @@
     position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom));
     transform: translateX(-50%) translateY(12px);
     z-index: 110; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px;
-    max-width: calc(100vw - 32px);
+    width: max-content; max-width: calc(100vw - 32px);
     opacity: 0;
     transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1);
   }
@@ -346,7 +339,7 @@
 
   /* Same shape/dimensions as .case-like (icon-less text pill) — the "icon" is
      the same plain arrow glyph the site already uses for directional links
-     (nav labels, the top back-link, .case-next__arrow), not a new SVG. */
+     (nav labels, .case-next__arrow), not a new SVG. */
   .case-home {
     display: inline-flex; align-items: center; gap: 10px;
     font-family: var(--sans); font-size: 0.92rem; font-weight: 600; color: #171717;
@@ -416,6 +409,7 @@
     .case-like.is-pulsing .case-like__icon { animation: none; }
   }
 </style>
+  <link rel="stylesheet" href="assets/typography.css">
 </head>
 <body>
 
@@ -429,12 +423,12 @@
 
   <div class="page">
     <div class="case-page">
-      <a class="back-link" href="index.html"><span data-lang="ru">← Все работы</span><span data-lang="en">← All work</span></a>
-
       <div class="case-header">
         <h1 class="case-title">Alif Partners</h1>
-        <div class="case-meta-line"><span class="case-name">Alif Bank</span></div>
-        <div class="case-tags"><span>/b2b</span><span>/ux-research</span><span>/fintech</span></div>
+        <div class="case-meta-group">
+          <div class="case-meta-line"><span class="case-name">Alif Bank</span></div>
+          <div class="case-tags"><span>/b2b</span><span>/ux-research</span><span>/fintech</span></div>
+        </div>
         <p class="case-dek"><span data-lang="ru">Редизайн админ-панели для партнёрской сети Alif Bank. Разбор процесса: исследование, решение, итоги.</span><span data-lang="en">A redesign of the admin panel for Alif Bank's partner network. A breakdown of the process: research, solution, results.</span></p>
         <dl class="case-facts">
           <div><dt><span data-lang="ru">Длительность</span><span data-lang="en">Duration</span></dt><dd><span data-lang="ru">4 месяца</span><span data-lang="en">4 months</span></dd></div>
@@ -645,6 +639,7 @@
   </div>
 
   <script src="assets/i18n.js"></script>
+  <script src="assets/typography.js"></script>
   <script src="assets/lightbox.js"></script>
   <script src="assets/case-nav.js"></script>
   <script>

@@ -113,18 +113,12 @@
 </style>
 <style>
   :root { --case-accent: var(--text-strong); }
-  .case-page { padding: 152px 0 160px; }
-  .back-link {
-    display: inline-block; font-family: var(--mono); font-size: 0.82rem;
-    color: var(--text-dim); margin-bottom: 40px; padding-bottom: 2px;
-    border-bottom: 1px solid var(--line); transition: color 0.2s ease, border-color 0.2s ease;
-  }
-  .back-link:hover { color: var(--case-accent); border-color: var(--case-accent); }
-  .back-link:focus-visible { outline: 2px solid var(--case-accent); outline-offset: 3px; border-radius: 2px; }
+  .case-page { padding: 128px 0 160px; }
   .case-header { margin-bottom: 48px; padding: 28px clamp(16px,4vw,32px); }
+  .case-meta-group { display: flex; flex-direction: column; gap: 16px; margin-top: 10px; }
   .case-meta-line {
     font-family: var(--mono); font-size: 0.85rem; text-transform: uppercase;
-    letter-spacing: 0.03em; color: var(--text-dim); margin-top: 10px;
+    letter-spacing: 0.03em; color: var(--text-dim);
   }
   .case-tags { display: flex; gap: 8px; flex-wrap: wrap; font-size: 0.78rem; }
   .case-tags span { background: var(--surface); border: 1px solid var(--line); color: var(--case-accent); padding: 5px 12px; border-radius: 999px; }
@@ -133,13 +127,24 @@
     font-family: var(--display); font-size: clamp(2.3rem, 5.4vw, 3.6rem); font-weight: 700;
     line-height: 1.05; letter-spacing: -0.025em;
   }
-  .metrics { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
-  .metric { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-medium); padding: 14px 18px; min-width: 140px; box-shadow: var(--shadow-soft); }
-  .metric .value { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; color: var(--case-accent); }
-  .metric .label { font-size: 0.8rem; color: var(--text-dim); margin-top: 2px; }
+  /* Typography/spacing/image treatment unified with case-alif-partners.html
+     (DESIGN.md item 10: shared typographic roles across all case pages). */
+  .metrics {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5);
+    margin-top: clamp(32px, 4vw, 40px); margin-bottom: 40px; width: 100%;
+  }
+  .metric {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-large);
+    padding: clamp(20px, 2.6vw, 28px); box-shadow: var(--shadow-soft); min-width: 0;
+  }
+  .metric .value { font-family: var(--mono); font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700; color: var(--case-accent); line-height: 1.1; }
+  .metric .label { font-size: 0.9rem; color: var(--text-dim); margin-top: 8px; line-height: 1.4; }
+  @media (max-width: 560px) {
+    .metrics { grid-template-columns: 1fr; margin-bottom: 24px; }
+  }
 
-  .detail-block { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--line); }
-  .detail-head { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 24px; }
+  .detail-block { margin-top: clamp(96px, 9vw, 128px); padding-top: var(--space-7); border-top: 1px solid var(--line); }
+  .detail-head { display: flex; align-items: flex-start; gap: 20px; margin-bottom: var(--space-7); }
   .detail-num {
     font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 4.2vw, 2.8rem);
     color: var(--line); line-height: 0.8; flex-shrink: 0; letter-spacing: 0;
@@ -147,7 +152,7 @@
   .detail-head h2 { font-family: var(--display); font-size: 1.4rem; line-height: 1.15; font-weight: 700; letter-spacing: -0.025em; padding-top: 8px; }
   .detail-block p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.65; max-width: 60ch; margin-bottom: 18px; }
   .detail-block > p:last-child { margin-bottom: 0; }
-  .detail-block img { display: block; width: 100%; height: auto; border-radius: var(--radius-large); margin-bottom: 18px; }
+  .detail-block img { display: block; width: 100%; height: auto; border-radius: var(--radius-large); margin-bottom: 18px; object-fit: contain; }
   .case-image-trigger {
     display: block; width: 100%; padding: 0; margin: 0; border: 0; background: none;
     cursor: pointer; font: inherit; color: inherit; text-align: inherit;
@@ -156,18 +161,21 @@
     outline: 3px solid var(--text-strong); outline-offset: 3px; border-radius: var(--radius-large);
   }
 
-  .detail-pair { display: grid; grid-template-columns: 5fr 7fr; gap: 36px; align-items: center; margin-bottom: 18px; }
+  .detail-pair { display: grid; grid-template-columns: 5fr 7fr; gap: 36px; align-items: center; margin-top: clamp(32px, 3vw, 40px); margin-bottom: 18px; }
   .detail-pair.media-left { grid-template-columns: 7fr 5fr; }
   .detail-pair.media-left .detail-pair-media { order: -1; }
   .detail-pair-text p { margin-bottom: 0; max-width: none; }
-  .detail-pair-media { border-radius: var(--radius-large); overflow: hidden; background: var(--surface); border: 1px solid var(--line); }
-  .detail-pair-media img { margin: 0; border-radius: 0; }
+  .detail-pair-media {
+    border-radius: var(--radius-large); overflow: hidden; background: var(--surface); border: 1px solid var(--line);
+    padding: clamp(20px, 3vw, 32px);
+  }
+  .detail-pair-media img { margin: 0; border-radius: var(--radius-medium); object-fit: contain; }
   .detail-pair-media .case-image-trigger:focus-visible,
   .detail-mosaic .case-image-trigger:focus-visible { outline-offset: -3px; }
   .detail-mosaic { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 18px; }
   .detail-mosaic img { margin: 0; }
   @media (max-width: 860px) {
-    .detail-pair, .detail-pair.media-left { grid-template-columns: 1fr !important; gap: 16px; }
+    .detail-pair, .detail-pair.media-left { grid-template-columns: 1fr; gap: 16px; }
     .detail-pair.media-left .detail-pair-media { order: 0; }
     .detail-mosaic { grid-template-columns: 1fr; }
   }
@@ -179,18 +187,57 @@
   }
   .problem-statement p { font-size: clamp(1.15rem, 2.2vw, 1.5rem); font-weight: 600; font-style: italic; color: var(--text); line-height: 1.4; max-width: 42ch; }
 
-  .outcome-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-medium); padding: 22px 24px; box-shadow: var(--shadow-soft); }
-  .outcome-kicker { display: block; font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--case-accent); }
-  .outcome-list { list-style: none; margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 4px 24px; }
-  .outcome-list li { position: relative; padding: 10px 0 10px 26px; border-top: 1px solid var(--line); font-size: 0.95rem; color: var(--text); }
-  .outcome-list li:first-child { border-top: none; padding-top: 0; }
-  .outcome-list li::before { content: "✓"; position: absolute; left: 0; color: var(--case-accent); font-family: var(--mono); }
-  .outcome-list.is-expected li::before { content: "→"; }
-  @media (max-width: 720px) {
-    .outcome-list { grid-template-columns: 1fr; }
-    .outcome-list li { border-top: 1px solid var(--line); padding-top: 10px; }
-    .outcome-list li:first-child { border-top: none; padding-top: 0; }
+  /* "Результат" + "Как измерить эффект": ported verbatim from
+     case-alif-partners.html so all case pages share one component system. */
+  .detail-block .result-summary-text { margin-top: 32px; margin-bottom: 0; }
+  .result-cards {
+    display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: var(--space-5);
+    margin-top: clamp(48px, 5vw, 64px);
   }
+  .result-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-large);
+    padding: clamp(24px, 3vw, 32px); display: flex; flex-direction: column; gap: var(--space-4);
+    min-width: 0; box-shadow: var(--shadow-soft);
+  }
+  .result-card__num { font-family: var(--display); font-weight: 700; font-size: clamp(1.8rem, 3vw, 2.4rem); color: var(--line); line-height: 1; }
+  .result-card__title { font-family: var(--display); font-weight: 700; font-size: 1.15rem; letter-spacing: -0.01em; color: var(--text); }
+  .result-card--lead .result-card__title { font-size: clamp(1.25rem, 2vw, 1.4rem); }
+  .result-card__text { font-size: 0.95rem; color: var(--text-dim); line-height: 1.6; }
+  @media (max-width: 860px) {
+    .result-cards { grid-template-columns: 1fr; }
+  }
+
+  .result-note {
+    margin-top: clamp(48px, 5vw, 64px); padding: var(--space-5) var(--space-6);
+    background: var(--line-faint); border-left: 3px solid var(--line-strong); border-radius: var(--radius-medium);
+    display: flex; flex-direction: column; gap: var(--space-2);
+  }
+  .result-note__label { font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); }
+  .result-note__text { font-size: 0.9rem; color: var(--text-dim); line-height: 1.55; max-width: 60ch; }
+
+  .metric-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5);
+    margin-top: clamp(32px, 3vw, 40px);
+  }
+  .metric-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-large);
+    padding: clamp(24px, 3vw, 32px); display: flex; flex-direction: column; gap: 0;
+    min-width: 0; box-shadow: var(--shadow-soft);
+  }
+  .metric-card__goal { font-family: var(--mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); }
+  .metric-card .metric-card__sentence { margin-top: 12px; margin-bottom: 0; font-size: 1.02rem; color: var(--text); line-height: 1.6; }
+  .metric-card__caption { margin-top: clamp(24px, 2.5vw, 32px); font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); }
+  .metric-card__accent {
+    margin-top: 10px;
+    display: inline-flex; align-self: flex-start; max-width: 100%;
+    background: var(--nav-bg); color: #f8f8f8;
+    font-family: var(--sans); font-size: 0.85rem; font-weight: 600; line-height: 1.35;
+    padding: 8px 16px; border-radius: var(--radius-pill);
+  }
+  @media (max-width: 720px) {
+    .metric-grid { grid-template-columns: 1fr; }
+  }
+  .detail-head.detail-head--tight { margin-bottom: 0; }
 
   .detail-list { display: flex; flex-direction: column; gap: 12px; }
   .detail-list-item { display: flex; gap: 10px; align-items: flex-start; }
@@ -207,15 +254,15 @@
   .case-floating-nav {
     position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom));
     transform: translateX(-50%) translateY(12px);
-    z-index: 110; display: flex; align-items: center; gap: 10px;
-    max-width: calc(100vw - 32px);
+    z-index: 110; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px;
+    width: max-content; max-width: calc(100vw - 32px);
     opacity: 0;
     transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1);
   }
   .case-floating-nav.is-inview { opacity: 1; transform: translateX(-50%) translateY(0); }
   body.lightbox-open .case-floating-nav { opacity: 0; pointer-events: none; }
 
-  .case-like, .case-next {
+  .case-like, .case-next, .case-home {
     background: rgba(255, 255, 255, 0.62);
     border: 1px solid rgba(255, 255, 255, 0.72);
     box-shadow:
@@ -226,8 +273,22 @@
     border-radius: var(--radius-pill);
   }
   @supports not (backdrop-filter: blur(1px)) {
-    .case-like, .case-next { background: rgba(248, 248, 248, 0.94); }
+    .case-like, .case-next, .case-home { background: rgba(248, 248, 248, 0.94); }
   }
+
+  .case-home {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--sans); font-size: 0.92rem; font-weight: 600; color: #171717;
+    padding-inline: 20px; min-height: 56px;
+    flex-shrink: 0;
+    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s cubic-bezier(0.22,1,0.36,1);
+  }
+  .case-home:hover { background: rgba(255,255,255,0.85); box-shadow: var(--shadow-control); }
+  .case-home:focus-visible { outline: 2px solid var(--text-strong); outline-offset: 2px; }
+  .case-home:active { transform: scale(0.96); }
+  .case-home__arrow { font-family: var(--mono); color: var(--text-dim); transition: transform 0.2s cubic-bezier(0.22,1,0.36,1); }
+  .case-home:hover .case-home__arrow, .case-home:focus-visible .case-home__arrow { transform: translateX(-4px); }
+  .case-home__label { white-space: nowrap; }
 
   .case-like {
     display: inline-flex; align-items: center; gap: 10px;
@@ -270,9 +331,9 @@
 
   @media (max-width: 720px) {
     .case-floating-nav { bottom: max(14px, env(safe-area-inset-bottom)); gap: 8px; }
-    .case-like { min-height: 48px; padding-inline: 16px; }
+    .case-like, .case-home { min-height: 48px; padding-inline: 16px; }
     .case-next { min-height: 48px; padding-inline: 16px; max-width: min(220px, 52vw); }
-    .case-next__label {
+    .case-next__label, .case-home__label {
       position: absolute; width: 1px; height: 1px; overflow: hidden;
       clip: rect(0,0,0,0); white-space: nowrap;
     }
@@ -280,10 +341,11 @@
 
   @media (prefers-reduced-motion: reduce) {
     .case-floating-nav { transition: none; opacity: 1; transform: translateX(-50%); }
-    .case-like__icon, .case-next__arrow, .case-like, .case-next { transition: none; }
+    .case-like__icon, .case-next__arrow, .case-like, .case-next, .case-home, .case-home__arrow { transition: none; }
     .case-like.is-pulsing .case-like__icon { animation: none; }
   }
 </style>
+  <link rel="stylesheet" href="assets/typography.css">
 </head>
 <body>
 
@@ -297,12 +359,12 @@
 
   <div class="page">
     <div class="case-page">
-      <a class="back-link" href="index.html"><span data-lang="ru">← Все работы</span><span data-lang="en">← All work</span></a>
-
       <div class="case-header">
         <h1 class="case-title">360 Tracker</h1>
-        <div class="case-meta-line"><span data-lang="ru">iOS · MVP за 6 месяцев</span><span data-lang="en">iOS · MVP in 6 months</span></div>
-        <div class="case-tags"><span>/mobile</span><span>/0→1</span><span>/privacy-vs-control</span></div>
+        <div class="case-meta-group">
+          <div class="case-meta-line"><span data-lang="ru">iOS · MVP за 6 месяцев</span><span data-lang="en">iOS · MVP in 6 months</span></div>
+          <div class="case-tags"><span>/mobile</span><span>/0→1</span><span>B2C</span></div>
+        </div>
         <p class="case-dek"><span data-lang="ru">MVP мобильного приложения для семейной безопасности за 6 месяцев. Разбор процесса: анализ конкурентов, user flow, итоги.</span><span data-lang="en">A family safety mobile app MVP built in 6 months. Process breakdown: competitor analysis, user flow, outcomes.</span></p>
         <div class="metrics">
           <div class="metric"><div class="value">4</div><div class="label"><span data-lang="ru">конкурента в анализе</span><span data-lang="en">competitors analyzed</span></div></div>
@@ -326,7 +388,7 @@
       <div class="detail-block">
         <div class="detail-head"><span class="detail-num">03</span><h2><span data-lang="ru">Анализ конкурентов</span><span data-lang="en">Competitor analysis</span></h2></div>
         <div class="detail-pair">
-          <div class="detail-pair-text"><p><span data-lang="ru">Вместо глубинных интервью сосредоточилась на анализе существующих решений: Kids360, Kid Security, iSharing и Family Tracker: какие функции предлагают, на чём делают акцент и какие сценарии используют для удержания пользователей.</span><span data-lang="en">Instead of in-depth interviews, I focused on analyzing existing solutions: Kids360, Kid Security, iSharing, and Family Tracker: what features they offer, what they emphasize, and what scenarios they use to retain users.</span></p></div>
+          <div class="detail-pair-text"><p><span data-lang="ru">Вместо глубинных интервью я сосредоточилась на анализе существующих решений (Kids360, Kid Security, iSharing и Family Tracker): какие функции они предлагают, на чём делают акцент и какие сценарии используют для удержания пользователей.</span><span data-lang="en">Instead of in-depth interviews, I focused on analyzing existing solutions (Kids360, Kid Security, iSharing, and Family Tracker): what features they offer, what they emphasize, and what scenarios they use to retain users.</span></p></div>
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
               <img src="assets/process/tracker-competitors.png" data-alt-ru="360 Tracker · анализ конкурентов" data-alt-en="360 Tracker · competitor analysis" alt="360 Tracker · анализ конкурентов" loading="lazy">
@@ -343,7 +405,7 @@
               <img src="assets/process/tracker-monetization.png" data-alt-ru="360 Tracker · монетизация конкурентов" data-alt-en="360 Tracker · competitor monetization" alt="360 Tracker · монетизация конкурентов" loading="lazy">
             </button>
           </div>
-          <div class="detail-pair-text"><p><span data-lang="ru">Большинство приложений используют модель freemium: базовые функции бесплатны, а расширенные возможности открываются по подписке. Бесплатной версии чаще всего достаточно только для базового отслеживания, а ключевые сценарии безопасности и контроля скрыты за paywall.</span><span data-lang="en">Most apps use a freemium model: basic features are free, and extended capabilities unlock via subscription. The free version is usually enough only for basic tracking, while key safety and control scenarios are hidden behind a paywall.</span></p></div>
+          <div class="detail-pair-text"><p><span data-lang="ru">Большинство приложений используют модель freemium: базовые функции бесплатны, а расширенные возможности открываются по подписке. Бесплатной версии чаще всего достаточно только для базового отслеживания, а ключевые сценарии безопасности и контроля доступны только по платной подписке.</span><span data-lang="en">Most apps use a freemium model: basic features are free, and extended capabilities unlock via subscription. The free version is usually enough only for basic tracking, while key safety and control scenarios sit behind the paid subscription.</span></p></div>
         </div>
       </div>
 
@@ -369,7 +431,7 @@
       <div class="detail-block">
         <div class="detail-head"><span class="detail-num">07</span><h2>User flow</h2></div>
         <div class="detail-pair">
-          <div class="detail-pair-text"><p><span data-lang="ru">По результатам исследования проработала user flow, основанный на ключевых сценариях использования продукта.</span><span data-lang="en">Based on the research results, I worked out a user flow built around the product's key usage scenarios.</span></p></div>
+          <div class="detail-pair-text"><p><span data-lang="ru">По результатам исследования я проработала user flow, основанный на ключевых сценариях использования продукта.</span><span data-lang="en">Based on the research results, I worked out a user flow built around the product's key usage scenarios.</span></p></div>
           <div class="detail-pair-media">
             <button class="case-image-trigger" type="button">
               <img src="assets/process/tracker-flow.png" data-alt-ru="360 Tracker · user flow" data-alt-en="360 Tracker · user flow" alt="360 Tracker · user flow" loading="lazy">
@@ -401,7 +463,7 @@
             </button>
           </div>
         </div>
-        <p><span data-lang="ru">Доработали логику: родитель может ограничить возможность скрытия геолокации для ребёнка. Это сохранило контроль в детском сценарии и дало взрослым пользователям управление своей приватностью.</span><span data-lang="en">We refined the logic: a parent can restrict a child's ability to hide their location. This preserved control in the child scenario while giving adult users control over their own privacy.</span></p>
+        <p><span data-lang="ru">Доработала логику: родитель может ограничить возможность скрытия геолокации для ребёнка. Это сохранило контроль в детском сценарии и дало взрослым пользователям управление своей приватностью.</span><span data-lang="en">I refined the logic: a parent can restrict a child's ability to hide their location. This preserved control in the child scenario while giving adult users control over their own privacy.</span></p>
       </div>
 
       <div class="detail-block">
@@ -412,7 +474,7 @@
               <img src="assets/process/tracker-history.png" data-alt-ru="360 Tracker · история поездок" data-alt-en="360 Tracker · trip history" alt="360 Tracker · история поездок" loading="lazy">
             </button>
           </div>
-          <div class="detail-pair-text"><p><span data-lang="ru">Добавили историю поездок за последние 30 дней с возможностью просматривать собственные маршруты. Функция доступна в рамках премиум-подписки и не отображается другим участникам семейного круга. Это расширило сценарии использования без усложнения базового опыта. Сама граница «30 дней» является стартовой гипотезой монетизации, а не результатом количественного теста цены; сколько дней истории пользователи реально готовы оплачивать, не проверялось.</span><span data-lang="en">We added trip history for the last 30 days with the ability to view your own routes. The feature is available as part of the premium subscription and isn't shown to other members of the family circle. This expanded the usage scenarios without complicating the basic experience. The "30 days" boundary itself is a starting monetization hypothesis, not the result of a quantitative pricing test; how many days of history users are actually willing to pay for was never tested.</span></p></div>
+          <div class="detail-pair-text"><p><span data-lang="ru">Добавила историю поездок за последние 30 дней с возможностью просматривать собственные маршруты. Функция доступна в рамках премиум-подписки и не отображается другим участникам семейного круга. Это расширило сценарии использования без усложнения базового опыта. Сама граница «30 дней» является стартовой гипотезой монетизации, а не результатом количественного теста цены: сколько дней истории пользователи реально готовы оплачивать, не проверялось.</span><span data-lang="en">I added trip history for the last 30 days with the ability to view your own routes. The feature is available as part of the premium subscription and isn't shown to other members of the family circle. This expanded the usage scenarios without complicating the basic experience. The "30 days" boundary itself is a starting monetization hypothesis, not the result of a quantitative pricing test: how many days of history users are actually willing to pay for was never tested.</span></p></div>
         </div>
       </div>
 
@@ -438,35 +500,62 @@
           </div>
           <div class="detail-pair-text">
             <p><span data-lang="ru">Включает базовые сценарии семейной безопасности и коммуникации: отслеживание геолокации в реальном времени, геофенсинг, уведомления о перемещениях и встроенный чат для общения внутри семейного круга. Все ключевые функции конкурентных приложений адаптированы под единый пользовательский опыт.</span><span data-lang="en">Includes the basic family safety and communication scenarios: real-time location tracking, geofencing, movement notifications, and a built-in chat for communication within the family circle. All the key features of competing apps were adapted into a single, unified user experience.</span></p>
-            <p><span data-lang="ru">Глубина проработки в этом кейсе неравномерна: геолокация и приватность (разделы 06…11) получили полноценное исследование и тестирование гипотез, а экстренные уведомления и чат показаны в финальном концепте как часть единого экрана, но отдельно не разбирались: тот же выбор фокуса ресурсов, что и в разделе 03 (анализ конкурентов вместо глубинных интервью).</span><span data-lang="en">This case's depth is uneven: geolocation and privacy (sections 06…11) got full research and hypothesis testing, while emergency alerts and chat appear in the final concept as part of one unified screen but weren't broken out and reasoned through separately: the same resourcing choice as in section 03 (competitor analysis instead of in-depth interviews).</span></p>
+            <p><span data-lang="ru">Глубина проработки в этом кейсе неравномерна: геолокация и приватность получили полноценное исследование и тестирование гипотез, а экстренные уведомления и чат показаны в финальном концепте как часть единого экрана, но отдельно не разбирались. Это тот же выбор фокуса ресурсов, что и в начале кейса, где анализ конкурентов заменил глубинные интервью.</span><span data-lang="en">This case's depth is uneven: geolocation and privacy got full research and hypothesis testing, while emergency alerts and chat appear in the final concept as part of one unified screen but weren't broken out and reasoned through separately. It's the same resourcing choice as earlier in the case, where competitor analysis stood in for in-depth interviews.</span></p>
           </div>
         </div>
       </div>
 
       <div class="detail-block">
-        <div class="detail-head"><span class="detail-num">13</span><h2><span data-lang="ru">Итоги</span><span data-lang="en">Results</span></h2></div>
-        <p><span data-lang="ru">Спроектирован и запущен MVP мобильного приложения для семейной безопасности. Расширенная аналитика перемещений и гибкие настройки приватности зафиксированы как направление для дальнейшего развития.</span><span data-lang="en">An MVP of the family safety mobile app was designed and launched. Extended movement analytics and flexible privacy settings were logged as a direction for further development.</span></p>
-        <div class="outcome-card">
-          <span class="outcome-kicker"><span data-lang="ru">Ключевые результаты MVP</span><span data-lang="en">Key MVP outcomes</span></span>
-          <ul class="outcome-list">
-            <li><span data-lang="ru">Сформировать и протестировать ключевые пользовательские сценарии (геолокация, семейный круг, экстренные уведомления и коммуникация)</span><span data-lang="en">Shape and test key user scenarios (geolocation, family circle, emergency alerts, and communication)</span></li>
-            <li><span data-lang="ru">Провести первичное юзабилити-тестирование и собрать обратную связь по ключевым функциям</span><span data-lang="en">Conduct initial usability testing and gather feedback on key features</span></li>
-            <li><span data-lang="ru">Спроектировать и запустить freemium-модель с премиум-подпиской, пробным периодом и 30-дневной историей поездок как платной опцией</span><span data-lang="en">Design and ship a freemium model with a premium subscription, a trial period, and 30-day trip history as a paid option</span></li>
-          </ul>
+        <div class="detail-head detail-head--tight"><span class="detail-num">13</span><h2><span data-lang="ru">Результат</span><span data-lang="en">Result</span></h2></div>
+        <p class="result-summary-text"><span data-lang="ru">Спроектирован и запущен MVP мобильного приложения для семейной безопасности.</span><span data-lang="en">An MVP of the family safety mobile app was designed and launched.</span></p>
+        <div class="result-cards">
+          <div class="result-card result-card--lead">
+            <span class="result-card__num" aria-hidden="true">01</span>
+            <h4 class="result-card__title"><span data-lang="ru">Ключевые сценарии</span><span data-lang="en">Key scenarios</span></h4>
+            <p class="result-card__text"><span data-lang="ru">Сформированы и протестированы ключевые пользовательские сценарии: геолокация, семейный круг, экстренные уведомления и коммуникация.</span><span data-lang="en">Key user scenarios were shaped and tested: geolocation, family circle, emergency alerts, and communication.</span></p>
+          </div>
+          <div class="result-card">
+            <span class="result-card__num" aria-hidden="true">02</span>
+            <h4 class="result-card__title"><span data-lang="ru">Первичное тестирование</span><span data-lang="en">Initial testing</span></h4>
+            <p class="result-card__text"><span data-lang="ru">Проведено первичное юзабилити-тестирование, собрана обратная связь по ключевым функциям.</span><span data-lang="en">Initial usability testing was conducted, and feedback on key features was gathered.</span></p>
+          </div>
+          <div class="result-card">
+            <span class="result-card__num" aria-hidden="true">03</span>
+            <h4 class="result-card__title"><span data-lang="ru">Freemium-модель</span><span data-lang="en">Freemium model</span></h4>
+            <p class="result-card__text"><span data-lang="ru">Спроектирована и запущена freemium-модель: премиум-подписка, пробный период и 30-дневная история поездок как платная опция.</span><span data-lang="en">A freemium model was designed and shipped: a premium subscription, a trial period, and 30-day trip history as a paid option.</span></p>
+          </div>
         </div>
-        <div class="outcome-card" style="margin-top:16px">
-          <span class="outcome-kicker"><span data-lang="ru">Направление развития / гипотеза для следующей проверки</span><span data-lang="en">Direction for future work / hypothesis to test next</span></span>
-          <ul class="outcome-list is-expected">
-            <li><span data-lang="ru">Готовность пользователей платить именно за эти сценарии не измерена; freemium-границы (30 дней) нужно проверять на реальных платежах, а не считать валидированными</span><span data-lang="en">Users' actual willingness to pay for these specific scenarios hasn't been measured; the freemium boundaries (30 days) need testing against real payments, not treated as already validated</span></li>
-            <li><span data-lang="ru">Кластеризация меток на карте при большом семейном круге не спроектирована, см. раздел 08</span><span data-lang="en">Map-pin clustering for a large family circle is not designed yet, see section 08</span></li>
-          </ul>
+        <div class="result-note">
+          <span class="result-note__label"><span data-lang="ru">Направление развития</span><span data-lang="en">Direction for future work</span></span>
+          <p class="result-note__text"><span data-lang="ru">Кластеризация меток на карте при большом семейном круге не спроектирована, это ограничение уже отмечено в описании главного экрана. Расширенная аналитика перемещений и более гибкие настройки приватности зафиксированы как направления для дальнейшего развития, а не как часть текущего MVP.</span><span data-lang="en">Map-pin clustering for a large family circle isn't designed yet, a limitation already flagged in the main screen section. Extended movement analytics and more flexible privacy settings were logged as directions for future development, not as part of the current MVP.</span></p>
+        </div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-head"><span class="detail-num">14</span><h2><span data-lang="ru">Как измерить эффект</span><span data-lang="en">How to measure the effect</span></h2></div>
+        <p><span data-lang="ru">MVP запущен и используется тестовой аудиторией. Ниже перечислены метрики, которые ещё предстоит проверить, а не подтверждённые результаты.</span><span data-lang="en">The MVP has launched and is in use by a test audience. What follows are metrics still to be verified, not confirmed results.</span></p>
+        <div class="metric-grid">
+          <div class="metric-card">
+            <span class="metric-card__goal"><span data-lang="ru">Готовность платить</span><span data-lang="en">Willingness to pay</span></span>
+            <p class="metric-card__sentence"><span data-lang="ru">Проверяем, готовы ли пользователи платить именно за премиум-сценарии: историю поездок и расширенные функции.</span><span data-lang="en">We're checking whether users are willing to pay specifically for premium scenarios: trip history and extended features.</span></p>
+            <span class="metric-card__caption"><span data-lang="ru">Метрика для проверки</span><span data-lang="en">Metric to verify</span></span>
+            <span class="metric-card__accent"><span data-lang="ru">Подтверждённый спрос на премиум-подписку</span><span data-lang="en">Confirmed demand for the premium subscription</span></span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-card__goal"><span data-lang="ru">Граница freemium</span><span data-lang="en">Freemium boundary</span></span>
+            <p class="metric-card__sentence"><span data-lang="ru">Тестируем на реальных платежах, актуальна ли 30-дневная граница истории поездок как платная опция.</span><span data-lang="en">We're testing against real payments whether the 30-day trip history boundary holds up as a paid option.</span></p>
+            <span class="metric-card__caption"><span data-lang="ru">Метрика для проверки</span><span data-lang="en">Metric to verify</span></span>
+            <span class="metric-card__accent"><span data-lang="ru">Оптимальная граница бесплатного и платного доступа</span><span data-lang="en">The right line between free and paid access</span></span>
+          </div>
         </div>
       </div>
 
-      <a class="back-link" href="index.html" style="margin-top:48px"><span data-lang="ru">← Все работы</span><span data-lang="en">← All work</span></a>
     </div>
 
     <nav class="case-floating-nav">
+      <a class="case-home" href="index.html">
+        <span class="case-home__arrow" aria-hidden="true">←</span>
+        <span class="case-home__label"><span data-lang="ru">Главная страница</span><span data-lang="en">Homepage</span></span>
+      </a>
       <button class="case-like" type="button" data-case-id="360-tracker" aria-pressed="false" aria-label="Поставить лайк кейсу 360 Tracker">
         <svg class="case-like__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
           <path d="M12 20.5s-7.2-4.5-9.8-8.9C.5 8.4 1.9 4.5 5.6 4.5c2.2 0 3.8 1.4 4.9 3.1 1.1-1.7 2.7-3.1 4.9-3.1 3.7 0 5.1 3.9 2.4 7.1-2.6 4.4-9.8 8.9-9.8 8.9z"/>
@@ -491,6 +580,7 @@
   </div>
 
   <script src="assets/i18n.js"></script>
+  <script src="assets/typography.js"></script>
   <script src="assets/lightbox.js"></script>
   <script src="assets/case-nav.js"></script>
 </body>

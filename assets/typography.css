@@ -1,0 +1,31 @@
+/* Shared typographic rules — orphan/widow control, wrapping, and hyphenation.
+   Loaded on every page; see assets/typography.js for the runtime nbsp pass.
+   This file only sets wrapping/breaking behavior — it must never set
+   font-size, color, spacing, or layout, so it can't fight a page's own
+   design tokens. */
+
+h1, h2, h3, h4, .section-title, .project-title {
+  text-wrap: balance;
+  hyphens: none;
+  word-break: normal;
+  break-after: avoid;
+}
+
+p, li, blockquote {
+  orphans: 2;
+  widows: 2;
+}
+
+p,
+li,
+blockquote,
+.project-description,
+.case-description,
+.card-description,
+.metric-text,
+.caption {
+  text-wrap: pretty;
+  hyphens: none;
+  word-break: normal;
+  overflow-wrap: break-word;
+}

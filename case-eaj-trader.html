@@ -141,7 +141,7 @@
     letter-spacing: 0.03em; color: var(--text-dim);
   }
   .case-tags { display: flex; gap: 8px; flex-wrap: wrap; font-size: var(--font-size-label); }
-  .case-tags span { background: var(--surface); border: 1px solid var(--line); color: var(--case-accent); padding: 5px 12px; border-radius: 999px; }
+  .case-tags span { background: var(--surface); border: 1px solid rgba(27, 96, 217, 0.3); color: var(--case-accent); padding: 5px 12px; border-radius: 999px; }
   .case-dek { margin-top: 16px; font-size: var(--font-size-body); color: var(--text-dim); max-width: 62ch; line-height: var(--line-height-body); }
   /* Task headline — a real <h4>, visually secondary to the project name
      (h1). Own --font-size-h4 tier, not h2/h3, and wide enough (900-1000px)
@@ -180,8 +180,16 @@
     font-weight: var(--font-weight-heading); letter-spacing: -0.01em; text-wrap: balance;
   }
   .detail-head-text .detail-kicker {
-    margin-top: 8px; font-family: var(--sans); font-weight: 500; font-size: var(--font-size-h3);
+    position: relative; margin-top: 8px; padding-left: 24px;
+    font-family: var(--sans); font-weight: 500; font-size: var(--font-size-h3);
     line-height: 1.3; color: var(--text-strong); max-width: 46ch; text-wrap: pretty;
+  }
+  /* Kicker names the section's actual conclusion — a short marker in the
+     product's own accent ties that conclusion to the brand color, per
+     accent-color instruction §2 ("ключевым выводам"). */
+  .detail-head-text .detail-kicker::before {
+    content: ''; position: absolute; left: 0; top: 0.55em;
+    width: 16px; height: 2px; border-radius: 2px; background: var(--accent-blue);
   }
   .detail-block p { color: var(--text-dim); font-size: var(--font-size-body); line-height: var(--line-height-body); max-width: 60ch; margin-bottom: clamp(20px, 2vw, 24px); text-wrap: pretty; }
   .detail-block > p:last-child { margin-bottom: 0; }
@@ -197,10 +205,12 @@
     cursor: pointer; font: inherit; color: inherit; text-align: inherit;
   }
   .case-image-trigger:focus-visible {
-    outline: 3px solid var(--text-strong); outline-offset: 3px; border-radius: var(--radius-large);
+    outline: 3px solid var(--accent-blue); outline-offset: 3px; border-radius: var(--radius-large);
   }
+  /* Product's own cool near-white (F8FAFC) instead of the generic warm
+     --surface — a quiet, page-specific touch per accent-color instruction §2. */
   .detail-media-frame {
-    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-large);
+    background: #F8FAFC; border: 1px solid var(--line); border-radius: var(--radius-large);
     padding: clamp(20px, 3vw, 32px); margin-top: clamp(32px, 3vw, 40px); margin-bottom: clamp(32px, 3vw, 40px);
   }
   .detail-media-frame .case-image-trigger { display: block; }
@@ -324,14 +334,22 @@
      Результат/Метрики pair — see typography-hierarchy instruction §3. */
   .result-cards {
     display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px;
-    margin-top: clamp(32px, 3vw, 40px);
+    margin-top: clamp(32px, 3vw, 40px); align-items: stretch;
   }
+  /* Calm accent-tinted glass: very light blue wash, no dark drop shadow
+     (a soft box-shadow read as a dark halo under the card — removed, not
+     softened). min-height is a uniform floor comfortably above this
+     section's real content (measured 160-182px across all 4 cases) so
+     every card in the grid — not just each row — ends up the same size;
+     align-items:stretch still equalizes any row whose content genuinely
+     exceeds the floor. See visual-polish instruction §1-3/§6. */
   .result-card {
-    background: rgba(255, 255, 255, 0.58);
+    background: rgba(27, 96, 217, 0.05);
     backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-    border: 1px solid rgba(255, 255, 255, 0.72);
-    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(27, 96, 217, 0.18);
+    box-shadow: none;
     border-radius: 24px;
+    min-height: 200px;
     padding: clamp(28px, 2.6vw, 36px);
     display: flex; flex-direction: column; align-items: flex-start; text-align: left; gap: 10px; min-width: 0;
   }
@@ -346,13 +364,9 @@
     content: ''; display: inline-block; width: 16px; height: 2px; border-radius: 2px;
     background: var(--accent-blue);
   }
-  .result-card__metric { font-family: var(--display); font-weight: 600; font-size: 1.05rem; color: var(--text); line-height: 1.35; }
+  .result-card .result-card__metric { font-family: var(--display); font-weight: 600; font-size: 1.05rem; color: var(--text); line-height: 1.35; margin: 0; max-width: none; }
   .result-card .result-card__desc { font-size: var(--font-size-label); color: var(--text-dim); line-height: 1.55; margin: 0; max-width: none; }
-  .result-card__status {
-    margin-top: 2px; display: inline-flex; font-family: var(--mono); font-size: 0.72rem;
-    padding: 4px 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); color: var(--text-dim);
-  }
-  @media (max-width: 720px) { .result-cards { grid-template-columns: 1fr; } }
+  @media (max-width: 720px) { .result-cards { grid-template-columns: 1fr; } .result-card { min-height: 0; } }
 
   /* ===== Case floating dock (like + next case) — shared across all case pages =====
      Two independent glass controls, fixed to the viewport like the top nav —

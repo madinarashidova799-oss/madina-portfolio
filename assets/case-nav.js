@@ -9,7 +9,8 @@
     'alif-partners': { title: 'Alif Partners', next: 'eaj-trader', nextUrl: 'case-eaj-trader.html' },
     'eaj-trader': { title: 'EAJ Trader', next: 'namaste', nextUrl: 'case-namaste.html' },
     'namaste': { title: 'Namaste', next: '360-tracker', nextUrl: 'case-360-tracker.html' },
-    '360-tracker': { title: '360 Tracker', next: 'alif-partners', nextUrl: 'case-alif-partners.html' }
+    '360-tracker': { title: '360 Tracker', next: 'alif-partners', nextUrl: 'case-alif-partners.html' },
+    'about': { title: '«Обо мне»' }
   };
 
   // Local per-browser persistence.

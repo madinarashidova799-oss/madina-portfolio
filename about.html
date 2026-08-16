@@ -6,10 +6,10 @@
 <script>(function(){if(localStorage.getItem('site-lang')==='en')document.documentElement.classList.add('lang-en');})();</script>
 <title data-ru="Обо мне: Мадина Рашидова" data-en="About: Madina Rashidova">Обо мне: Мадина Рашидова</title>
 <link rel="icon" type="image/png" href="favicon.png">
-<meta name="description" data-ru="Мадина Рашидова: продуктовый дизайнер с опытом в fintech, banking и мобильных продуктах." data-en="Madina Rashidova: product designer with experience in fintech, banking, and mobile products." content="Мадина Рашидова: продуктовый дизайнер с опытом в fintech, banking и мобильных продуктах.">
+<meta name="description" data-ru="Продуктовый дизайнер. Разбираюсь в сложных системах и стараюсь оставлять их сложность внутри продукта, а не на экране пользователя." data-en="Product designer. I get to the bottom of complex systems and try to keep their complexity inside the product, not on the user's screen." content="Продуктовый дизайнер. Разбираюсь в сложных системах и стараюсь оставлять их сложность внутри продукта, а не на экране пользователя.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,600&family=PT+Serif:ital,wght@0,400;1,400;1,700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #f8f8f8;
@@ -40,6 +40,7 @@
     --mono: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --display: var(--sans);
+    --serif: 'PT Serif', Georgia, 'Times New Roman', serif;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -58,7 +59,9 @@
     z-index: 100; display: flex; align-items: center;
     background: var(--nav-bg); border-radius: 100px; padding: 8px 8px 8px 22px;
     box-shadow: var(--shadow-control);
+    transition: transform 0.28s cubic-bezier(0.22,1,0.36,1), opacity 0.28s cubic-bezier(0.22,1,0.36,1);
   }
+  .site-nav.is-nav-hidden { transform: translateX(-50%) translateY(-140%); opacity: 0; pointer-events: none; }
   .site-nav .nav-name {
     font-family: var(--mono); font-size: 0.85rem; font-weight: 500;
     color: #fff; margin-right: 8px; white-space: nowrap;
@@ -89,103 +92,241 @@
   html.lang-en [data-lang="ru"] { display: none; }
   html.lang-en [data-lang="en"] { display: inline; }
 
-  .about-layout { padding: 152px 0 96px; display: flex; gap: clamp(48px, 6vw, 96px); align-items: flex-start; }
-  .about-page { max-width: 720px; min-width: 0; flex: 1 1 auto; }
-  .about-rail { display: none; }
-  @media (min-width: 1100px) {
-    .about-rail {
-      display: flex; flex-direction: column; gap: 16px;
-      flex: 1; max-width: 320px; position: sticky; top: 140px;
-    }
-  }
-  .about-stat {
-    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-medium);
-    padding: 20px 22px; box-shadow: var(--shadow-soft);
-  }
-  .about-stat__value { font-family: var(--mono); font-size: 1.5rem; font-weight: 700; color: var(--text-strong); }
-  .about-stat__label { font-size: 0.85rem; color: var(--text-dim); margin-top: 4px; line-height: 1.4; }
-  .back-link {
-    display: inline-block; font-family: var(--mono); font-size: 0.82rem;
-    color: var(--text-dim); margin-bottom: 40px; padding-bottom: 2px;
-    border-bottom: 1px solid var(--line); transition: color 0.2s ease, border-color 0.2s ease;
-  }
-  .back-link:hover { color: var(--accent); border-color: var(--accent); }
-  .back-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  /* ===================== Page shell ===================== */
+  .about-page-wrap { padding: 152px 0 160px; }
+  @media (max-width: 720px) { .about-page-wrap { padding-bottom: 200px; } }
+
+  /* ===================== Typographic system ===================== */
+  /* Same H1 scale as the case pages — see typography-hierarchy instruction §3. */
   h1.about-title {
-    font-family: var(--display); font-size: clamp(2rem, 4.6vw, 3rem); font-weight: 700;
-    line-height: 1.05; letter-spacing: -0.025em; margin-bottom: 12px;
+    font-family: var(--display); font-weight: 700; font-size: clamp(44px, 4.5vw, 68px);
+    line-height: 1.02; letter-spacing: -0.02em; text-wrap: balance;
   }
-  .about-role { font-size: 1.05rem; color: var(--text-dim); margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
-
-  .about-section { margin-top: 40px; }
-  .about-section h2 {
-    font-family: var(--display); font-size: 1.1rem; font-weight: 700;
-    letter-spacing: -0.01em; margin-bottom: 12px;
+  .about-dek {
+    margin-top: 20px; font-size: clamp(1.25rem, 1.1rem + 0.4vw, 1.375rem); font-weight: 400;
+    color: var(--text-dim); max-width: 62ch; line-height: 1.5; text-wrap: pretty;
   }
-  .about-section p { font-size: 1rem; color: var(--text-dim); line-height: 1.7; max-width: 60ch; }
-  .about-section p + p { margin-top: 12px; }
-  .about-section p a { color: var(--text-strong); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 2px; transition: text-decoration-color 0.2s ease; }
-  .about-section p a:hover, .about-section p a:focus-visible { text-decoration-color: var(--text-strong); }
-  .about-section p a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
-  .about-section--cta { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--line); }
-  .about-section--cta h2 { font-size: clamp(1.3rem, 2.2vw, 1.6rem); }
-  .about-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
-  .about-list li { position: relative; padding-left: 22px; font-size: 1rem; color: var(--text-dim); line-height: 1.6; }
-  .about-list li::before { content: "→"; position: absolute; left: 0; color: var(--text-strong); font-family: var(--mono); }
+  .about-hero h2, .about-outside h2 {
+    font-family: var(--display); font-weight: 600; font-size: clamp(1.875rem, 1.6rem + 1vw, 2.625rem);
+    line-height: 1.08; letter-spacing: -0.015em; margin-bottom: 24px; text-wrap: balance;
+  }
+  .about-hero p, .about-outside p {
+    font-size: clamp(1.25rem, 1.1rem + 0.4vw, 1.375rem); font-weight: 400;
+    color: var(--text-dim); line-height: 1.55; max-width: 720px; text-wrap: pretty;
+  }
+  .about-hero p + p, .about-outside p + p { margin-top: 22px; }
 
-  .about-tools { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
-  .about-tools li {
-    background: var(--surface); border: 1px solid var(--line); color: var(--text);
-    font-family: var(--mono); font-size: 0.82rem; padding: 6px 14px; border-radius: 999px;
+  .about-quote {
+    font-family: var(--serif); font-style: italic; font-weight: 400;
+    font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.75rem); line-height: 1.4; color: var(--text-strong);
+    max-width: 640px; margin-top: 32px; padding-left: 20px; border-left: 2px solid var(--line-strong);
   }
 
-  .about-cases { list-style: none; display: flex; flex-direction: column; gap: 2px; margin-top: 4px; }
-  .about-cases a {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    padding: 16px 4px; border-top: 1px solid var(--line);
-    transition: color 0.2s ease;
+  /* ===================== Hero: text + collage ===================== */
+  .about-hero { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: start; }
+  @media (min-width: 900px) {
+    .about-hero { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(48px, 6vw, 80px); }
   }
-  .about-cases li:first-child a { border-top: none; }
-  .about-cases__text { display: flex; flex-direction: column; gap: 2px; }
-  .about-cases__name { font-family: var(--display); font-weight: 700; font-size: 1rem; color: var(--text); }
-  .about-cases__desc { font-family: var(--sans); font-weight: 400; font-size: 0.85rem; color: var(--text-dim); }
-  .about-cases a:hover .about-cases__name, .about-cases a:focus-visible .about-cases__name { color: var(--text-dim); }
-  .about-cases a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
-  .about-cases .arrow { font-family: var(--mono); font-weight: 400; color: var(--text-dim-2); transition: transform 0.2s ease; flex-shrink: 0; }
-  .about-cases a:hover .arrow, .about-cases a:focus-visible .arrow { transform: translateX(4px); }
+  .about-story { margin-top: 40px; }
+  .about-likelead { margin-top: 40px; }
 
-  .about-contacts {
-    display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;
+  /* ===================== Photo scrapbook ===================== */
+  .about-collage {
+    position: relative; width: 100%; aspect-ratio: 5 / 6;
+    max-width: 480px; margin: 0 auto;
   }
-  .contact-btn {
-    position: relative;
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    font-family: var(--sans); font-size: 0.88rem; font-weight: 600; color: var(--text);
-    background: var(--surface);
-    border: 1px solid var(--line);
-    box-shadow: var(--shadow-control);
-    padding: 0 24px; min-height: 52px; border-radius: var(--radius-pill);
-    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+  @media (min-width: 900px) { .about-collage { max-width: none; } }
+
+  .collage-photo {
+    position: absolute; background: #fff; padding: 6px;
+    border: 1px solid #fff; border-radius: 6px;
+    box-shadow: 0 10px 26px rgba(23,17,14,0.10);
+    opacity: 0; transform: translateY(12px) rotate(var(--rot-start, 0deg));
+    transition: transform 480ms cubic-bezier(0.22,1,0.36,1), box-shadow 220ms ease, opacity 480ms ease;
+    will-change: transform, opacity;
   }
-  .contact-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
-  .contact-btn:hover { background: #fff; box-shadow: var(--shadow-soft); transform: translateY(-2px); }
-  .contact-btn:focus-visible { outline: 2px solid var(--text-strong); outline-offset: 2px; }
-  .contact-btn:active { transform: translateY(0); }
+  .collage-photo.is-visible { opacity: 1; transform: translateY(0) rotate(var(--rot-end, 0deg)); }
+  .collage-photo:hover, .collage-photo:focus-within {
+    transform: translateY(-5px) rotate(var(--rot-hover, 0deg));
+    box-shadow: 0 18px 38px rgba(23,17,14,0.18); z-index: 5;
+  }
+  .collage-photo img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 2px; }
+  .collage-photo__frame { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 2px; }
+  .collage-photo__tape {
+    position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-2deg);
+    width: 56px; height: 22px; background: rgba(238, 227, 199, 0.55);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06); border-radius: 1px;
+  }
+
+  .collage-main { left: 8%; top: 8%; width: 38%; aspect-ratio: 4 / 4.6; z-index: 3; --rot-start: -6deg; --rot-end: -2deg; --rot-hover: -3deg; }
+  .collage-work { left: 54%; top: 4%; width: 32%; aspect-ratio: 3 / 4; z-index: 2; --rot-start: 5deg; --rot-end: 3deg; --rot-hover: 4deg; }
+  .collage-people { left: 10%; top: 54%; width: 34%; aspect-ratio: 4 / 5; z-index: 2; --rot-start: -6deg; --rot-end: -3deg; --rot-hover: -4deg; }
+  .collage-nature { left: 56%; top: 58%; width: 34%; aspect-ratio: 4 / 5; z-index: 1; --rot-start: 5deg; --rot-end: 2deg; --rot-hover: 3deg; }
+
+  @media (max-width: 560px) {
+    .collage-main { left: 5%; top: 4%; width: 44%; --rot-start: -3deg; --rot-end: -1deg; --rot-hover: -2deg; }
+    .collage-work { left: 51%; top: 2%; width: 42%; --rot-start: 3deg; --rot-end: 1.5deg; --rot-hover: 2deg; }
+    .collage-people { left: 5%; top: 52%; width: 44%; --rot-start: -3deg; --rot-end: -1.5deg; --rot-hover: -2deg; }
+    .collage-nature { left: 51%; top: 55%; width: 42%; --rot-start: 3deg; --rot-end: 1deg; --rot-hover: 2deg; }
+  }
+
+  /* Single hand-drawn arrow + serif caption pointing at the portrait — the
+     collage's only decorative label (visual-hierarchy instruction §3, this
+     round trims it down from four to one). */
+  .collage-arrows { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 4; overflow: visible; }
+  .collage-arrow { fill: none; stroke-width: 1.6; stroke-linecap: round; }
+  .collage-arrow--graphite { stroke: #3A3532; }
+
+  .collage-caption {
+    position: absolute; font-family: var(--serif); font-style: italic; font-weight: 400;
+    font-size: 0.95rem; line-height: 1.2; white-space: nowrap; z-index: 5;
+    opacity: 0; clip-path: inset(0 100% 0 0);
+    transition: clip-path 300ms ease, opacity 200ms ease;
+  }
+  .collage-caption.is-visible { opacity: 1; clip-path: inset(0 0 0 0); }
+  .collage-caption--graphite { color: #3A3532; }
+  .collage-caption--main { left: 3%; top: 1%; }
+
+  @media (max-width: 560px) {
+    .collage-caption { font-size: 0.8rem; }
+  }
+
+  /* ===================== "За пределами макетов": personal text + Telegram ===================== */
+  .about-outside { margin-top: clamp(80px, 8vw, 120px); }
+  @media (max-width: 720px) { .about-outside { margin-top: clamp(56px, 10vw, 72px); } }
+
+  /* Text left, two compact Telegram cards right — one connected section,
+     not text followed by a separate card block. Stacks text-then-cards on
+     mobile. See about-page instruction §4. */
+  .outside-grid { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: start; }
+  @media (min-width: 900px) {
+    .outside-grid { grid-template-columns: minmax(0, 1fr) minmax(240px, 320px); gap: clamp(48px, 6vw, 72px); }
+  }
+
+  .tg-cards { display: flex; flex-direction: column; gap: 20px; }
+
+  .tg-card {
+    position: relative; display: flex; flex-direction: column; justify-content: space-between;
+    border-radius: var(--radius-medium); padding: clamp(28px, 3vw, 32px); min-height: 208px;
+    text-decoration: none; box-shadow: var(--shadow-soft);
+    transition: transform 220ms cubic-bezier(0.22,1,0.36,1), box-shadow 220ms ease;
+  }
+  .tg-card:hover, .tg-card:focus-visible { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(23,17,14,0.16); }
+  .tg-card:focus-visible { outline: 2px solid var(--text-strong); outline-offset: 3px; }
+  .tg-card__icon { width: 22px; height: 22px; display: block; opacity: 0.82; }
+  .tg-card__name { font-family: var(--display); font-weight: 700; font-size: 1.15rem; margin-top: 14px; letter-spacing: -0.01em; }
+  .tg-card .tg-card__body { font-size: 0.92rem; font-weight: 400; color: inherit; line-height: 1.5; margin-top: 8px; max-width: 34ch; }
+  .tg-card__cta { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 0.88rem; margin-top: 18px; }
+  .tg-card__arrow { transition: transform 220ms cubic-bezier(0.22,1,0.36,1); }
+  .tg-card:hover .tg-card__arrow, .tg-card:focus-visible .tg-card__arrow { transform: translateX(3px); }
+
+  .tg-card--earworm { background: #FDE058; color: #231e1b; }
+  .tg-card--designer { background: #7C9DCB; color: #12172E; }
 
   footer.page-footer {
     border-top: 1px solid var(--line); padding: 32px 0;
     font-family: var(--mono); font-size: 0.78rem; color: var(--text-dim);
   }
 
+  /* ===== Case-style floating dock, reused on this page ===== */
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+  .case-floating-nav {
+    position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom));
+    transform: translateX(-50%) translateY(12px);
+    z-index: 110; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px;
+    width: max-content; max-width: calc(100vw - 32px);
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  .case-floating-nav.is-inview { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .case-like, .case-next, .case-home {
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    box-shadow: 0 10px 32px rgba(15, 13, 12, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px) saturate(125%);
+    -webkit-backdrop-filter: blur(20px) saturate(125%);
+    border-radius: var(--radius-pill);
+  }
+  @supports not (backdrop-filter: blur(1px)) {
+    .case-like, .case-next, .case-home { background: rgba(248, 248, 248, 0.94); }
+  }
+  .case-home {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--sans); font-size: 0.92rem; font-weight: 600; color: #171717;
+    padding-inline: 20px; min-height: 56px; flex-shrink: 0;
+    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s cubic-bezier(0.22,1,0.36,1);
+  }
+  .case-home:hover { background: rgba(255,255,255,0.85); box-shadow: var(--shadow-control); }
+  .case-home:focus-visible { outline: 2px solid var(--text-strong); outline-offset: 2px; }
+  .case-home:active { transform: scale(0.96); }
+  .case-home__arrow { font-family: var(--mono); color: var(--text-dim); transition: transform 0.2s cubic-bezier(0.22,1,0.36,1); }
+  .case-home:hover .case-home__arrow, .case-home:focus-visible .case-home__arrow { transform: translateX(-4px); }
+  .case-home__label { white-space: nowrap; }
+
+  .case-like {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--sans); font-size: 0.92rem; font-weight: 600; color: #171717;
+    padding-inline: 20px; min-height: 56px; cursor: pointer; flex-shrink: 0;
+    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s cubic-bezier(0.22,1,0.36,1);
+  }
+  .case-like:hover { background: rgba(255,255,255,0.85); box-shadow: var(--shadow-control); }
+  .case-like:focus-visible { outline: 2px solid var(--text-strong); outline-offset: 2px; }
+  .case-like:active { transform: scale(0.96); }
+  .case-like__icon { width: 20px; height: 20px; flex-shrink: 0; color: var(--text-dim); transition: transform 0.2s cubic-bezier(0.22,1,0.36,1), color 0.2s ease; }
+  .case-like:hover .case-like__icon { transform: scale(1.06); }
+  .case-like.is-liked { color: var(--text-strong); }
+  .case-like.is-liked .case-like__icon { color: var(--text-strong); }
+  .case-like.is-liked .case-like__icon path { fill: currentColor; }
+  .case-like.is-pulsing .case-like__icon { animation: caseLikePulse 240ms cubic-bezier(0.22,1,0.36,1); }
+  @keyframes caseLikePulse { 0% { transform: scale(1); } 45% { transform: scale(1.22); } 100% { transform: scale(1); } }
+  .case-like__label { white-space: nowrap; }
+  .case-like__count { font-family: var(--mono); color: var(--text-dim); min-width: 1.4em; }
+
+  .case-next {
+    display: flex; align-items: center; gap: 12px;
+    padding-inline: 24px; min-height: 56px; max-width: min(360px, 60vw);
+    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s cubic-bezier(0.22,1,0.36,1);
+  }
+  .case-next:hover, .case-next:focus-visible { background: rgba(255,255,255,0.88); box-shadow: var(--shadow-control); transform: translateY(-2px); }
+  .case-next:focus-visible { outline: 2px solid var(--text-strong); outline-offset: 2px; }
+  .case-next:active { transform: translateY(0); }
+  .case-next__label { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); }
+  .case-next__title-row { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+  .case-next__title { font-family: var(--display); font-weight: 700; font-size: 1.05rem; color: #171717; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .case-next__arrow { flex-shrink: 0; color: #171717; transition: transform 0.25s cubic-bezier(0.22,1,0.36,1); }
+  .case-next:hover .case-next__arrow, .case-next:focus-visible .case-next__arrow { transform: translateX(5px); }
+
+  @media (max-width: 720px) {
+    .case-floating-nav { bottom: max(14px, env(safe-area-inset-bottom)); gap: 8px; }
+    .case-like, .case-home { min-height: 48px; padding-inline: 16px; }
+    .case-next { min-height: 48px; padding-inline: 16px; max-width: min(220px, 52vw); }
+    .case-next__label, .case-home__label {
+      position: absolute; width: 1px; height: 1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .back-link, .site-nav a.nav-link, .lang-toggle, .contact-btn, .about-cases a, .about-cases .arrow {
-      transition: none;
+    .site-nav, .tg-card, .tg-card__arrow, .collage-photo,
+    .case-floating-nav, .case-like__icon, .case-next__arrow, .case-like, .case-next, .case-home, .case-home__arrow {
+      transition: none !important;
     }
-    .contact-btn:hover { transform: none; }
+    .tg-card:hover, .tg-card:focus-visible { transform: none; }
+    .tg-card:hover .tg-card__arrow, .tg-card:focus-visible .tg-card__arrow { transform: none; }
+    .collage-photo, .collage-photo.is-visible { opacity: 1 !important; transform: none !important; }
+    .collage-photo:hover, .collage-photo:focus-within { transform: none !important; }
+    .collage-caption { transition: none !important; opacity: 1 !important; clip-path: inset(0 0 0 0) !important; }
+    .case-like.is-pulsing .case-like__icon { animation: none; }
+    .case-floating-nav { opacity: 1; transform: translateX(-50%); }
   }
 
 </style>
+  <link rel="stylesheet" href="assets/typography.css">
 </head>
 <body>
 
@@ -198,114 +339,125 @@
   </nav>
 
   <div class="page">
-    <div class="about-layout">
-    <div class="about-page">
-      <a class="back-link" href="index.html"><span data-lang="ru">← На главную</span><span data-lang="en">← Home</span></a>
-      <h1 class="about-title"><span data-lang="ru">Мадина Рашидова</span><span data-lang="en">Madina Rashidova</span></h1>
-      <p class="about-role"><span data-lang="ru">Продуктовый дизайнер · fintech, banking, сложные системы</span><span data-lang="en">Product designer · fintech, banking, complex systems</span></p>
+    <div class="about-page-wrap">
 
-      <section class="about-section">
-        <h2><span data-lang="ru">Кто я и чем занимаюсь</span><span data-lang="en">Who I am and what I do</span></h2>
-        <p><span data-lang="ru">Я проектирую сложные административные интерфейсы и продукты с большими объёмами данных: панели управления, личные кабинеты, MVP с нуля. Ниже коротко расскажу, как я работаю; подробные разборы процесса находятся в разделе «Работы».</span><span data-lang="en">I design complex admin interfaces and products with large volumes of data: dashboards, personal accounts, MVPs built from scratch. Below is a short summary of how I work; full process breakdowns live in "Work."</span></p>
-      </section>
+      <div class="about-hero">
+        <div class="about-hero-text">
+          <h1 class="about-title"><span data-lang="ru">Мадина Рашидова</span><span data-lang="en">Madina Rashidova</span></h1>
+          <p class="about-dek"><span data-lang="ru">Продуктовый дизайнер. Разбираюсь в сложных системах и стараюсь оставлять их сложность внутри продукта, а не на экране пользователя.</span><span data-lang="en">Product designer. I get to the bottom of complex systems and try to keep their complexity inside the product, not on the user's screen.</span></p>
 
-      <section class="about-section">
-        <h2><span data-lang="ru">Основные продуктовые направления</span><span data-lang="en">Main product areas</span></h2>
-        <ul class="about-list">
-          <li><span data-lang="ru">Административные интерфейсы и продукты с большими объёмами данных</span><span data-lang="en">Admin interfaces and products with large volumes of data</span></li>
-          <li><span data-lang="ru">Fintech, banking и trading</span><span data-lang="en">Fintech, banking, and trading</span></li>
-          <li><span data-lang="ru">0→1: MVP с нуля, от исследования до запуска</span><span data-lang="en">0→1: MVPs from scratch, from research to launch</span></li>
-        </ul>
-      </section>
+          <section class="about-story">
+            <h2><span data-lang="ru">Из поддержки в продуктовый дизайн</span><span data-lang="en">From support into product design</span></h2>
+            <p><span data-lang="ru">Я пришла в дизайн через колл-центр и отдел партнёров Alif. Там я видела процессы не на красивых схемах, а в работе: с повторными звонками, ручными проверками и данными, которые приходилось вводить несколько раз.</span><span data-lang="en">I came into design through Alif's call center and partner department. There I saw processes not on neat diagrams but at work: with repeat calls, manual checks, and data that had to be entered more than once.</span></p>
+            <p><span data-lang="ru">Так появился довольно практичный интерес к дизайну. Я уже знала, где люди ошибаются, что приходится объяснять по телефону и почему одно простое действие иногда требует пяти вкладок и терпения модератора.</span><span data-lang="en">That's how a fairly practical interest in design showed up. I already knew where people made mistakes, what had to be explained over the phone, and why one simple action sometimes needed five tabs and a moderator's patience.</span></p>
+            <p><span data-lang="ru">Сейчас я проектирую личные кабинеты, административные интерфейсы и продукты с нуля. Начинаю с пользователей и процессов, затем собираю логику, проверяю решения и сопровождаю их вместе с разработчиками.</span><span data-lang="en">Now I design personal dashboards, admin interfaces, and products from scratch. I start with users and processes, then put the logic together, test solutions, and see them through together with developers.</span></p>
+          </section>
 
-      <section class="about-section">
-        <h2><span data-lang="ru">Подход к работе</span><span data-lang="en">How I work</span></h2>
-        <p><span data-lang="ru">Каждый кейс в портфолио начинается с конкретной бизнес-цели, а не только с визуала: интерфейс должен снижать реальную операционную нагрузку или закрывать конкретный пользовательский сценарий. Решения опираются на интервью, анализ конкурентов или бизнес-анализ, в зависимости от того, что позволяют сроки проекта. На этапе разработки работаю в тесной связке с инженерами: провожу дизайн-ревью и слежу, чтобы финальный продукт соответствовал изначальной идее.</span><span data-lang="en">Every case in this portfolio starts from a concrete business goal, not just visuals: the interface has to reduce a real operational load or resolve a specific user scenario. Decisions are grounded in interviews, competitor analysis, or business analysis, depending on what the project's timeline allows. During development I work closely with engineers: running design reviews and making sure the final product matches the original idea.</span></p>
-      </section>
+          <section class="about-likelead">
+            <h2><span data-lang="ru">Что мне нравится в работе</span><span data-lang="en">What I like about the work</span></h2>
+            <p><span data-lang="ru">Больше всего я люблю момент, когда большая схема с ролями, статусами и исключениями превращается в понятный сценарий.</span><span data-lang="en">What I love most is the moment when a big diagram full of roles, statuses, and exceptions turns into a clear scenario.</span></p>
+            <p><span data-lang="ru">Мне близки задачи, где нужно не просто нарисовать экран, а разобраться, как устроен продукт, выбрать главное и убрать из интерфейса всё, что пользователь не обязан держать в голове.</span><span data-lang="en">I'm drawn to tasks where you can't just draw a screen — you have to figure out how the product works, choose what matters most, and clear out everything the user shouldn't have to keep in their head.</span></p>
+            <p class="about-quote"><span data-lang="ru">«Если интерфейс приходится долго объяснять по телефону, у дизайна ещё есть работа»</span><span data-lang="en">"If an interface still needs a long phone call to explain, design still has work to do"</span></p>
+          </section>
+        </div>
 
-      <section class="about-section">
-        <h2><span data-lang="ru">Опыт с финтехом, AI и сложными системами</span><span data-lang="en">Experience with fintech, AI, and complex systems</span></h2>
-        <p><span data-lang="ru">Сейчас работаю в Профинанс / FIBO Group. До этого — Alif Bank, где спроектировала редизайн партнёрской админ-панели банка (кейс Alif Partners), и Foreesco Group, где разрабатывала EAJ Trader — MVP личного кабинета трейдера. Точные даты и результаты по каждой роли — в разделе <a href="index.html#experience">«Опыт»</a> на главной странице.</span><span data-lang="en">Currently I work at Профинанс / FIBO Group. Before that — Alif Bank, where I designed the bank's partner admin panel redesign (the Alif Partners case), and Foreesco Group, where I worked on EAJ Trader, a trader's personal dashboard MVP. Exact dates and results for each role are in the <a href="index.html#experience">"Experience"</a> section on the homepage.</span></p>
-        <p><span data-lang="ru">AI-инструменты входят в мой процесс, а не являются отдельной продуктовой специализацией: этот сайт сделан с Claude Code, а Codex и GPT входят в мой обычный рабочий набор (см. иконки на главной).</span><span data-lang="en">AI tools are part of my process, not a separate product specialty: this site itself was built with Claude Code, and Codex and GPT are part of my regular toolkit (see the icons on the homepage).</span></p>
-      </section>
+        <div class="about-collage-wrap">
+          <div class="about-collage">
+            <figure class="collage-photo collage-main">
+              <div class="collage-photo__frame">
+                <img src="assets/about/about-portrait.png" data-alt-ru="Мадина Рашидова, портрет" data-alt-en="Madina Rashidova, portrait" alt="Мадина Рашидова, портрет" loading="lazy">
+              </div>
+              <span class="collage-photo__tape" aria-hidden="true"></span>
+            </figure>
+            <figure class="collage-photo collage-work">
+              <div class="collage-photo__frame">
+                <img src="assets/about/about-work-book.jpg" data-alt-ru="Книга «Новая типографика» Яна Чихольда" data-alt-en="Jan Tschichold's «The New Typography»" alt="Книга «Новая типографика» Яна Чихольда" loading="lazy">
+              </div>
+              <span class="collage-photo__tape" aria-hidden="true"></span>
+            </figure>
+            <figure class="collage-photo collage-people">
+              <div class="collage-photo__frame">
+                <img src="assets/about/about-friends-notebook.jpg" data-alt-ru="Блокнот с фотографиями и ручками" data-alt-en="A notebook with photos and pens" alt="Блокнот с фотографиями и ручками" loading="lazy">
+              </div>
+              <span class="collage-photo__tape" aria-hidden="true"></span>
+            </figure>
+            <figure class="collage-photo collage-nature">
+              <div class="collage-photo__frame">
+                <img src="assets/about/about-nature-sunset.jpg" data-alt-ru="Закат над рекой" data-alt-en="Sunset over the river" alt="Закат над рекой" loading="lazy">
+              </div>
+              <span class="collage-photo__tape" aria-hidden="true"></span>
+            </figure>
 
-      <section class="about-section">
-        <h2><span data-lang="ru">Инструменты и компетенции</span><span data-lang="en">Tools and skills</span></h2>
-        <ul class="about-tools">
-          <li>Figma</li><li>Photoshop</li><li>Illustrator</li><li>Notion</li>
-          <li>Claude Code</li><li>Codex</li><li>GPT</li><li>Behance</li>
-          <li>Tilda</li><li>GitHub</li><li>Blender</li>
-        </ul>
-      </section>
+            <svg class="collage-arrows" viewBox="0 0 500 600" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <marker id="arrowhead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M1,1 L9,5 L1,9 Z" fill="context-stroke"></path>
+                </marker>
+              </defs>
+              <path class="collage-arrow collage-arrow--graphite" marker-end="url(#arrowhead)" d="M 40 45 C 25 60, 30 75, 55 88"></path>
+            </svg>
 
-      <section class="about-section">
-        <h2><span data-lang="ru">Работы</span><span data-lang="en">Work</span></h2>
-        <ul class="about-cases">
-          <li><a href="case-alif-partners.html">
-            <span class="about-cases__text">
-              <span class="about-cases__name">Alif Partners</span>
-              <span class="about-cases__desc"><span data-lang="ru">Редизайн партнёрской админ-панели банка</span><span data-lang="en">Bank partner admin panel redesign</span></span>
-            </span>
-            <span class="arrow" aria-hidden="true">→</span>
-          </a></li>
-          <li><a href="case-eaj-trader.html">
-            <span class="about-cases__text">
-              <span class="about-cases__name">EAJ Trader</span>
-              <span class="about-cases__desc"><span data-lang="ru">MVP личного кабинета трейдера</span><span data-lang="en">Trader's personal dashboard MVP</span></span>
-            </span>
-            <span class="arrow" aria-hidden="true">→</span>
-          </a></li>
-          <li><a href="case-namaste.html">
-            <span class="about-cases__text">
-              <span class="about-cases__name">Namaste</span>
-              <span class="about-cases__desc"><span data-lang="ru">MVP приложения для йоги и медитаций</span><span data-lang="en">Yoga and meditation app MVP</span></span>
-            </span>
-            <span class="arrow" aria-hidden="true">→</span>
-          </a></li>
-          <li><a href="case-360-tracker.html">
-            <span class="about-cases__text">
-              <span class="about-cases__name">360 Tracker</span>
-              <span class="about-cases__desc"><span data-lang="ru">MVP приложения для безопасности семьи</span><span data-lang="en">Family-safety app MVP</span></span>
-            </span>
-            <span class="arrow" aria-hidden="true">→</span>
-          </a></li>
-        </ul>
-      </section>
+            <span class="collage-caption collage-caption--graphite collage-caption--main"><span data-lang="ru">это я</span><span data-lang="en">this is me</span></span>
+          </div>
+        </div>
+      </div>
 
-      <section class="about-section about-section--cta">
-        <h2><span data-lang="ru">Связаться</span><span data-lang="en">Get in touch</span></h2>
-        <div class="about-contacts">
-          <a class="contact-btn" href="https://t.me/Madina_Rashidova" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 3.5L2.7 10.9c-1.2.5-1.2 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.4.8.8.8.4 0 .6-.2.9-.5l2.2-2.1 4.6 3.4c.8.5 1.4.2 1.6-.8l3-14c.3-1.3-.4-1.9-1.4-1.5zM8 15.1l9-5.7c.4-.3.8-.1.5.2l-7.7 7-.3 3.1-1.5-4.6z"/></svg>
-            Telegram
-          </a>
-          <a class="contact-btn" href="mailto:madinarashidova799@gmail.com">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 6.5l9 6.5 9-6.5"/></svg>
-            <span data-lang="ru">Почта</span><span data-lang="en">Email</span>
-          </a>
-          <a class="contact-btn" href="cv.pdf" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h5M8 12h8M8 16h8"/></svg>
-            CV
-          </a>
+      <section class="about-outside">
+        <h2><span data-lang="ru">За пределами макетов</span><span data-lang="en">Outside the mockups</span></h2>
+        <div class="outside-grid">
+          <div class="outside-text">
+            <p><span data-lang="ru">После работы я переключаюсь на музыку, прогулки, природу и занятия, где не нужно согласовывать финальный макет. Люблю знакомиться с людьми и слушать их истории. Возможно, поэтому интервью остаются одной из любимых частей моей работы.</span><span data-lang="en">After work I switch to music, walks, nature, and activities where nobody needs to sign off on the final layout. I love meeting people and listening to their stories. Maybe that's why interviews stay one of my favorite parts of the job.</span></p>
+            <p><span data-lang="ru">Часть находок сохраняю в Telegram: в Earworm собираю музыку и личные истории, а в «Дезигнере» — работы, наблюдения и разборы интерфейсов.</span><span data-lang="en">Some of what I find, I save in Telegram: in Earworm I collect music and personal stories, and in "Дезигнер" — projects, observations, and interface breakdowns.</span></p>
+          </div>
+
+          <div class="tg-cards">
+            <a class="tg-card tg-card--earworm" href="https://t.me/Earworm_me" target="_blank" rel="noopener noreferrer" aria-label="Earworm: музыка, истории и странные совпадения — открыть канал в Telegram">
+              <div class="tg-card__top">
+                <svg class="tg-card__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M21.5 3.5L2.7 10.9c-1.2.5-1.2 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.4.8.8.8.4 0 .6-.2.9-.5l2.2-2.1 4.6 3.4c.8.5 1.4.2 1.6-.8l3-14c.3-1.3-.4-1.9-1.4-1.5zM8 15.1l9-5.7c.4-.3.8-.1.5.2l-7.7 7-.3 3.1-1.5-4.6z"/>
+                </svg>
+                <div class="tg-card__name">Earworm</div>
+                <p class="tg-card__body"><span data-lang="ru">Музыка, истории и странные совпадения.</span><span data-lang="en">Music, stories, and strange coincidences.</span></p>
+              </div>
+              <span class="tg-card__cta"><span data-lang="ru">Слушать и читать</span><span data-lang="en">Listen and read</span><span class="tg-card__arrow" aria-hidden="true">→</span></span>
+            </a>
+
+            <a class="tg-card tg-card--designer" href="https://t.me/rashidenko_tut" target="_blank" rel="noopener noreferrer" aria-label="Дезигнер: работы, разборы интерфейсов и заметки о профессии — открыть канал в Telegram">
+              <div class="tg-card__top">
+                <svg class="tg-card__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M21.5 3.5L2.7 10.9c-1.2.5-1.2 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.4.8.8.8.4 0 .6-.2.9-.5l2.2-2.1 4.6 3.4c.8.5 1.4.2 1.6-.8l3-14c.3-1.3-.4-1.9-1.4-1.5zM8 15.1l9-5.7c.4-.3.8-.1.5.2l-7.7 7-.3 3.1-1.5-4.6z"/>
+                </svg>
+                <div class="tg-card__name"><span data-lang="ru">Дезигнер</span><span data-lang="en">Дезигнер</span></div>
+                <p class="tg-card__body"><span data-lang="ru">Работы, разборы интерфейсов и заметки о профессии.</span><span data-lang="en">Projects, interface breakdowns, and notes on the profession.</span></p>
+              </div>
+              <span class="tg-card__cta"><span data-lang="ru">Заглянуть в канал</span><span data-lang="en">Take a look</span><span class="tg-card__arrow" aria-hidden="true">→</span></span>
+            </a>
+          </div>
         </div>
       </section>
     </div>
 
-    <aside class="about-rail" aria-hidden="true">
-      <div class="about-stat">
-        <div class="about-stat__value"><span data-lang="ru">с 2022</span><span data-lang="en">since 2022</span></div>
-        <div class="about-stat__label"><span data-lang="ru">в fintech и banking</span><span data-lang="en">in fintech and banking</span></div>
-      </div>
-      <div class="about-stat">
-        <div class="about-stat__value">4</div>
-        <div class="about-stat__label"><span data-lang="ru">кейса в портфолио</span><span data-lang="en">cases in this portfolio</span></div>
-      </div>
-      <div class="about-stat">
-        <div class="about-stat__value">3</div>
-        <div class="about-stat__label"><span data-lang="ru">домена: fintech · banking · trading</span><span data-lang="en">domains: fintech · banking · trading</span></div>
-      </div>
-    </aside>
-    </div>
+    <nav class="case-floating-nav">
+      <a class="case-home" href="index.html">
+        <span class="case-home__arrow" aria-hidden="true">←</span>
+        <span class="case-home__label"><span data-lang="ru">Главная страница</span><span data-lang="en">Homepage</span></span>
+      </a>
+      <button class="case-like" type="button" data-case-id="about" aria-pressed="false" aria-label="Поставить лайк странице «Обо мне»">
+        <svg class="case-like__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
+          <path d="M12 20.5s-7.2-4.5-9.8-8.9C.5 8.4 1.9 4.5 5.6 4.5c2.2 0 3.8 1.4 4.9 3.1 1.1-1.7 2.7-3.1 4.9-3.1 3.7 0 5.1 3.9 2.4 7.1-2.6 4.4-9.8 8.9-9.8 8.9z"/>
+        </svg>
+        <span class="case-like__label"><span data-lang="ru">Нравится</span><span data-lang="en">Like</span></span>
+        <span class="case-like__count">0</span>
+      </button>
+      <a class="case-next" href="index.html#work">
+        <span class="case-next__label"><span data-lang="ru">Смотреть кейсы</span><span data-lang="en">See the work</span></span>
+        <span class="case-next__title-row">
+          <span class="case-next__title"><span data-lang="ru">Работы</span><span data-lang="en">Work</span></span>
+          <span class="case-next__arrow" aria-hidden="true">→</span>
+        </span>
+      </a>
+      <span class="sr-only" aria-live="polite" data-case-live></span>
+    </nav>
   </div>
 
   <footer class="page-footer">
@@ -313,5 +465,57 @@
   </footer>
 
   <script src="assets/i18n.js"></script>
+  <script src="assets/typography.js"></script>
+  <script src="assets/case-nav.js"></script>
+  <script>
+    (function () {
+      var photos = document.querySelectorAll('.collage-photo');
+      var arrows = document.querySelectorAll('.collage-arrow');
+      var captions = document.querySelectorAll('.collage-caption');
+      var collage = document.querySelector('.about-collage');
+      if (!collage || !photos.length) return;
+
+      var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      arrows.forEach(function (a) {
+        try {
+          var len = a.getTotalLength();
+          a.style.strokeDasharray = len;
+          a.style.strokeDashoffset = reducedMotion ? 0 : len;
+        } catch (e) {}
+      });
+
+      function runScene() {
+        if (reducedMotion) {
+          photos.forEach(function (p) { p.classList.add('is-visible'); });
+          arrows.forEach(function (a) { a.style.strokeDashoffset = 0; });
+          captions.forEach(function (c) { c.classList.add('is-visible'); });
+          return;
+        }
+        var photoDelays = [0, 90, 180, 270];
+        photos.forEach(function (p, i) {
+          p.style.transitionDelay = photoDelays[i % photoDelays.length] + 'ms';
+          p.classList.add('is-visible');
+        });
+        arrows.forEach(function (a, i) {
+          var delay = 600 + i * 90;
+          a.style.transition = 'stroke-dashoffset 380ms ease-out';
+          setTimeout(function () { a.style.strokeDashoffset = 0; }, delay);
+        });
+        captions.forEach(function (c, i) {
+          var delay = 600 + i * 90 + 380;
+          setTimeout(function () { c.classList.add('is-visible'); }, delay);
+        });
+      }
+
+      if (!('IntersectionObserver' in window)) { runScene(); return; }
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { runScene(); obs.disconnect(); }
+        });
+      }, { threshold: 0.2 });
+      obs.observe(collage);
+    })();
+  </script>
 </body>
 </html>

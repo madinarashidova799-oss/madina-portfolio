@@ -40,6 +40,18 @@
     --mono: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --display: var(--sans);
+    /* Unified type scale — same tokens copy-pasted across about.html and all
+       4 case pages (no shared includes on this static site, see PRODUCT.md). */
+    --font-size-h1: clamp(40px, 5vw, 72px);
+    --font-size-h2: clamp(24px, 2vw, 30px);
+    --font-size-h3: clamp(20px, 1.5vw, 24px);
+    --font-size-h4: clamp(19px, 1.6vw, 23px);
+    --font-size-body: clamp(16px, 1.1vw, 18px);
+    --font-size-label: 14px;
+    --font-weight-heading: 600;
+    --line-height-h1: 1.05;
+    --line-height-heading: 1.2;
+    --line-height-body: 1.55;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -118,55 +130,33 @@
   .case-header { margin-bottom: 48px; padding: 28px clamp(16px,4vw,32px); }
   .case-meta-group { display: flex; flex-direction: column; gap: 16px; margin-top: 10px; }
   .case-meta-line {
-    font-family: var(--mono); font-size: 0.85rem; text-transform: uppercase;
+    font-family: var(--mono); font-size: var(--font-size-label); text-transform: uppercase;
     letter-spacing: 0.03em; color: var(--text-dim);
   }
   .case-name { color: var(--text); font-weight: 700; }
   /* Project name is the one h1 on the page — see typography-hierarchy
-     instruction §1. 72-96px desktop, scaling down through clamp() so it
-     never breaks composition on tablet/mobile. */
+     instruction §1. Shares --font-size-h1 with every other page's H1. */
   h1.case-title {
-    font-family: var(--display); font-size: clamp(44px, 4.5vw, 68px); font-weight: 700;
-    line-height: 1.02; letter-spacing: -0.02em;
+    font-family: var(--display); font-size: var(--font-size-h1); font-weight: var(--font-weight-heading);
+    line-height: var(--line-height-h1); letter-spacing: -0.02em;
   }
-  .case-tags { display: flex; gap: 8px; flex-wrap: wrap; font-size: 0.78rem; }
+  .case-tags { display: flex; gap: 8px; flex-wrap: wrap; font-size: var(--font-size-label); }
   .case-tags span { background: var(--surface); border: 1px solid var(--line); color: var(--case-accent); padding: 5px 12px; border-radius: 999px; }
-  .case-dek { margin-top: 16px; font-size: clamp(17px, 1.15vw, 20px); color: var(--text-dim); max-width: 62ch; line-height: 1.55; }
-  /* Task headline, visually secondary to the project name: smaller size,
-     medium weight (not 700), tighter line-height, and letter-spacing that
-     no longer mirrors h1's tracking — see typography-hierarchy
-     instruction §1. */
+  .case-dek { margin-top: 16px; font-size: var(--font-size-body); color: var(--text-dim); max-width: 62ch; line-height: var(--line-height-body); }
+  /* Task headline — a real <h4>, visually secondary to the project name
+     (h1). Own --font-size-h4 tier, not h2/h3, and wide enough (900-1000px)
+     to hold a full sentence without wrapping too tightly — see
+     typography-hierarchy instruction §1. */
   .case-headline {
-    font-family: var(--display); font-weight: 600; font-size: clamp(24px, 2.2vw, 34px);
-    letter-spacing: -0.01em; line-height: 1.15; color: var(--text); margin-top: 20px; max-width: 46ch;
+    font-family: var(--display); font-weight: var(--font-weight-heading); font-size: var(--font-size-h4);
+    letter-spacing: -0.005em; line-height: 1.3; color: var(--text); margin-top: 20px; max-width: 960px;
   }
-  @media (max-width: 560px) { .case-headline { font-size: clamp(25px, 6vw, 30px); } }
-  /* Text → cards gap: 32px floor, 40px on desktop — one clamp() covers both
-     instead of a separate breakpoint rule, matching how --page-padding and
-     other site-wide spacing already scale. */
-  .metrics {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5);
-    margin-top: clamp(32px, 4vw, 40px); margin-bottom: 40px; width: 100%;
-  }
-  .metric {
-    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-large);
-    padding: clamp(20px, 2.6vw, 28px); box-shadow: var(--shadow-soft); min-width: 0;
-  }
-  .metric .value { font-family: var(--mono); font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700; color: var(--case-accent); line-height: 1.1; }
-  .metric .label { font-size: 0.9rem; color: var(--text-dim); margin-top: 8px; line-height: 1.4; }
-  @media (max-width: 860px) {
-    .metrics { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 32px; }
-  }
-  @media (max-width: 560px) {
-    .metrics { grid-template-columns: 1fr; margin-bottom: 24px; }
-  }
-
   .case-facts {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px 24px;
     margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line);
   }
-  .case-facts dt { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); margin-bottom: 4px; }
-  .case-facts dd { font-size: 1.05rem; color: var(--text); line-height: 1.4; }
+  .case-facts dt { font-family: var(--mono); font-size: var(--font-size-label); text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); margin-bottom: 4px; }
+  .case-facts dd { font-size: var(--font-size-label); color: var(--text); line-height: 1.4; }
 
   /* Research findings — three compact blocks instead of a dry numbered
      list. Light surface, black type, yellow number as the one accent —
@@ -210,7 +200,7 @@
      see visual-hierarchy instruction §4 (no colored outline on any card). */
   .result-card__label {
     display: inline-flex; align-items: center; gap: 8px;
-    font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase;
+    font-family: var(--mono); font-size: var(--font-size-label); text-transform: uppercase;
     letter-spacing: 0.06em; color: var(--text-dim-2);
   }
   .result-card__label::before {
@@ -218,7 +208,7 @@
     background: var(--case-accent-2);
   }
   .result-card__metric { font-family: var(--display); font-weight: 600; font-size: 1.05rem; color: var(--text); line-height: 1.35; }
-  .result-card .result-card__desc { font-size: 0.92rem; color: var(--text-dim); line-height: 1.55; margin: 0; max-width: none; }
+  .result-card .result-card__desc { font-size: var(--font-size-label); color: var(--text-dim); line-height: 1.55; margin: 0; max-width: none; }
   .result-card__status {
     margin-top: 2px; display: inline-flex; font-family: var(--mono); font-size: 0.72rem;
     padding: 4px 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); color: var(--text-dim);
@@ -241,14 +231,14 @@
   }
   .detail-head-text { padding-top: 6px; min-width: 0; }
   .detail-head h2 {
-    font-family: var(--display); font-size: clamp(25px, 2vw, 32px); line-height: 1.2;
-    font-weight: 600; letter-spacing: -0.01em; text-wrap: balance;
+    font-family: var(--display); font-size: var(--font-size-h2); line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-heading); letter-spacing: -0.01em; text-wrap: balance;
   }
   .detail-head-text .detail-kicker {
-    margin-top: 8px; font-family: var(--sans); font-weight: 500; font-size: clamp(18px, 1.4vw, 22px);
-    line-height: 1.4; color: var(--text-strong); max-width: 46ch; text-wrap: pretty;
+    margin-top: 8px; font-family: var(--sans); font-weight: 500; font-size: var(--font-size-h3);
+    line-height: 1.3; color: var(--text-strong); max-width: 46ch; text-wrap: pretty;
   }
-  .detail-block p { color: var(--text-dim); font-size: clamp(17px, 1.15vw, 20px); line-height: 1.55; max-width: 60ch; margin-bottom: clamp(20px, 2vw, 24px); text-wrap: pretty; }
+  .detail-block p { color: var(--text-dim); font-size: var(--font-size-body); line-height: var(--line-height-body); max-width: 60ch; margin-bottom: clamp(20px, 2vw, 24px); text-wrap: pretty; }
   .detail-block > p:last-child { margin-bottom: 0; }
   .detail-block img { display: block; width: 100%; height: auto; border-radius: var(--radius-large); margin-bottom: 18px; object-fit: contain; }
   .case-image-trigger {
@@ -423,7 +413,7 @@
           <div class="case-meta-line"><span class="case-name">Alif Bank</span></div>
           <div class="case-tags"><span>/b2b</span><span>/ux-research</span><span>/fintech</span></div>
         </div>
-        <p class="case-headline"><span data-lang="ru">Перестройка операционной работы партнёрской сети Alif</span><span data-lang="en">Restructuring how Alif's partner network handles its daily operations</span></p>
+        <h4 class="case-headline"><span data-lang="ru">Перестройка операционной работы партнёрской сети Alif</span><span data-lang="en">Restructuring how Alif's partner network handles its daily operations</span></h4>
         <p class="case-dek"><span data-lang="ru">Alif развивает рассрочку через партнёрские магазины и маркетплейс Alif Shop. Пока сеть росла, партнёры всё ещё зависели от звонков колл-центра, терминалов и ручной помощи модераторов. Вместе с количеством заказов росла и нагрузка на сотрудников банка.</span><span data-lang="en">Alif grows its installment business through partner stores and the Alif Shop marketplace. As the network grew, partners still depended on calls to the call center, terminals, and manual help from moderators. Along with the order count, the load on the bank's staff grew too.</span></p>
         <p class="case-dek"><span data-lang="ru">Моя задача заключалась в том, чтобы перенести повседневную работу партнёра в админ-панель. Заявки, товары и доставка должны были проходить там самостоятельно, а у банка оставались инструменты проверки.</span><span data-lang="en">My task was to move the partner's day-to-day work into the admin panel. Requests, products, and delivery needed to run through it independently, while the bank kept its verification tools.</span></p>
         <dl class="case-facts">

@@ -114,27 +114,51 @@
 * короткие строки;
 * минимум декоративных начертаний.
 
-Пример шкалы:
+**Актуальная унифицированная шкала** (реализована как identical `:root`-токены,
+скопированные во все 5 страниц — about.html и 4 страницы кейсов; на статичном
+сайте без сборки и общих include это единственный способ держать систему без
+расхождений между файлами, см. PRODUCT.md):
 
 ```css
---font-size-display: clamp(3rem, 6vw, 6.5rem);
---font-size-h1: clamp(2.5rem, 5vw, 5rem);
---font-size-h2: clamp(2rem, 3.8vw, 4rem);
---font-size-h3: clamp(1.5rem, 2.2vw, 2.5rem);
---font-size-body-large: clamp(1.125rem, 1.4vw, 1.5rem);
---font-size-body: 1rem;
---font-size-small: 0.875rem;
+--font-size-h1: clamp(40px, 5vw, 72px);      /* h1.case-title — один H1 на кейс-странице */
+--font-size-h2: clamp(24px, 2vw, 30px);       /* .detail-head h2 — нумерованные секции кейсов */
+--font-size-h3: clamp(20px, 1.5vw, 24px);     /* .detail-kicker — третий уровень заголовка секции */
+--font-size-h4: clamp(19px, 1.6vw, 23px);     /* .case-headline (задача под H1, все 4 кейса) и
+                                                   about.html: .about-hero/.about-outside h4
+                                                   ("Из поддержки...", "Что мне нравится...",
+                                                   "За пределами макетов") — общий токен на обеих */
+--font-size-body: clamp(16px, 1.1vw, 18px);   /* .detail-block p, .case-dek — только страницы кейсов */
+--font-size-label: 14px;                       /* мелкие uppercase-лейблы и метаданные:
+                                                   .case-meta-line, .case-facts dt/dd, .case-tags,
+                                                   .result-card__label, заголовки таблиц и т.п. */
+--font-weight-heading: 600;                    /* h1 больше не 700 — единственный overused-bold, который правили */
+--line-height-h1: 1.05;
+--line-height-heading: 1.2;                    /* h2/h3 */
+--line-height-body: 1.55;                      /* только страницы кейсов, см. about.html ниже */
 ```
 
-Рекомендуемые значения:
+**about.html — сознательное расхождение с общей шкалой** (не токены, а конкретные
+компонент-специфичные значения, см. инструкцию по типографике about-страницы):
 
-```css
---line-height-display: 0.95;
---line-height-heading: 1.05;
---line-height-body: 1.5;
---letter-spacing-display: -0.04em;
---letter-spacing-heading: -0.025em;
-```
+* `h2.about-title` («Мадина Рашидова») — уже не H1: понижен до H2, но со своим
+  размером `--font-size-about-name: clamp(32px, 4vw, 39px)` (36–42px desktop /
+  30–34px mobile), а не общим `--font-size-h2`. Токен объявлен только в
+  `about.html`, больше нигде не переиспользуется. Страница сознательно
+  остаётся без H1 — если это когда-нибудь потребуется пересмотреть
+  (например, ради a11y-аудита), это отдельное решение, не побочный эффект.
+* Основной текст (`.about-dek`, `.about-hero p`, `.about-outside p`) —
+  зафиксирован на `16px` / `line-height: 1.6` напрямую, **не** через
+  `--font-size-body` (тот у него потолок 18px) — здесь потолок именно 16px.
+* Карточки Telegram-каналов — `.channels-frame` > `.channels-grid`
+  (2 колонки `repeat(2, minmax(0,1fr))` desktop, 1 колонка ≤767px),
+  карточки `.tg-card` растянуты на всю колонку и на равную высоту
+  (`align-items: stretch`). Заменяет прежний `.outside-grid`/`.tg-cards`
+  (текст + узкая правая колонка карточек), который оставлял пустое поле
+  слева от карточек.
+
+Декоративные/редакционные элементы вне пятиуровневой системы (`.about-quote`,
+`.problem-statement` — pull-quote в Alif Partners, `.detail-num` — декоративный
+номер секции) сознательно не унифицированы: они не часть читательской иерархии.
 
 Не использовать:
 

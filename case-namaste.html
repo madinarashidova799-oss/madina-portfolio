@@ -40,6 +40,18 @@
     --mono: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --display: var(--sans);
+    /* Unified type scale — same tokens copy-pasted across about.html and all
+       4 case pages (no shared includes on this static site, see PRODUCT.md). */
+    --font-size-h1: clamp(40px, 5vw, 72px);
+    --font-size-h2: clamp(24px, 2vw, 30px);
+    --font-size-h3: clamp(20px, 1.5vw, 24px);
+    --font-size-h4: clamp(19px, 1.6vw, 23px);
+    --font-size-body: clamp(16px, 1.1vw, 18px);
+    --font-size-label: 14px;
+    --font-weight-heading: 600;
+    --line-height-h1: 1.05;
+    --line-height-heading: 1.2;
+    --line-height-body: 1.55;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -117,22 +129,23 @@
   .case-header { margin-bottom: 48px; padding: 28px clamp(16px,4vw,32px); }
   .case-meta-group { display: flex; flex-direction: column; gap: 16px; margin-top: 10px; }
   .case-meta-line {
-    font-family: var(--mono); font-size: 0.85rem; text-transform: uppercase;
+    font-family: var(--mono); font-size: var(--font-size-label); text-transform: uppercase;
     letter-spacing: 0.03em; color: var(--text-dim);
   }
-  .case-tags { display: flex; gap: 8px; flex-wrap: wrap; font-size: 0.78rem; }
+  .case-tags { display: flex; gap: 8px; flex-wrap: wrap; font-size: var(--font-size-label); }
   .case-tags span { background: var(--surface); border: 1px solid var(--line); color: var(--case-accent); padding: 5px 12px; border-radius: 999px; }
-  .case-dek { margin-top: 16px; font-size: clamp(17px, 1.15vw, 20px); color: var(--text-dim); max-width: 62ch; line-height: 1.55; }
-  /* Task headline, visually secondary to the project name — see
+  .case-dek { margin-top: 16px; font-size: var(--font-size-body); color: var(--text-dim); max-width: 62ch; line-height: var(--line-height-body); }
+  /* Task headline — a real <h4>, visually secondary to the project name
+     (h1). Own --font-size-h4 tier, not h2/h3, and wide enough (900-1000px)
+     to hold a full sentence without wrapping too tightly — see
      typography-hierarchy instruction §1. */
   .case-headline {
-    font-family: var(--display); font-weight: 600; font-size: clamp(24px, 2.2vw, 34px);
-    letter-spacing: -0.01em; line-height: 1.15; color: var(--text); margin-top: 20px; max-width: 46ch;
+    font-family: var(--display); font-weight: var(--font-weight-heading); font-size: var(--font-size-h4);
+    letter-spacing: -0.005em; line-height: 1.3; color: var(--text); margin-top: 20px; max-width: 960px;
   }
-  @media (max-width: 560px) { .case-headline { font-size: clamp(25px, 6vw, 30px); } }
   h1.case-title {
-    font-family: var(--display); font-size: clamp(44px, 4.5vw, 68px); font-weight: 700;
-    line-height: 1.02; letter-spacing: -0.02em;
+    font-family: var(--display); font-size: var(--font-size-h1); font-weight: var(--font-weight-heading);
+    line-height: var(--line-height-h1); letter-spacing: -0.02em;
   }
   /* Shared intro facts block — see case-alif-partners.html's .case-facts,
      the reference component for this system (DESIGN.md item 10). */
@@ -140,8 +153,8 @@
     display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px 24px;
     margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line);
   }
-  .case-facts dt { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); margin-bottom: 4px; }
-  .case-facts dd { font-size: 1.05rem; color: var(--text); line-height: 1.4; }
+  .case-facts dt { font-family: var(--mono); font-size: var(--font-size-label); text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim-2); margin-bottom: 4px; }
+  .case-facts dd { font-size: var(--font-size-label); color: var(--text); line-height: 1.4; }
 
   .detail-block { margin-top: clamp(80px, 8vw, 120px); padding-top: var(--space-7); border-top: 1px solid var(--line); }
   @media (max-width: 720px) { .detail-block { margin-top: clamp(56px, 10vw, 72px); } }
@@ -154,14 +167,14 @@
   }
   .detail-head-text { padding-top: 6px; min-width: 0; }
   .detail-head h2 {
-    font-family: var(--display); font-size: clamp(25px, 2vw, 32px); line-height: 1.2;
-    font-weight: 600; letter-spacing: -0.01em; text-wrap: balance;
+    font-family: var(--display); font-size: var(--font-size-h2); line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-heading); letter-spacing: -0.01em; text-wrap: balance;
   }
   .detail-head-text .detail-kicker {
-    margin-top: 8px; font-family: var(--sans); font-weight: 500; font-size: clamp(18px, 1.4vw, 22px);
-    line-height: 1.4; color: var(--text-strong); max-width: 46ch; text-wrap: pretty;
+    margin-top: 8px; font-family: var(--sans); font-weight: 500; font-size: var(--font-size-h3);
+    line-height: 1.3; color: var(--text-strong); max-width: 46ch; text-wrap: pretty;
   }
-  .detail-block p { color: var(--text-dim); font-size: clamp(17px, 1.15vw, 20px); line-height: 1.55; max-width: 60ch; margin-bottom: clamp(20px, 2vw, 24px); text-wrap: pretty; }
+  .detail-block p { color: var(--text-dim); font-size: var(--font-size-body); line-height: var(--line-height-body); max-width: 60ch; margin-bottom: clamp(20px, 2vw, 24px); text-wrap: pretty; }
   .detail-block > p:last-child { margin-bottom: 0; }
   .detail-block img { display: block; width: 100%; height: auto; border-radius: var(--radius-large); margin-bottom: 18px; object-fit: contain; }
   .case-image-trigger {
@@ -191,13 +204,6 @@
     .detail-mosaic { grid-template-columns: 1fr; }
   }
 
-  .problem-statement { padding: 8px 0; }
-  .problem-statement .quote-mark {
-    display: block; font-family: var(--display); font-weight: 700; font-size: clamp(3rem, 6vw, 4.5rem);
-    line-height: 0.5; color: var(--case-accent); opacity: 0.4; margin-bottom: 8px;
-  }
-  .problem-statement p { font-size: clamp(1.15rem, 2.2vw, 1.5rem); font-weight: 600; font-style: italic; color: var(--text); line-height: 1.4; max-width: 42ch; }
-
   /* Unified "Результат" section — plain intro paragraph, then a 2x2 grid
      of glass result cards. No decorative numbers, no icons, no repeated
      "Результат" word, no invented figures. Replaces the old split
@@ -219,7 +225,7 @@
      see visual-hierarchy instruction §4 (no colored outline on any card). */
   .result-card__label {
     display: inline-flex; align-items: center; gap: 8px;
-    font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase;
+    font-family: var(--mono); font-size: var(--font-size-label); text-transform: uppercase;
     letter-spacing: 0.06em; color: var(--text-dim-2);
   }
   .result-card__label::before {
@@ -227,7 +233,7 @@
     background: var(--ink-namaste);
   }
   .result-card__metric { font-family: var(--display); font-weight: 600; font-size: 1.05rem; color: var(--text); line-height: 1.35; }
-  .result-card .result-card__desc { font-size: 0.92rem; color: var(--text-dim); line-height: 1.55; margin: 0; max-width: none; }
+  .result-card .result-card__desc { font-size: var(--font-size-label); color: var(--text-dim); line-height: 1.55; margin: 0; max-width: none; }
   .result-card__status {
     margin-top: 2px; display: inline-flex; font-family: var(--mono); font-size: 0.72rem;
     padding: 4px 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); color: var(--text-dim);
@@ -248,11 +254,11 @@
   }
   .health-table { width: 100%; min-width: 640px; border-collapse: collapse; }
   .health-table th, .health-table td {
-    padding: clamp(24px, 1.8vw, 28px) clamp(24px, 2.2vw, 28px); text-align: left; font-size: 0.9rem; color: var(--text);
+    padding: clamp(24px, 1.8vw, 28px) clamp(24px, 2.2vw, 28px); text-align: left; font-size: var(--font-size-label); color: var(--text);
     border-bottom: 1px solid var(--line); white-space: nowrap;
   }
   .health-table thead th {
-    font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em;
+    font-family: var(--mono); font-size: var(--font-size-label); text-transform: uppercase; letter-spacing: 0.06em;
     color: var(--text-dim-2); font-weight: 500; background: var(--surface);
   }
   .health-table tbody th {
@@ -396,7 +402,7 @@
         <div class="case-meta-group">
           <div class="case-tags"><span>/mobile</span><span>/0→1</span><span>B2C</span></div>
         </div>
-        <p class="case-headline"><span data-lang="ru">Запуск приложения для йоги, фитнеса и медитаций</span><span data-lang="en">Launching an app for yoga, fitness, and meditation</span></p>
+        <h4 class="case-headline"><span data-lang="ru">Запуск приложения для йоги, фитнеса и медитаций</span><span data-lang="en">Launching an app for yoga, fitness, and meditation</span></h4>
         <p class="case-dek"><span data-lang="ru">Команда хотела объединить в одном iOS-приложении тренировки, развитие привычки и дополнительные health-функции. Идей было много: разные практики, уровни сложности, персонализация, сон, вода, питание и активность.</span><span data-lang="en">The team wanted to combine workouts, habit-building, and additional health features in one iOS app. There were plenty of ideas: different practices, difficulty levels, personalization, sleep, water, nutrition, and activity.</span></p>
         <p class="case-dek"><span data-lang="ru">Нам предстояло собрать жизнеспособную первую версию: определить основной тренировочный цикл и выбрать функции с учётом пользы для пользователя, сроков и ресурсов команды.</span><span data-lang="en">We had to put together a viable first version: define the core workout cycle and choose features based on user value, the timeline, and the team's resources.</span></p>
         <dl class="case-facts">

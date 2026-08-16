@@ -41,6 +41,22 @@
     --sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --display: var(--sans);
     --serif: 'PT Serif', Georgia, 'Times New Roman', serif;
+    /* Unified type scale — same tokens copy-pasted across about.html and all
+       4 case pages (no shared includes on this static site, see PRODUCT.md). */
+    --font-size-h1: clamp(40px, 5vw, 72px);
+    --font-size-h2: clamp(24px, 2vw, 30px);
+    --font-size-h3: clamp(20px, 1.5vw, 24px);
+    --font-size-h4: clamp(19px, 1.6vw, 23px);
+    --font-size-body: clamp(16px, 1.1vw, 18px);
+    --font-size-label: 14px;
+    --font-weight-heading: 600;
+    --line-height-h1: 1.05;
+    --line-height-heading: 1.2;
+    --line-height-body: 1.55;
+    /* about.html-only: the page name is now a real <h2>, one size step below
+       h1 but well above the shared --font-size-h2 used for section
+       headings elsewhere — see instruction §2. Not reused on any other page. */
+    --font-size-about-name: clamp(32px, 4vw, 39px);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -97,22 +113,30 @@
   @media (max-width: 720px) { .about-page-wrap { padding-bottom: 200px; } }
 
   /* ===================== Typographic system ===================== */
-  /* Same H1 scale as the case pages — see typography-hierarchy instruction §3. */
-  h1.about-title {
-    font-family: var(--display); font-weight: 700; font-size: clamp(44px, 4.5vw, 68px);
-    line-height: 1.02; letter-spacing: -0.02em; text-wrap: balance;
+  /* The page name is now a real <h2> — a deliberate demotion from h1, its own
+     size step (--font-size-about-name) between the shared h1 and h2 tokens,
+     not the case pages' shared h1 scale. See instruction §2. */
+  h2.about-title {
+    font-family: var(--display); font-weight: var(--font-weight-heading); font-size: var(--font-size-about-name);
+    line-height: 1.15; letter-spacing: -0.02em; text-wrap: balance;
   }
+  /* Body copy on this page is pinned flat at 16px — never scales past it via
+     clamp(), unlike the case pages' --font-size-body (16-18px). See
+     instruction §2. */
   .about-dek {
-    margin-top: 20px; font-size: clamp(1.25rem, 1.1rem + 0.4vw, 1.375rem); font-weight: 400;
-    color: var(--text-dim); max-width: 62ch; line-height: 1.5; text-wrap: pretty;
+    margin-top: 20px; font-size: 16px; font-weight: 400;
+    color: var(--text-dim); max-width: 62ch; line-height: 1.6; text-wrap: pretty;
   }
-  .about-hero h2, .about-outside h2 {
-    font-family: var(--display); font-weight: 600; font-size: clamp(1.875rem, 1.6rem + 1vw, 2.625rem);
-    line-height: 1.08; letter-spacing: -0.015em; margin-bottom: 24px; text-wrap: balance;
+  /* Section headings ("Из поддержки...", "Что мне нравится...",
+     "За пределами макетов") are real <h4>s sharing --font-size-h4 with the
+     case pages' task headline — see instruction §2. */
+  .about-hero h4, .about-outside h4 {
+    font-family: var(--display); font-weight: var(--font-weight-heading); font-size: var(--font-size-h4);
+    line-height: 1.3; letter-spacing: -0.005em; margin-bottom: 24px; text-wrap: balance;
   }
   .about-hero p, .about-outside p {
-    font-size: clamp(1.25rem, 1.1rem + 0.4vw, 1.375rem); font-weight: 400;
-    color: var(--text-dim); line-height: 1.55; max-width: 720px; text-wrap: pretty;
+    font-size: 16px; font-weight: 400;
+    color: var(--text-dim); line-height: 1.6; max-width: 720px; text-wrap: pretty;
   }
   .about-hero p + p, .about-outside p + p { margin-top: 22px; }
 
@@ -195,27 +219,34 @@
   .about-outside { margin-top: clamp(80px, 8vw, 120px); }
   @media (max-width: 720px) { .about-outside { margin-top: clamp(56px, 10vw, 72px); } }
 
-  /* Text left, two compact Telegram cards right — one connected section,
-     not text followed by a separate card block. Stacks text-then-cards on
-     mobile. See about-page instruction §4. */
-  .outside-grid { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: start; }
-  @media (min-width: 900px) {
-    .outside-grid { grid-template-columns: minmax(0, 1fr) minmax(240px, 320px); gap: clamp(48px, 6vw, 72px); }
+  /* Both Telegram cards in one full-width row inside the main content frame —
+     two equal columns on desktop, one column on mobile/tablet. Replaces the
+     old narrow-right-column layout that left empty space beside the text.
+     See instruction §3. */
+  .channels-frame { width: 100%; margin-top: clamp(32px, 3vw, 48px); }
+  .channels-grid {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px; align-items: stretch;
   }
-
-  .tg-cards { display: flex; flex-direction: column; gap: 20px; }
+  @media (max-width: 767px) {
+    .channels-grid { grid-template-columns: 1fr; gap: 16px; }
+  }
 
   .tg-card {
     position: relative; display: flex; flex-direction: column; justify-content: space-between;
-    border-radius: var(--radius-medium); padding: clamp(28px, 3vw, 32px); min-height: 208px;
+    width: 100%; min-width: 0; height: 100%;
+    border-radius: var(--radius-medium); padding: 28px 32px;
     text-decoration: none; box-shadow: var(--shadow-soft);
     transition: transform 220ms cubic-bezier(0.22,1,0.36,1), box-shadow 220ms ease;
+  }
+  @media (max-width: 767px) {
+    .tg-card { padding: 24px; }
   }
   .tg-card:hover, .tg-card:focus-visible { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(23,17,14,0.16); }
   .tg-card:focus-visible { outline: 2px solid var(--text-strong); outline-offset: 3px; }
   .tg-card__icon { width: 22px; height: 22px; display: block; opacity: 0.82; }
   .tg-card__name { font-family: var(--display); font-weight: 700; font-size: 1.15rem; margin-top: 14px; letter-spacing: -0.01em; }
-  .tg-card .tg-card__body { font-size: 0.92rem; font-weight: 400; color: inherit; line-height: 1.5; margin-top: 8px; max-width: 34ch; }
+  .tg-card .tg-card__body { font-size: var(--font-size-label); font-weight: 400; color: inherit; line-height: 1.5; margin-top: 8px; max-width: 34ch; }
   .tg-card__cta { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 0.88rem; margin-top: 18px; }
   .tg-card__arrow { transition: transform 220ms cubic-bezier(0.22,1,0.36,1); }
   .tg-card:hover .tg-card__arrow, .tg-card:focus-visible .tg-card__arrow { transform: translateX(3px); }
@@ -343,18 +374,18 @@
 
       <div class="about-hero">
         <div class="about-hero-text">
-          <h1 class="about-title"><span data-lang="ru">Мадина Рашидова</span><span data-lang="en">Madina Rashidova</span></h1>
+          <h2 class="about-title"><span data-lang="ru">Мадина Рашидова</span><span data-lang="en">Madina Rashidova</span></h2>
           <p class="about-dek"><span data-lang="ru">Продуктовый дизайнер. Разбираюсь в сложных системах и стараюсь оставлять их сложность внутри продукта, а не на экране пользователя.</span><span data-lang="en">Product designer. I get to the bottom of complex systems and try to keep their complexity inside the product, not on the user's screen.</span></p>
 
           <section class="about-story">
-            <h2><span data-lang="ru">Из поддержки в продуктовый дизайн</span><span data-lang="en">From support into product design</span></h2>
+            <h4><span data-lang="ru">Из поддержки в продуктовый дизайн</span><span data-lang="en">From support into product design</span></h4>
             <p><span data-lang="ru">Я пришла в дизайн через колл-центр и отдел партнёров Alif. Там я видела процессы не на красивых схемах, а в работе: с повторными звонками, ручными проверками и данными, которые приходилось вводить несколько раз.</span><span data-lang="en">I came into design through Alif's call center and partner department. There I saw processes not on neat diagrams but at work: with repeat calls, manual checks, and data that had to be entered more than once.</span></p>
             <p><span data-lang="ru">Так появился довольно практичный интерес к дизайну. Я уже знала, где люди ошибаются, что приходится объяснять по телефону и почему одно простое действие иногда требует пяти вкладок и терпения модератора.</span><span data-lang="en">That's how a fairly practical interest in design showed up. I already knew where people made mistakes, what had to be explained over the phone, and why one simple action sometimes needed five tabs and a moderator's patience.</span></p>
             <p><span data-lang="ru">Сейчас я проектирую личные кабинеты, административные интерфейсы и продукты с нуля. Начинаю с пользователей и процессов, затем собираю логику, проверяю решения и сопровождаю их вместе с разработчиками.</span><span data-lang="en">Now I design personal dashboards, admin interfaces, and products from scratch. I start with users and processes, then put the logic together, test solutions, and see them through together with developers.</span></p>
           </section>
 
           <section class="about-likelead">
-            <h2><span data-lang="ru">Что мне нравится в работе</span><span data-lang="en">What I like about the work</span></h2>
+            <h4><span data-lang="ru">Что мне нравится в работе</span><span data-lang="en">What I like about the work</span></h4>
             <p><span data-lang="ru">Больше всего я люблю момент, когда большая схема с ролями, статусами и исключениями превращается в понятный сценарий.</span><span data-lang="en">What I love most is the moment when a big diagram full of roles, statuses, and exceptions turns into a clear scenario.</span></p>
             <p><span data-lang="ru">Мне близки задачи, где нужно не просто нарисовать экран, а разобраться, как устроен продукт, выбрать главное и убрать из интерфейса всё, что пользователь не обязан держать в голове.</span><span data-lang="en">I'm drawn to tasks where you can't just draw a screen — you have to figure out how the product works, choose what matters most, and clear out everything the user shouldn't have to keep in their head.</span></p>
             <p class="about-quote"><span data-lang="ru">«Если интерфейс приходится долго объяснять по телефону, у дизайна ещё есть работа»</span><span data-lang="en">"If an interface still needs a long phone call to explain, design still has work to do"</span></p>
@@ -403,14 +434,14 @@
       </div>
 
       <section class="about-outside">
-        <h2><span data-lang="ru">За пределами макетов</span><span data-lang="en">Outside the mockups</span></h2>
-        <div class="outside-grid">
-          <div class="outside-text">
-            <p><span data-lang="ru">После работы я переключаюсь на музыку, прогулки, природу и занятия, где не нужно согласовывать финальный макет. Люблю знакомиться с людьми и слушать их истории. Возможно, поэтому интервью остаются одной из любимых частей моей работы.</span><span data-lang="en">After work I switch to music, walks, nature, and activities where nobody needs to sign off on the final layout. I love meeting people and listening to their stories. Maybe that's why interviews stay one of my favorite parts of the job.</span></p>
-            <p><span data-lang="ru">Часть находок сохраняю в Telegram: в Earworm собираю музыку и личные истории, а в «Дезигнере» — работы, наблюдения и разборы интерфейсов.</span><span data-lang="en">Some of what I find, I save in Telegram: in Earworm I collect music and personal stories, and in "Дезигнер" — projects, observations, and interface breakdowns.</span></p>
-          </div>
+        <h4><span data-lang="ru">За пределами макетов</span><span data-lang="en">Outside the mockups</span></h4>
+        <div class="outside-text">
+          <p><span data-lang="ru">После работы я переключаюсь на музыку, прогулки, природу и занятия, где не нужно согласовывать финальный макет. Люблю знакомиться с людьми и слушать их истории. Возможно, поэтому интервью остаются одной из любимых частей моей работы.</span><span data-lang="en">After work I switch to music, walks, nature, and activities where nobody needs to sign off on the final layout. I love meeting people and listening to their stories. Maybe that's why interviews stay one of my favorite parts of the job.</span></p>
+          <p><span data-lang="ru">Часть находок сохраняю в Telegram: в Earworm собираю музыку и личные истории, а в «Дезигнере» — работы, наблюдения и разборы интерфейсов.</span><span data-lang="en">Some of what I find, I save in Telegram: in Earworm I collect music and personal stories, and in "Дезигнер" — projects, observations, and interface breakdowns.</span></p>
+        </div>
 
-          <div class="tg-cards">
+        <div class="channels-frame">
+          <div class="channels-grid">
             <a class="tg-card tg-card--earworm" href="https://t.me/Earworm_me" target="_blank" rel="noopener noreferrer" aria-label="Earworm: музыка, истории и странные совпадения — открыть канал в Telegram">
               <div class="tg-card__top">
                 <svg class="tg-card__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

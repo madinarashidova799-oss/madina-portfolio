@@ -419,7 +419,7 @@
   .project-showcase--eaj { background: #000; }
   .project-showcase--eaj .project-showcase__scrim { display: none; }
   .project-showcase--eaj .project-showcase__media { background: #000; }
-  @media (min-width: 761px) {
+  @media (min-width: 768px) {
     .project-showcase--eaj {
       display: flex; align-items: center;
       gap: clamp(32px, 5vw, 64px);
@@ -491,7 +491,7 @@
     padding: clamp(104px, 11vw, 152px) clamp(20px, 6vw, 80px) clamp(56px, 7vw, 88px);
   }
   .project-showcase--alif .project-showcase__content { justify-content: flex-end; }
-  @media (min-width: 761px) {
+  @media (min-width: 768px) {
     /* Content is a flex sibling of the media column now (see the EAJ
        two-column rules above), not an overlay stacked on top of it — it
        needs its own natural height, not the shared full-bleed-overlay
@@ -606,7 +606,7 @@
      section to a 4:3 box keeps the photo's full width in frame instead — the phone
      shrinks a little (explicitly allowed by the brief) and both side columns stay
      clear of it, the portrait pins, and the phone's bottom nav. */
-  @media (min-width: 761px) and (max-width: 1100px) {
+  @media (min-width: 768px) and (max-width: 1100px) {
     .project-showcase--namaste, .project-showcase--tracker { min-height: 0; aspect-ratio: 4 / 3; }
     .project-showcase--namaste .project-showcase__content,
     .project-showcase--tracker .project-showcase__content {
@@ -618,36 +618,56 @@
     .project-showcase--tracker .project-showcase__body { max-width: 240px; }
   }
 
-  /* Mobile keeps the same full-bleed dark scene and the same rise-and-cover
-     mechanic as desktop (explicitly requested — a lighter secondary text
-     animation, not a different layout). Only three things change: smaller
-     safe-area paddings/type sizes, a full-width text column instead of a
-     per-project measured one, and the four-band text stagger collapses into
-     a single "visible once the scene is roughly in place" fade (see the
-     opacity override further down) — no separate scale animation budget. */
-  /* At narrow/tall (portrait phone) ratios, object-fit:cover on these
-     landscape photos leaves almost no clear side margin — the subject fills
-     the whole frame edge to edge, so full-bleed overlay text has nowhere
-     safe to sit (confirmed live: it read straight across the tablet/phone).
-     The brief explicitly allows this fallback for narrow screens: text may
-     move below the image instead of over it, as long as nothing overlaps.
-     The panel itself stays `position:absolute;inset:0` (the rise-and-cover
-     mechanic doesn't care what's inside it) — only the INTERNAL layout
-     changes, to an image-top / text-below split within that same layer. */
-  @media (max-width: 760px) {
-    .project-showcase__media { inset: 0 0 44% 0; }
+  /* Mobile (≤767px): the pinned/sticky rise-and-cover mechanic is disabled
+     entirely — see the script's matchMedia(max-width:767px) gate near the
+     end of the file, which no longer adds `.js-stage-active` at this width.
+     Cards render as a normal vertical list, one per row, in document flow,
+     each fully visible with no scroll-driven reveal. This reverses an
+     earlier version of this section that deliberately kept the stacking
+     motion on mobile: in practice the pinned scroll-through made navigation
+     unclear on phones (cards visually overlapping, no obvious sign that
+     scrolling continues the reveal) — client request, see conversation.
+     The `.js-stage-active`-prefixed selectors and `!important` below are
+     defensive: they guarantee the flat/static layout even if that class is
+     ever present at this width (e.g. a resize event caught mid-transition),
+     not just when the script behaves as expected. Only the OUTER
+     positioning/motion system is reset here — the per-project image-top /
+     text-below internal layout, colors, and CTA treatment are unchanged. */
+  @media (max-width: 767px) {
+    .projects-stage-wrap,
+    .projects-stage-wrap.js-stage-active {
+      height: auto !important;
+    }
+    .projects-stage,
+    .projects-stage-wrap.js-stage-active .projects-stage {
+      position: static !important; height: auto !important; overflow: visible !important; isolation: auto;
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .project-showcase,
+    .projects-stage-wrap.js-stage-active .project-showcase {
+      position: relative !important; inset: auto !important;
+      min-height: 0 !important; height: auto;
+      transform: none !important;
+    }
+    .project-showcase__media {
+      position: relative; inset: auto; height: 56vh; height: 56svh;
+    }
     .project-showcase__media img { object-position: center 28%; }
+    .projects-stage-wrap.js-stage-active .project-showcase__media img {
+      transform: none !important;
+    }
     .project-showcase--namaste .project-showcase__media img { object-position: center 12%; }
     .project-showcase--tracker .project-showcase__media img { object-position: 42% 22%; }
     /* EAJ keeps the same no-crop requirement on mobile as desktop — contain,
        not cover, so the laptop is never cut off in the top image band. */
     .project-showcase--eaj .project-showcase__media img { object-fit: contain; object-position: center bottom; }
     .project-showcase__scrim { display: none; }
-    .projects-stage-wrap .project-showcase__content {
-      position: absolute; inset: 56% 0 0 0; z-index: 3; min-height: 0;
+    .projects-stage-wrap .project-showcase__content,
+    .projects-stage-wrap.js-stage-active .project-showcase__content {
+      position: static; inset: auto; z-index: auto; min-height: 0;
       background: var(--surface); justify-content: flex-start !important;
       align-items: flex-start !important;
-      padding: 22px 20px clamp(28px, 9vw, 40px); overflow-y: auto;
+      padding: 22px 20px clamp(28px, 9vw, 40px);
     }
     .projects-stage-wrap .project-showcase__index { color: var(--text-dim-2); }
     .projects-stage-wrap .project-showcase__body { max-width: none; margin-top: 0; }
@@ -671,13 +691,14 @@
     .projects-stage-wrap .project-showcase:focus-visible .project-showcase__cta {
       background: rgba(38, 31, 27, 0.96); color: #f8f8f8;
     }
-    /* Simplified secondary animation: once a scene is more than half risen,
-       its text is just fully visible — no four-step stagger to track on a
-       small screen at scroll speeds that vary a lot more than on desktop. */
+    /* No scroll-driven reveal on mobile: every card's text and CTA are just
+       visible, full opacity, no stagger — nothing here depends on the
+       scroll-progress script, which never runs at this width. */
     .projects-stage-wrap.js-stage-active .project-showcase__header,
     .projects-stage-wrap.js-stage-active .project-showcase__desc,
-    .projects-stage-wrap.js-stage-active .project-showcase__cta-wrap {
-      opacity: var(--mobile-text-o, 1); transform: none;
+    .projects-stage-wrap.js-stage-active .project-showcase__cta-wrap,
+    .project-showcase__header, .project-showcase__desc, .project-showcase__cta-wrap {
+      opacity: 1 !important; transform: none !important;
     }
   }
 
@@ -1279,12 +1300,15 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
     // Stacked-panel scroll motion (Floema-style cover-over-cover, see
     // DESIGN.md § Stacked Project Transitions + § Scroll Progress and
-    // Layering). `.js-stage-active` is added unconditionally — including on
-    // mobile, per the brief: the rise-and-cover mechanic itself must survive
-    // down to phone widths, only the secondary text stagger simplifies there
-    // (handled purely in CSS via --mobile-text-o). Reduced-motion is the only
-    // gate: skip entirely and the markup stays in its plain, fully-visible,
-    // stacked-document baseline (four ordinary sections, no motion).
+    // Layering). Mobile (≤767px) no longer runs this at all — the pinned/
+    // stacked reveal made navigation unclear on phones (cards visually
+    // overlapping, no obvious cue that scrolling continues the reveal), so
+    // below that width the cards stay in their plain, fully-visible,
+    // stacked-document baseline (four ordinary sections, no motion, no
+    // `.js-stage-active`) — see the matching `@media (max-width: 767px)`
+    // CSS block above, which also forces this layout defensively even if
+    // the class is somehow present. `prefers-reduced-motion: reduce` skips
+    // the effect at every width, same as before.
     (function () {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       var wrap = document.querySelector('.projects-stage-wrap');
@@ -1293,8 +1317,8 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       var namasteEl = wrap.querySelector('.project-showcase--namaste');
       var trackerEl = wrap.querySelector('.project-showcase--tracker');
       if (!eajEl || !namasteEl || !trackerEl) return;
-
-      wrap.classList.add('js-stage-active');
+      var sceneEls = [eajEl, namasteEl, trackerEl];
+      var sceneVarNames = ['--ty', '--scale', '--media-o', '--header-o', '--desc-o', '--cta-o'];
 
       // Budget, in "percent of one viewport height" scrolled while the stage
       // is pinned — must match the wrapper's CSS height (700svh = 100svh
@@ -1332,10 +1356,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         el.style.setProperty('--header-o', band(t, 0.50, 0.72).toFixed(3));
         el.style.setProperty('--desc-o', band(t, 0.60, 0.82).toFixed(3));
         el.style.setProperty('--cta-o', band(t, 0.70, 0.90).toFixed(3));
-        // Mobile's single simplified fade (see @media max-width:760px) —
-        // computed here too so it stays perfectly in sync with the rise
-        // instead of running on a second, separate timeline.
-        el.style.setProperty('--mobile-text-o', band(t, 0.40, 0.65).toFixed(3));
       }
 
       var rafId = null;
@@ -1352,9 +1372,38 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
         rafId = requestAnimationFrame(tick);
       }
-      rafId = requestAnimationFrame(tick);
+
+      function startMotion() {
+        if (rafId !== null) return;
+        wrap.classList.add('js-stage-active');
+        rafId = requestAnimationFrame(tick);
+      }
+      function stopMotion() {
+        if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+        wrap.classList.remove('js-stage-active');
+        // Fully reset the scroll-progress state the script wrote, so a
+        // stale --ty/--scale/etc. from the last desktop frame can't leak
+        // into the mobile layout (which ignores these vars via CSS anyway,
+        // but nothing should depend on that — the reset makes it explicit).
+        sceneEls.forEach(function (el) {
+          sceneVarNames.forEach(function (name) { el.style.removeProperty(name); });
+        });
+      }
+
+      var mobileQuery = window.matchMedia('(max-width: 767px)');
+      var isMobile = mobileQuery.matches;
+      if (isMobile) { stopMotion(); } else { startMotion(); }
+
+      // One listener for the life of the page — toggles the effect on/off
+      // as the viewport crosses 767px, instead of a `resize` handler that
+      // would need its own re-entrancy guard against firing repeatedly.
+      mobileQuery.addEventListener('change', function (e) {
+        isMobile = e.matches;
+        if (isMobile) stopMotion(); else startMotion();
+      });
 
       document.addEventListener('visibilitychange', function () {
+        if (isMobile) return; // motion isn't running on mobile; nothing to pause/resume
         if (document.hidden) {
           if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
         } else if (rafId === null) {

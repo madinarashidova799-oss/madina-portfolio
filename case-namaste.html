@@ -202,6 +202,11 @@
     padding: clamp(20px, 3vw, 32px);
   }
   .detail-pair-media img { margin: 0; border-radius: var(--radius-medium); object-fit: contain; }
+  /* Full-width variant for a media block placed outside the .detail-pair
+     grid (image stacked below its section's text, not side-by-side) — same
+     card frame as every other large Namaste illustration, just spanning
+     the whole content column instead of one grid track. */
+  .detail-pair-media--stacked { margin-top: clamp(32px, 3vw, 40px); margin-bottom: 18px; }
   .detail-pair-media .case-image-trigger:focus-visible,
   .detail-mosaic .case-image-trigger:focus-visible { outline-offset: -3px; }
   .detail-mosaic { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 18px; }
@@ -211,6 +216,59 @@
     .detail-pair.media-left .detail-pair-media { order: 0; }
     .detail-mosaic { grid-template-columns: 1fr; }
   }
+
+  /* Reusable dark/light theme comparison slider — ported from
+     case-eaj-trader.html's .compare-slider so this page doesn't grow a
+     second, parallel slider implementation (three instances share this one
+     component: онбординг/уровни, health-функции, финальный концепт).
+     Left = dark theme (overlay, clipped to --pos%), right = light theme
+     (base, full image underneath); dragging the handle left shrinks the
+     dark layer and reveals more of the light theme, dragging right does
+     the opposite. Both theme screenshots share identical 2940x1928 export
+     dimensions, so one fixed aspect-ratio keeps every instance pixel-aligned. */
+  .compare-slider__frame {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-large);
+    padding: clamp(20px, 3vw, 32px); margin-top: clamp(32px, 3vw, 40px); margin-bottom: clamp(32px, 3vw, 40px);
+  }
+  .compare-slider__stage {
+    position: relative; overflow: hidden; border-radius: var(--radius-medium);
+    aspect-ratio: 2940 / 1928; touch-action: none; user-select: none; --pos: 50;
+  }
+  .compare-slider__stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; margin: 0; border-radius: 0; pointer-events: none; }
+  .compare-slider__overlay { position: absolute; inset: 0; clip-path: inset(0 calc((100 - var(--pos)) * 1%) 0 0); }
+  .compare-slider__tag {
+    position: absolute; top: 16px; z-index: 2;
+    background: var(--surface); border: 1px solid var(--line); color: var(--case-accent);
+    font-family: var(--mono); font-size: var(--font-size-label); text-transform: uppercase; letter-spacing: 0.04em;
+    padding: 6px 14px; border-radius: var(--radius-pill);
+  }
+  .compare-slider__tag--left { left: 16px; }
+  .compare-slider__tag--right { right: 16px; }
+  @media (max-width: 480px) {
+    .compare-slider__tag--right { top: auto; bottom: 16px; }
+  }
+  .compare-slider__handle {
+    position: absolute; top: 0; bottom: 0; left: calc(var(--pos) * 1%); width: 2px;
+    background: rgba(255,255,255,0.9); box-shadow: 0 0 0 1px var(--line);
+    transform: translateX(-50%); pointer-events: none; z-index: 2;
+  }
+  .compare-slider__grip {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 44px; height: 44px; border-radius: 50%;
+    background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow-control);
+    display: flex; align-items: center; justify-content: center; gap: 3px;
+    font-family: var(--mono); font-size: 0.8rem; color: var(--text-dim);
+  }
+  .compare-slider__range {
+    position: absolute; inset: 0; width: 100%; height: 100%; margin: 0;
+    appearance: none; -webkit-appearance: none; background: transparent;
+    cursor: ew-resize; z-index: 3; touch-action: none;
+  }
+  .compare-slider__range::-webkit-slider-runnable-track { background: transparent; }
+  .compare-slider__range::-moz-range-track { background: transparent; }
+  .compare-slider__range::-webkit-slider-thumb { -webkit-appearance: none; width: 44px; height: 44px; background: transparent; border: 0; cursor: ew-resize; }
+  .compare-slider__range::-moz-range-thumb { width: 44px; height: 44px; background: transparent; border: 0; cursor: ew-resize; }
+  .compare-slider__range:focus-visible { outline: 2px solid var(--ink-namaste); outline-offset: 4px; }
 
   /* Unified "Результат" section — plain intro paragraph, then a 2x2 grid
      of glass result cards. No decorative numbers, no icons, no repeated
@@ -435,13 +493,11 @@
             <p class="detail-kicker"><span data-lang="ru">Без чего продукт не работает</span><span data-lang="en">What the product couldn't work without</span></p>
           </div>
         </div>
-        <div class="detail-pair">
-          <div class="detail-pair-text"><p><span data-lang="ru">Из-за сроков мы сосредоточились на анализе Down Dog, Yoga for Beginners, Yoga Fit и Daily Yoga. Я сравнила путь до первой тренировки, уровни нагрузки, персонализацию, структуру контента, дополнительные функции и монетизацию.</span><span data-lang="en">Given the timeline, we focused on analyzing Down Dog, Yoga for Beginners, Yoga Fit, and Daily Yoga. I compared the path to the first workout, intensity levels, personalization, content structure, additional features, and monetization.</span></p></div>
-          <div class="detail-pair-media">
-            <button class="case-image-trigger" type="button">
-              <img src="assets/process/namaste-competitors.png" data-alt-ru="Namaste: сравнение конкурентов" data-alt-en="Namaste: competitor comparison" alt="Namaste: сравнение конкурентов" loading="lazy">
-            </button>
-          </div>
+        <p><span data-lang="ru">Из-за сроков мы сосредоточились на анализе Down Dog, Yoga for Beginners, Yoga Fit и Daily Yoga. Я сравнила путь до первой тренировки, уровни нагрузки, персонализацию, структуру контента, дополнительные функции и монетизацию.</span><span data-lang="en">Given the timeline, we focused on analyzing Down Dog, Yoga for Beginners, Yoga Fit, and Daily Yoga. I compared the path to the first workout, intensity levels, personalization, content structure, additional features, and monetization.</span></p>
+        <div class="detail-pair-media detail-pair-media--stacked">
+          <button class="case-image-trigger" type="button">
+            <img src="assets/namaste/Research.png" data-alt-ru="Namaste: сравнение конкурентов" data-alt-en="Namaste: competitor comparison" alt="Namaste: сравнение конкурентов" loading="lazy">
+          </button>
         </div>
         <p><span data-lang="ru">Основой стали понятный выбор практики, подходящий уровень и предсказуемый сценарий занятия. Дополнительные функции оценивали по пользовательской ценности и стоимости разработки.</span><span data-lang="en">The foundation became a clear choice of practice, a suitable level, and a predictable workout scenario. Additional features were evaluated by user value and development cost.</span></p>
       </div>
@@ -453,21 +509,26 @@
             <p class="detail-kicker"><span data-lang="ru">Тренировочный цикл без лишней сложности</span><span data-lang="en">The workout cycle without extra complexity</span></p>
           </div>
         </div>
-        <div class="detail-pair">
-          <div class="detail-pair-text"><p><span data-lang="ru">Архитектуру построила вокруг направлений и уровней сложности. В MVP вошли подготовленные видеоуроки и три уровня: начинающий, продвинутый и мастер.</span><span data-lang="en">I built the architecture around styles and difficulty levels. The MVP included pre-produced video lessons and three levels: beginner, advanced, and master.</span></p></div>
-          <div class="detail-pair-media">
-            <button class="case-image-trigger" type="button">
-              <img src="assets/process/namaste-directions.png" data-alt-ru="Namaste: направления йоги" data-alt-en="Namaste: yoga styles" alt="Namaste: направления йоги" loading="lazy">
-            </button>
-          </div>
+        <p><span data-lang="ru">Архитектуру построила вокруг направлений и уровней сложности. В MVP вошли подготовленные видеоуроки и три уровня: начинающий, продвинутый и мастер.</span><span data-lang="en">I built the architecture around styles and difficulty levels. The MVP included pre-produced video lessons and three levels: beginner, advanced, and master.</span></p>
+        <div class="detail-pair-media detail-pair-media--stacked">
+          <button class="case-image-trigger" type="button">
+            <img src="assets/Userflow.png" data-alt-ru="Namaste: схема пользовательского флоу — онбординг, опрос и структура Home" data-alt-en="Namaste: user flow diagram — onboarding, survey, and Home structure" alt="Namaste: схема пользовательского флоу — онбординг, опрос и структура Home" loading="lazy">
+          </button>
         </div>
-        <div class="detail-pair media-left">
-          <div class="detail-pair-media">
-            <button class="case-image-trigger" type="button">
-              <img src="assets/process/namaste-progression.png" data-alt-ru="Namaste: уровни сложности" data-alt-en="Namaste: difficulty levels" alt="Namaste: уровни сложности" loading="lazy">
-            </button>
+        <p><span data-lang="ru">В первой версии пользователь сам выбирает направление, уровень и цель. Сложную рекомендательную систему оставили на развитие, чтобы она не задерживала основной сценарий.</span><span data-lang="en">In the first version, the user chooses the style, level, and goal themselves. A complex recommendation system was left for later development, so it wouldn't hold up the core scenario.</span></p>
+        <div class="compare-slider">
+          <div class="compare-slider__frame">
+            <div class="compare-slider__stage" data-compare-slider>
+              <img class="compare-slider__base" src="assets/namaste/уровень-white.png" data-alt-ru="Namaste: экран опроса и выбора уровня — светлая тема" data-alt-en="Namaste: survey and level-selection screens — light theme" alt="Namaste: экран опроса и выбора уровня — светлая тема" loading="lazy">
+              <div class="compare-slider__overlay">
+                <img src="assets/namaste/уровень-dark.png" data-alt-ru="Namaste: экран опроса и выбора уровня — тёмная тема" data-alt-en="Namaste: survey and level-selection screens — dark theme" alt="Namaste: экран опроса и выбора уровня — тёмная тема" loading="lazy">
+              </div>
+              <span class="compare-slider__tag compare-slider__tag--left"><span data-lang="ru">Тёмная тема</span><span data-lang="en">Dark theme</span></span>
+              <span class="compare-slider__tag compare-slider__tag--right"><span data-lang="ru">Светлая тема</span><span data-lang="en">Light theme</span></span>
+              <div class="compare-slider__handle"><span class="compare-slider__grip" aria-hidden="true">‹›</span></div>
+              <input class="compare-slider__range" type="range" min="0" max="100" value="50" step="1" aria-label="Сравнение тёмной и светлой темы экрана опроса и выбора уровня">
+            </div>
           </div>
-          <div class="detail-pair-text"><p><span data-lang="ru">В первой версии пользователь сам выбирает направление, уровень и цель. Сложную рекомендательную систему оставили на развитие, чтобы она не задерживала основной сценарий.</span><span data-lang="en">In the first version, the user chooses the style, level, and goal themselves. A complex recommendation system was left for later development, so it wouldn't hold up the core scenario.</span></p></div>
         </div>
       </div>
       <div class="detail-block">
@@ -524,13 +585,20 @@
           </div>
         </div>
         <p><span data-lang="ru">Трекер воды давал заметную ценность при низкой сложности. Для сна команда могла переиспользовать существующую продуктовую логику. КБЖУ требовал слишком много ресурсов, а шагомер зависел от внешних интеграций.</span><span data-lang="en">The water tracker offered noticeable value at low complexity. For sleep, the team could reuse existing product logic. The calorie counter needed too many resources, and the step counter depended on external integrations.</span></p>
-        <div class="detail-pair media-left">
-          <div class="detail-pair-media">
-            <button class="case-image-trigger" type="button">
-              <img src="assets/process/namaste-health.png" data-alt-ru="Namaste: health-функции" data-alt-en="Namaste: the health features" alt="Namaste: health-функции" loading="lazy">
-            </button>
+        <p><span data-lang="ru">В MVP вошли трекеры сна и воды: у них было подходящее соотношение ценности и объёма разработки.</span><span data-lang="en">The MVP included the sleep and water trackers: they had the right balance of value to development effort.</span></p>
+        <div class="compare-slider">
+          <div class="compare-slider__frame">
+            <div class="compare-slider__stage" data-compare-slider>
+              <img class="compare-slider__base" src="assets/namaste/фокус-white.png" data-alt-ru="Namaste: экраны трекеров сна и воды — светлая тема" data-alt-en="Namaste: sleep and water tracker screens — light theme" alt="Namaste: экраны трекеров сна и воды — светлая тема" loading="lazy">
+              <div class="compare-slider__overlay">
+                <img src="assets/namaste/фокус-dark.png" data-alt-ru="Namaste: экраны трекеров сна и воды — тёмная тема" data-alt-en="Namaste: sleep and water tracker screens — dark theme" alt="Namaste: экраны трекеров сна и воды — тёмная тема" loading="lazy">
+              </div>
+              <span class="compare-slider__tag compare-slider__tag--left"><span data-lang="ru">Тёмная тема</span><span data-lang="en">Dark theme</span></span>
+              <span class="compare-slider__tag compare-slider__tag--right"><span data-lang="ru">Светлая тема</span><span data-lang="en">Light theme</span></span>
+              <div class="compare-slider__handle"><span class="compare-slider__grip" aria-hidden="true">‹›</span></div>
+              <input class="compare-slider__range" type="range" min="0" max="100" value="50" step="1" aria-label="Сравнение тёмной и светлой темы экранов трекеров сна и воды">
+            </div>
           </div>
-          <div class="detail-pair-text"><p><span data-lang="ru">В MVP вошли трекеры сна и воды: у них было подходящее соотношение ценности и объёма разработки.</span><span data-lang="en">The MVP included the sleep and water trackers: they had the right balance of value to development effort.</span></p></div>
         </div>
       </div>
       <div class="detail-block">
@@ -557,9 +625,20 @@
         <button class="case-image-trigger" type="button">
           <img src="assets/process/namaste-keyactions.png" data-alt-ru="Namaste: экран ключевых действий" data-alt-en="Namaste: the key-actions screen" alt="Namaste: экран ключевых действий" loading="lazy">
         </button>
-        <button class="case-image-trigger" type="button">
-          <img src="assets/process/namaste-actions.png" data-alt-ru="Namaste: ключевые действия" data-alt-en="Namaste: key actions" alt="Namaste: ключевые действия" loading="lazy">
-        </button>
+        <div class="compare-slider">
+          <div class="compare-slider__frame">
+            <div class="compare-slider__stage" data-compare-slider>
+              <img class="compare-slider__base" src="assets/namaste/Финал-white.png" data-alt-ru="Namaste: финальные экраны тренировок — светлая тема" data-alt-en="Namaste: final workout screens — light theme" alt="Namaste: финальные экраны тренировок — светлая тема" loading="lazy">
+              <div class="compare-slider__overlay">
+                <img src="assets/namaste/Финал-dark.png" data-alt-ru="Namaste: финальные экраны тренировок — тёмная тема" data-alt-en="Namaste: final workout screens — dark theme" alt="Namaste: финальные экраны тренировок — тёмная тема" loading="lazy">
+              </div>
+              <span class="compare-slider__tag compare-slider__tag--left"><span data-lang="ru">Тёмная тема</span><span data-lang="en">Dark theme</span></span>
+              <span class="compare-slider__tag compare-slider__tag--right"><span data-lang="ru">Светлая тема</span><span data-lang="en">Light theme</span></span>
+              <div class="compare-slider__handle"><span class="compare-slider__grip" aria-hidden="true">‹›</span></div>
+              <input class="compare-slider__range" type="range" min="0" max="100" value="50" step="1" aria-label="Сравнение тёмной и светлой темы финальных экранов тренировок">
+            </div>
+          </div>
+        </div>
       </div>
       <div class="detail-block">
         <div class="detail-head">
@@ -631,5 +710,50 @@
   <script src="assets/typography.js"></script>
   <script src="assets/lightbox.js"></script>
   <script src="assets/case-nav.js"></script>
+  <script>
+    // Dark/light theme comparison slider (see .compare-slider CSS comment
+    // above) — ported verbatim from case-eaj-trader.html so both pages run
+    // the exact same, already-tested drag/touch/keyboard logic. A real
+    // <input type="range"> drives everything; pointer events unify mouse
+    // and touch and keep tracking the gesture even if the pointer leaves
+    // the element mid-drag.
+    (function () {
+      var stages = document.querySelectorAll('[data-compare-slider]');
+      stages.forEach(function (stage) {
+        var range = stage.querySelector('.compare-slider__range');
+        if (!range) return;
+        function update() { stage.style.setProperty('--pos', range.value); }
+        range.addEventListener('input', update);
+        update();
+
+        function setFromClientX(clientX) {
+          var rect = stage.getBoundingClientRect();
+          var ratio = (clientX - rect.left) / rect.width;
+          ratio = Math.max(0, Math.min(1, ratio));
+          var value = Math.round(ratio * 100);
+          if (String(value) !== range.value) {
+            range.value = String(value);
+            range.dispatchEvent(new Event('input', { bubbles: true }));
+          }
+        }
+
+        var dragging = false;
+        range.addEventListener('pointerdown', function (e) {
+          dragging = true;
+          range.setPointerCapture(e.pointerId);
+          setFromClientX(e.clientX);
+        });
+        range.addEventListener('pointermove', function (e) {
+          if (!dragging) return;
+          setFromClientX(e.clientX);
+        });
+        range.addEventListener('pointerup', function (e) {
+          dragging = false;
+          if (range.hasPointerCapture(e.pointerId)) range.releasePointerCapture(e.pointerId);
+        });
+        range.addEventListener('pointercancel', function () { dragging = false; });
+      });
+    })();
+  </script>
 </body>
 </html>

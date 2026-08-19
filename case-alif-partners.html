@@ -206,18 +206,9 @@
   }
   /* Accent lives as a short line inside the card, not a border around it —
      see visual-hierarchy instruction §4 (no colored outline on any card). */
-  .result-card__label {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: var(--mono); font-size: var(--font-size-label); text-transform: uppercase;
-    letter-spacing: 0.06em; color: var(--text-dim-2);
-  }
-  .result-card__label::before {
-    content: ''; display: inline-block; width: 16px; height: 2px; border-radius: 2px;
-    background: var(--case-accent-2);
-  }
   .result-card .result-card__metric, .metric-card .result-card__metric { font-family: var(--display); font-weight: 600; font-size: 1.05rem; color: var(--text); line-height: 1.35; margin: 0; max-width: none; }
   .result-card .result-card__desc, .metric-card .result-card__desc { font-size: var(--font-size-label); color: var(--text-dim); line-height: 1.55; margin: 0; max-width: none; }
-  /* Metric cards mark the second, separate "Как оценивать эффект" layer —
+  /* Metric cards mark the second, separate "Как оценивали эффект" layer —
      a quiet neutral surface (not the case's accent tint) so it reads as a
      distinct kind of card, not a continuation of the Результат grid. */
   .metric-card {
@@ -581,19 +572,15 @@
         <p><span data-lang="ru">Админ-панель из внутреннего инструмента банка превратилась в продукт для самостоятельной работы партнёра с меньшей зависимостью от колл-центра и модераторов. Отдельно запущена мобильная версия с тем же функционалом для работы в магазине, на складе и на выдаче.</span><span data-lang="en">The admin panel went from an internal bank tool to a product partners run on their own, with less dependence on the call center and moderators. A mobile version with the same functionality launched separately for work in-store, in the warehouse, and at pickup.</span></p>
         <div class="result-cards">
           <div class="result-card">
-            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
             <p class="result-card__metric"><span data-lang="ru">Поиск товара вместо повторного создания карточки</span><span data-lang="en">Product search instead of recreating a listing</span></p>
           </div>
           <div class="result-card">
-            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
             <p class="result-card__metric"><span data-lang="ru">Единый чат с историей обращений вместо звонков</span><span data-lang="en">A single chat with request history instead of calls</span></p>
           </div>
           <div class="result-card">
-            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
             <p class="result-card__metric"><span data-lang="ru">Доставка перенесена в админ-панель</span><span data-lang="en">Delivery moved into the admin panel</span></p>
           </div>
           <div class="result-card">
-            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
             <p class="result-card__metric"><span data-lang="ru">Мобильная версия для работы вне офиса</span><span data-lang="en">A mobile version for work away from the desk</span></p>
           </div>
         </div>
@@ -602,28 +589,23 @@
         <div class="detail-head">
           <span class="detail-num">08</span>
           <div class="detail-head-text">
-            <h2><span data-lang="ru">Как оценивать эффект</span><span data-lang="en">How to evaluate the effect</span></h2>
+            <h2><span data-lang="ru">Как оценивали эффект</span><span data-lang="en">How we evaluated the effect</span></h2>
           </div>
         </div>
-        <p><span data-lang="ru">Ниже — показатели, по которым оцениваем эффект.</span><span data-lang="en">Below are the indicators we use to evaluate the effect.</span></p>
         <div class="metric-cards">
           <div class="metric-card">
-            <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Доля заказов, обработанных партнёром самостоятельно</span><span data-lang="en">The share of orders a partner processes on their own</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, насколько новый процесс снижает участие сотрудников банка.</span><span data-lang="en">Shows how much the new process reduces the involvement of the bank's staff.</span></p>
           </div>
           <div class="metric-card">
-            <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Доля заявок, завершённых без отмены</span><span data-lang="en">The share of requests completed without cancellation</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, реже ли заявки срываются из-за неактуальных данных или задержки обработки.</span><span data-lang="en">Shows whether requests fall through less often due to outdated data or a processing delay.</span></p>
           </div>
           <div class="metric-card">
-            <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Медианное время от заявки до передачи в доставку</span><span data-lang="en">Median time from request to handoff to delivery</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, ускорил ли единый сценарий обработку заявки.</span><span data-lang="en">Shows whether the unified workflow sped up processing the request.</span></p>
           </div>
           <div class="metric-card">
-            <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Количество активных партнёров на одного модератора</span><span data-lang="en">Active partners per moderator</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, может ли сеть расти без пропорционального роста штата модераторов.</span><span data-lang="en">Shows whether the network can grow without a proportional increase in moderator headcount.</span></p>
           </div>

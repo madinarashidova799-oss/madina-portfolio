@@ -298,18 +298,9 @@
   }
   /* Accent lives as a short line inside the card, not a border around it —
      see visual-hierarchy instruction §4 (no colored outline on any card). */
-  .result-card__label {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: var(--mono); font-size: var(--font-size-label); text-transform: uppercase;
-    letter-spacing: 0.06em; color: var(--text-dim-2);
-  }
-  .result-card__label::before {
-    content: ''; display: inline-block; width: 16px; height: 2px; border-radius: 2px;
-    background: var(--ink-namaste);
-  }
   .result-card .result-card__metric, .metric-card .result-card__metric { font-family: var(--display); font-weight: 600; font-size: 1.05rem; color: var(--text); line-height: 1.35; margin: 0; max-width: none; }
   .result-card .result-card__desc, .metric-card .result-card__desc { font-size: var(--font-size-label); color: var(--text-dim); line-height: 1.55; margin: 0; max-width: none; }
-  /* Metric cards mark the second, separate "Как оценивать эффект" layer —
+  /* Metric cards mark the second, separate "Как оценивали эффект" layer —
      a quiet neutral surface (not the case's accent tint) so it reads as a
      distinct kind of card, not a continuation of the Результат grid. */
   .metric-card {
@@ -640,22 +631,18 @@
         <p><span data-lang="ru">Запущено iOS-приложение с тренировочным циклом вокруг направлений и трёх уровней сложности (начинающий, продвинутый, мастер).</span><span data-lang="en">An iOS app has launched with a workout cycle built around styles and three difficulty levels (beginner, advanced, master).</span></p>
         <div class="result-cards">
           <div class="result-card">
-            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
             <p class="result-card__metric"><span data-lang="ru">Персонализированный старт</span><span data-lang="en">A personalized start</span></p>
             <p class="result-card__desc"><span data-lang="ru">Онбординг помогает выбрать направление, уровень и подходящий формат занятий.</span><span data-lang="en">Onboarding helps pick a style, level, and a workout format that fits.</span></p>
           </div>
           <div class="result-card">
-            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
             <p class="result-card__metric"><span data-lang="ru">Связный тренировочный цикл</span><span data-lang="en">A coherent workout cycle</span></p>
             <p class="result-card__desc"><span data-lang="ru">Пользователь проходит путь от выбора практики до завершения занятия и прогресса.</span><span data-lang="en">The user moves from choosing a practice through finishing the session to seeing their progress.</span></p>
           </div>
           <div class="result-card">
-            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
             <p class="result-card__metric"><span data-lang="ru">Обоснованный состав MVP</span><span data-lang="en">A well-reasoned MVP scope</span></p>
             <p class="result-card__desc"><span data-lang="ru">Health-функции выбраны по ценности, сложности реализации и результатам проверки.</span><span data-lang="en">Health features were chosen by value, implementation effort, and test results.</span></p>
           </div>
           <div class="result-card">
-            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
             <p class="result-card__metric"><span data-lang="ru">Основа для регулярного использования</span><span data-lang="en">A foundation for regular use</span></p>
             <p class="result-card__desc"><span data-lang="ru">Избранное, прогресс и цели помогают возвращаться к занятиям.</span><span data-lang="en">Favorites, progress, and goals help bring the user back to their workouts.</span></p>
           </div>
@@ -665,27 +652,23 @@
         <div class="detail-head">
           <span class="detail-num">07</span>
           <div class="detail-head-text">
-            <h2><span data-lang="ru">Как оценивать эффект</span><span data-lang="en">How to evaluate the effect</span></h2>
+            <h2><span data-lang="ru">Как оценивали эффект</span><span data-lang="en">How we evaluated the effect</span></h2>
           </div>
         </div>
         <div class="metric-cards">
           <div class="metric-card">
-            <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Доля пользователей, завершивших первую тренировку</span><span data-lang="en">The share of users who completed their first workout</span></p>
             <p class="result-card__desc"><span data-lang="ru">Помогает оценить, насколько быстро человек получает первую ценность продукта.</span><span data-lang="en">Helps assess how quickly a person gets the product's first value.</span></p>
           </div>
           <div class="metric-card">
-            <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Удержание D7 и D30 после первой тренировки</span><span data-lang="en">D7 and D30 retention after the first workout</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, складывается ли у пользователя регулярная привычка тренировок.</span><span data-lang="en">Shows whether a regular workout habit forms for the user.</span></p>
           </div>
           <div class="metric-card">
-            <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Доля пользователей, оформивших подписку</span><span data-lang="en">The share of users who subscribed</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, доходит ли пользователь от бесплатной тренировки до платной подписки.</span><span data-lang="en">Shows whether the user gets from a free workout to a paid subscription.</span></p>
           </div>
           <div class="metric-card">
-            <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Доля продлений подписки после первого периода</span><span data-lang="en">The renewal rate after the first billing period</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, остаётся ли тренировочный цикл ценным после пробного периода.</span><span data-lang="en">Shows whether the workout cycle stays valuable after the trial period.</span></p>
           </div>

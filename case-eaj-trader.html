@@ -355,18 +355,9 @@
   }
   /* Accent lives as a short line inside the card, not a border around it —
      see visual-hierarchy instruction §4 (no colored outline on any card). */
-  .result-card__label {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: var(--mono); font-size: var(--font-size-label); text-transform: uppercase;
-    letter-spacing: 0.06em; color: var(--text-dim-2);
-  }
-  .result-card__label::before {
-    content: ''; display: inline-block; width: 16px; height: 2px; border-radius: 2px;
-    background: var(--accent-blue);
-  }
   .result-card .result-card__metric, .metric-card .result-card__metric { font-family: var(--display); font-weight: 600; font-size: 1.05rem; color: var(--text); line-height: 1.35; margin: 0; max-width: none; }
   .result-card .result-card__desc, .metric-card .result-card__desc { font-size: var(--font-size-label); color: var(--text-dim); line-height: 1.55; margin: 0; max-width: none; }
-  /* Metric cards mark the second, separate "Как оценивать эффект" layer —
+  /* Metric cards mark the second, separate "Как оценивали эффект" layer —
      a quiet neutral surface (not the case's accent tint) so it reads as a
      distinct kind of card, not a continuation of the Результат grid. */
   .metric-card {
@@ -616,21 +607,18 @@
         <p><span data-lang="ru">Запущен личный кабинет с базовым финансовым циклом: просмотр состояния капитала, управление счетами.</span><span data-lang="en">A personal dashboard has launched with the basic financial cycle: viewing your capital and managing accounts.</span></p>
         <div class="result-cards">
           <div class="result-card">
-            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
             <p class="result-card__metric"><span data-lang="ru">Главный экран</span><span data-lang="en">Home screen</span></p>
             <p class="result-card__desc"><span data-lang="ru">Баланс, счета, доступные суммы, входы в операции.</span><span data-lang="en">Balance, accounts, available amounts, entry points into operations.</span></p>
           </div>
           <div class="result-card">
-            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
-            <p class="result-card__metric"><span data-lang="ru">Карточный формат счёта вместо табличного</span><span data-lang="en">A card-based account format instead of a table</span></p>
+            <p class="result-card__metric"><span data-lang="ru">Карточный формат счёта</span><span data-lang="en">A card-based account format</span></p>
+            <p class="result-card__desc"><span data-lang="ru">Таблицу сохранили для сценария, в котором счетов станет больше.</span><span data-lang="en">The table view was kept for a scenario with a larger number of accounts.</span></p>
           </div>
           <div class="result-card">
-            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
             <p class="result-card__metric"><span data-lang="ru">Прозрачные статусы операций</span><span data-lang="en">Transparent operation statuses</span></p>
             <p class="result-card__desc"><span data-lang="ru">Пользователь видит состояние пополнений, выводов и переводов.</span><span data-lang="en">The user sees the state of deposits, withdrawals, and transfers.</span></p>
           </div>
           <div class="result-card">
-            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
             <p class="result-card__metric"><span data-lang="ru">Поддержка внутри продукта</span><span data-lang="en">Support built into the product</span></p>
             <p class="result-card__desc"><span data-lang="ru">Обращение создаётся и отслеживается без поиска внешних контактов.</span><span data-lang="en">A request is created and tracked without hunting for outside contacts.</span></p>
           </div>
@@ -642,29 +630,24 @@
         <div class="detail-head">
           <span class="detail-num">08</span>
           <div class="detail-head-text">
-            <h2><span data-lang="ru">Как оценивать эффект</span><span data-lang="en">How to evaluate the effect</span></h2>
+            <h2><span data-lang="ru">Как оценивали эффект</span><span data-lang="en">How we evaluated the effect</span></h2>
             <p class="detail-kicker"><span data-lang="ru">Продукт запущен недавно</span><span data-lang="en">The product launched recently</span></p>
           </div>
         </div>
-        <p><span data-lang="ru">Устойчивых постзапусковых данных пока нет, поэтому ниже приведены не готовые результаты, а метрики, по которым будем оценивать эффект после того, как накопится статистика.</span><span data-lang="en">There's no stable post-launch data yet, so what follows isn't a finished result. It's the metrics we'll use to evaluate the effect once enough data has built up.</span></p>
         <div class="metric-cards">
           <div class="metric-card">
-            <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Конверсия в открытие и пополнение счёта</span><span data-lang="en">Conversion to opening and funding an account</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, доходит ли пользователь от входа в кабинет до первого ценностного действия.</span><span data-lang="en">Shows whether the user gets from entering the dashboard to the first valuable action.</span></p>
           </div>
           <div class="metric-card">
-            <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Доля новых пользователей, открывших торговый счёт</span><span data-lang="en">The share of new users who opened a trading account</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, доходит ли пользователь до первого счёта, а не только до главного экрана.</span><span data-lang="en">Shows whether the user reaches a first account, not just the home screen.</span></p>
           </div>
           <div class="metric-card">
-            <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Доля пополненных счетов с повторной операцией</span><span data-lang="en">The share of funded accounts with a repeat operation</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, возвращается ли пользователь в кабинет после первого пополнения.</span><span data-lang="en">Shows whether the user comes back to the dashboard after the first deposit.</span></p>
           </div>
           <div class="metric-card">
-            <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Доля успешно завершённых пополнений, выводов и переводов</span><span data-lang="en">The share of successfully completed deposits, withdrawals, and transfers</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает надёжность финансового цикла, вокруг которого построен кабинет.</span><span data-lang="en">Shows the reliability of the financial cycle the dashboard is built around.</span></p>
           </div>

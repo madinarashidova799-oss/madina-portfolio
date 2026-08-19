@@ -304,18 +304,9 @@
   }
   /* Accent lives as a short line inside the card, not a border around it —
      see visual-hierarchy instruction §4 (no colored outline on any card). */
-  .result-card__label {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: var(--mono); font-size: var(--font-size-label); text-transform: uppercase;
-    letter-spacing: 0.06em; color: var(--text-dim-2);
-  }
-  .result-card__label::before {
-    content: ''; display: inline-block; width: 16px; height: 2px; border-radius: 2px;
-    background: var(--accent-tracker);
-  }
   .result-card .result-card__metric, .metric-card .result-card__metric { font-family: var(--display); font-weight: 600; font-size: 1.05rem; color: var(--text); line-height: 1.35; margin: 0; max-width: none; }
   .result-card .result-card__desc, .metric-card .result-card__desc { font-size: var(--font-size-label); color: var(--text-dim); line-height: 1.55; margin: 0; max-width: none; }
-  /* Metric cards mark the second, separate "Как оценивать эффект" layer —
+  /* Metric cards mark the second, separate "Как оценивали эффект" layer —
      a quiet neutral surface (not the case's accent tint) so it reads as a
      distinct kind of card, not a continuation of the Результат grid. */
   .metric-card {
@@ -664,22 +655,18 @@
         <p><span data-lang="ru">Запущено iOS-приложение с картой как главным экраном: статусы участников семьи, геозоны, уведомления о выходе за границу.</span><span data-lang="en">An iOS app has launched with the map as the main screen: family members' statuses, geofences, and notifications when someone leaves a boundary.</span></p>
         <div class="result-cards">
           <div class="result-card">
-            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
             <p class="result-card__metric"><span data-lang="ru">Семейный круг</span><span data-lang="en">A family circle</span></p>
             <p class="result-card__desc"><span data-lang="ru">Пользователь добавляет близких и управляет составом семьи.</span><span data-lang="en">The user adds family members and manages who's in the circle.</span></p>
           </div>
           <div class="result-card">
-            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
             <p class="result-card__metric"><span data-lang="ru">Карта и статусы</span><span data-lang="en">Map and statuses</span></p>
             <p class="result-card__desc"><span data-lang="ru">Местоположение и актуальное состояние участников доступны на одном экране.</span><span data-lang="en">Members' location and current status are available on a single screen.</span></p>
           </div>
           <div class="result-card">
-            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
             <p class="result-card__metric"><span data-lang="ru">Геозоны и уведомления</span><span data-lang="en">Geofences and notifications</span></p>
             <p class="result-card__desc"><span data-lang="ru">Приложение сообщает о важных событиях без постоянного наблюдения за картой.</span><span data-lang="en">The app reports important events without anyone having to watch the map constantly.</span></p>
           </div>
           <div class="result-card">
-            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
             <p class="result-card__metric"><span data-lang="ru">История поездок и freemium</span><span data-lang="en">Trip history and freemium</span></p>
             <p class="result-card__desc"><span data-lang="ru">Основные функции доступны бесплатно, расширенная история поддерживает подписку.</span><span data-lang="en">The core features are free, and extended history supports the subscription.</span></p>
           </div>
@@ -689,27 +676,23 @@
         <div class="detail-head">
           <span class="detail-num">07</span>
           <div class="detail-head-text">
-            <h2><span data-lang="ru">Как оценивать эффект</span><span data-lang="en">How to evaluate the effect</span></h2>
+            <h2><span data-lang="ru">Как оценивали эффект</span><span data-lang="en">How we evaluated the effect</span></h2>
           </div>
         </div>
         <div class="metric-cards">
           <div class="metric-card">
-            <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Доля семей, создавших круг и добавивших участника</span><span data-lang="en">The share of families who created a circle and added a member</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, завершает ли пользователь основной сценарий настройки приложения.</span><span data-lang="en">Shows whether the user completes the app's core setup scenario.</span></p>
           </div>
           <div class="metric-card">
-            <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Удержание D7 и D30 среди активированных семей</span><span data-lang="en">D7 and D30 retention among activated families</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, продолжает ли семья пользоваться картой и статусами после настройки.</span><span data-lang="en">Shows whether the family keeps using the map and statuses after setup.</span></p>
           </div>
           <div class="metric-card">
-            <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Доля активных семей, оформивших подписку</span><span data-lang="en">The share of active families who subscribed</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, доходит ли семья от бесплатных сценариев до истории поездок по подписке.</span><span data-lang="en">Shows whether a family moves from the free scenarios to the subscription-based trip history.</span></p>
           </div>
           <div class="metric-card">
-            <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Доля продлений подписки после первого периода</span><span data-lang="en">The renewal rate after the first billing period</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, остаётся ли история поездок ценной после пробного периода.</span><span data-lang="en">Shows whether trip history stays valuable after the trial period.</span></p>
           </div>

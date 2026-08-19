@@ -183,7 +183,7 @@
      numbers, no icons, no repeated "Результат" word, no invented figures —
      each card names a product metric and what it shows. Replaces the old
      split Результат/Метрики pair; see typography-hierarchy instruction §3. */
-  .result-cards {
+  .result-cards, .metric-cards {
     display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px;
     margin-top: clamp(32px, 3vw, 40px); align-items: stretch;
   }
@@ -215,9 +215,21 @@
     content: ''; display: inline-block; width: 16px; height: 2px; border-radius: 2px;
     background: var(--case-accent-2);
   }
-  .result-card .result-card__metric { font-family: var(--display); font-weight: 600; font-size: 1.05rem; color: var(--text); line-height: 1.35; margin: 0; max-width: none; }
-  .result-card .result-card__desc { font-size: var(--font-size-label); color: var(--text-dim); line-height: 1.55; margin: 0; max-width: none; }
-  @media (max-width: 720px) { .result-cards { grid-template-columns: 1fr; } .result-card { min-height: 0; } }
+  .result-card .result-card__metric, .metric-card .result-card__metric { font-family: var(--display); font-weight: 600; font-size: 1.05rem; color: var(--text); line-height: 1.35; margin: 0; max-width: none; }
+  .result-card .result-card__desc, .metric-card .result-card__desc { font-size: var(--font-size-label); color: var(--text-dim); line-height: 1.55; margin: 0; max-width: none; }
+  /* Metric cards mark the second, separate "Как оценивать эффект" layer —
+     a quiet neutral surface (not the case's accent tint) so it reads as a
+     distinct kind of card, not a continuation of the Результат grid. */
+  .metric-card {
+    background: var(--line-faint);
+    border: 1px solid var(--line);
+    box-shadow: none;
+    border-radius: 24px;
+    min-height: 200px;
+    padding: clamp(28px, 2.6vw, 36px);
+    display: flex; flex-direction: column; align-items: flex-start; text-align: left; gap: 10px; min-width: 0;
+  }
+  @media (max-width: 720px) { .result-cards, .metric-cards { grid-template-columns: 1fr; } .result-card, .metric-card { min-height: 0; } }
 
   /* Between major numbered sections (01, 02, 03…) — 80-120px desktop,
      56-72px mobile, distinct from the 24-32px heading→text rhythm inside
@@ -311,7 +323,7 @@
   .case-floating-nav {
     position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom));
     transform: translateX(-50%) translateY(12px);
-    z-index: 110; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px;
+    z-index: 110; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 16px;
     width: max-content; max-width: calc(100vw - 32px);
     opacity: 0;
     transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1);
@@ -319,7 +331,7 @@
   .case-floating-nav.is-inview { opacity: 1; transform: translateX(-50%) translateY(0); }
   body.lightbox-open .case-floating-nav { opacity: 0; pointer-events: none; }
 
-  .case-like, .case-next, .case-home {
+  .case-next, .case-home {
     background: rgba(255, 255, 255, 0.62);
     border: 1px solid rgba(255, 255, 255, 0.72);
     box-shadow:
@@ -330,12 +342,12 @@
     border-radius: var(--radius-pill);
   }
   @supports not (backdrop-filter: blur(1px)) {
-    .case-like, .case-next, .case-home { background: rgba(248, 248, 248, 0.94); }
+    .case-next, .case-home { background: rgba(248, 248, 248, 0.94); }
   }
 
-  /* Same shape/dimensions as .case-like (icon-less text pill) — the "icon" is
-     the same plain arrow glyph the site already uses for directional links
-     (nav labels, .case-next__arrow), not a new SVG. */
+  /* Icon-less text pill — the "icon" is the same plain arrow glyph the site
+     already uses for directional links (nav labels, .case-next__arrow), not
+     a new SVG. */
   .case-home {
     display: inline-flex; align-items: center; gap: 10px;
     font-family: var(--sans); font-size: 0.92rem; font-weight: 600; color: #171717;
@@ -349,30 +361,6 @@
   .case-home__arrow { font-family: var(--mono); color: var(--text-dim); transition: transform 0.2s cubic-bezier(0.22,1,0.36,1); }
   .case-home:hover .case-home__arrow, .case-home:focus-visible .case-home__arrow { transform: translateX(-4px); }
   .case-home__label { white-space: nowrap; }
-
-  .case-like {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-family: var(--sans); font-size: 0.92rem; font-weight: 600; color: #171717;
-    padding-inline: 20px; min-height: 56px;
-    cursor: pointer; flex-shrink: 0;
-    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s cubic-bezier(0.22,1,0.36,1);
-  }
-  .case-like:hover { background: rgba(255,255,255,0.85); box-shadow: var(--shadow-control); }
-  .case-like:focus-visible { outline: 2px solid var(--text-strong); outline-offset: 2px; }
-  .case-like:active { transform: scale(0.96); }
-  .case-like__icon { width: 20px; height: 20px; flex-shrink: 0; color: var(--text-dim); transition: transform 0.2s cubic-bezier(0.22,1,0.36,1), color 0.2s ease; }
-  .case-like:hover .case-like__icon { transform: scale(1.06); }
-  .case-like.is-liked { color: var(--text-strong); }
-  .case-like.is-liked .case-like__icon { color: var(--text-strong); }
-  .case-like.is-liked .case-like__icon path { fill: currentColor; }
-  .case-like.is-pulsing .case-like__icon { animation: caseLikePulse 240ms cubic-bezier(0.22,1,0.36,1); }
-  @keyframes caseLikePulse {
-    0% { transform: scale(1); }
-    45% { transform: scale(1.22); }
-    100% { transform: scale(1); }
-  }
-  .case-like__label { white-space: nowrap; }
-  .case-like__count { font-family: var(--mono); color: var(--text-dim); min-width: 1.4em; }
 
   .case-next {
     display: flex; align-items: center; gap: 12px;
@@ -390,8 +378,8 @@
   .case-next:hover .case-next__arrow, .case-next:focus-visible .case-next__arrow { transform: translateX(5px); }
 
   @media (max-width: 720px) {
-    .case-floating-nav { bottom: max(14px, env(safe-area-inset-bottom)); gap: 8px; }
-    .case-like, .case-home { min-height: 48px; padding-inline: 16px; }
+    .case-floating-nav { bottom: max(14px, env(safe-area-inset-bottom)); gap: 16px; }
+    .case-home { min-height: 48px; padding-inline: 16px; }
     .case-next { min-height: 48px; padding-inline: 16px; max-width: min(220px, 52vw); }
     .case-next__label, .case-home__label {
       position: absolute; width: 1px; height: 1px; overflow: hidden;
@@ -401,8 +389,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .case-floating-nav { transition: none; opacity: 1; transform: translateX(-50%); }
-    .case-like__icon, .case-next__arrow, .case-like, .case-next, .case-home, .case-home__arrow { transition: none; }
-    .case-like.is-pulsing .case-like__icon { animation: none; }
+    .case-next__arrow, .case-next, .case-home, .case-home__arrow { transition: none; }
   }
 </style>
   <link rel="stylesheet" href="assets/typography.css">
@@ -423,7 +410,7 @@
         <h1 class="case-title">Alif Partners</h1>
         <div class="case-meta-group">
           <div class="case-meta-line"><span class="case-name">Alif Bank</span></div>
-          <div class="case-tags"><span>/b2b</span><span>/ux-research</span><span>/fintech</span></div>
+          <div class="case-tags"><span>/b2b</span><span>/fintech</span></div>
         </div>
         <h4 class="case-headline"><span data-lang="ru">Перестройка операционной работы партнёрской сети Alif</span><span data-lang="en">Restructuring how Alif's partner network handles its daily operations</span></h4>
         <p class="case-dek"><span data-lang="ru">Alif развивает рассрочку через партнёрские магазины и маркетплейс Alif Shop. Пока сеть росла, партнёры всё ещё зависели от звонков колл-центра, терминалов и ручной помощи модераторов. Вместе с количеством заказов росла и нагрузка на сотрудников банка.</span><span data-lang="en">Alif grows its installment business through partner stores and the Alif Shop marketplace. As the network grew, partners still depended on calls to the call center, terminals, and manual help from moderators. Along with the order count, the load on the bank's staff grew too.</span></p>
@@ -522,6 +509,7 @@
             <img src="assets/process/alif-price-insight.png" data-alt-ru="Alif Partners · сравнение цен конкурентов" data-alt-en="Alif Partners · competitor price comparison" alt="Alif Partners · сравнение цен конкурентов" loading="lazy">
           </button>
         </div>
+        <p><span data-lang="ru">Поиск и цены сняли часть решений с партнёра, но доставка и общение с банком по-прежнему оставались вне единого сценария.</span><span data-lang="en">Search and pricing took some decisions off the partner's plate, but delivery and communication with the bank still sat outside the single scenario.</span></p>
       </div>
       <div class="detail-block">
         <div class="detail-head">
@@ -562,6 +550,7 @@
             <img src="assets/process/alif-order-detail.png" data-alt-ru="Alif Partners · оформление заявки с сохранением бизнес-логики" data-alt-en="Alif Partners · processing a request while preserving the business logic" alt="Alif Partners · оформление заявки с сохранением бизнес-логики" loading="lazy">
           </button>
         </div>
+        <p><span data-lang="ru">За компьютером партнёр теперь ведёт заказ по одному и тому же принципу. Оставалось перенести его в мобильный сценарий для сотрудников магазина и курьеров.</span><span data-lang="en">At a desk, the partner now runs an order by the same principle. It still needed to carry over into a mobile scenario for store staff and couriers.</span></p>
       </div>
       <div class="detail-block">
         <div class="detail-head">
@@ -579,33 +568,61 @@
             </button>
           </div>
         </div>
+        <p><span data-lang="ru">С веб- и мобильной версией на месте главный вопрос сместился от того, как оформить заказ, к тому, что это в итоге изменило для партнёров и банка.</span><span data-lang="en">With both web and mobile in place, the main question shifted from how to process an order to what it actually changed for partners and the bank.</span></p>
       </div>
       <div class="detail-block">
         <div class="detail-head">
           <span class="detail-num">07</span>
           <div class="detail-head-text">
             <h2><span data-lang="ru">Результат</span><span data-lang="en">Result</span></h2>
-            <p class="detail-kicker"><span data-lang="ru">Как оценивали изменение процесса</span><span data-lang="en">How we evaluated the process change</span></p>
+            <p class="detail-kicker"><span data-lang="ru">Партнёры получили рабочий контур для самостоятельной обработки заказов</span><span data-lang="en">Partners got a working setup for handling orders on their own</span></p>
           </div>
         </div>
-        <p><span data-lang="ru">Проверяем, помогает ли новая админ-панель партнёрам самостоятельно обрабатывать больше заказов без роста ручной нагрузки на банк.</span><span data-lang="en">We're checking whether the new admin panel helps partners handle more orders on their own without increasing the bank's manual workload.</span></p>
+        <p><span data-lang="ru">Админ-панель из внутреннего инструмента банка превратилась в продукт для самостоятельной работы партнёра с меньшей зависимостью от колл-центра и модераторов. Отдельно запущена мобильная версия с тем же функционалом для работы в магазине, на складе и на выдаче.</span><span data-lang="en">The admin panel went from an internal bank tool to a product partners run on their own, with less dependence on the call center and moderators. A mobile version with the same functionality launched separately for work in-store, in the warehouse, and at pickup.</span></p>
         <div class="result-cards">
           <div class="result-card">
+            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
+            <p class="result-card__metric"><span data-lang="ru">Поиск товара вместо повторного создания карточки</span><span data-lang="en">Product search instead of recreating a listing</span></p>
+          </div>
+          <div class="result-card">
+            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
+            <p class="result-card__metric"><span data-lang="ru">Единый чат с историей обращений вместо звонков</span><span data-lang="en">A single chat with request history instead of calls</span></p>
+          </div>
+          <div class="result-card">
+            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
+            <p class="result-card__metric"><span data-lang="ru">Доставка перенесена в админ-панель</span><span data-lang="en">Delivery moved into the admin panel</span></p>
+          </div>
+          <div class="result-card">
+            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
+            <p class="result-card__metric"><span data-lang="ru">Мобильная версия для работы вне офиса</span><span data-lang="en">A mobile version for work away from the desk</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-head">
+          <span class="detail-num">08</span>
+          <div class="detail-head-text">
+            <h2><span data-lang="ru">Как оценивать эффект</span><span data-lang="en">How to evaluate the effect</span></h2>
+          </div>
+        </div>
+        <p><span data-lang="ru">Ниже — показатели, по которым оцениваем эффект.</span><span data-lang="en">Below are the indicators we use to evaluate the effect.</span></p>
+        <div class="metric-cards">
+          <div class="metric-card">
             <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Доля заказов, обработанных партнёром самостоятельно</span><span data-lang="en">The share of orders a partner processes on their own</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, насколько новый процесс снижает участие сотрудников банка.</span><span data-lang="en">Shows how much the new process reduces the involvement of the bank's staff.</span></p>
           </div>
-          <div class="result-card">
+          <div class="metric-card">
             <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Доля заявок, завершённых без отмены</span><span data-lang="en">The share of requests completed without cancellation</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, реже ли заявки срываются из-за неактуальных данных или задержки обработки.</span><span data-lang="en">Shows whether requests fall through less often due to outdated data or a processing delay.</span></p>
           </div>
-          <div class="result-card">
+          <div class="metric-card">
             <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Медианное время от заявки до передачи в доставку</span><span data-lang="en">Median time from request to handoff to delivery</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, ускорил ли единый сценарий обработку заявки.</span><span data-lang="en">Shows whether the unified workflow sped up processing the request.</span></p>
           </div>
-          <div class="result-card">
+          <div class="metric-card">
             <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Количество активных партнёров на одного модератора</span><span data-lang="en">Active partners per moderator</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, может ли сеть расти без пропорционального роста штата модераторов.</span><span data-lang="en">Shows whether the network can grow without a proportional increase in moderator headcount.</span></p>
@@ -619,13 +636,6 @@
         <span class="case-home__arrow" aria-hidden="true">←</span>
         <span class="case-home__label"><span data-lang="ru">Главная страница</span><span data-lang="en">Homepage</span></span>
       </a>
-      <button class="case-like" type="button" data-case-id="alif-partners" aria-pressed="false" aria-label="Поставить лайк кейсу Alif Partners">
-        <svg class="case-like__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
-          <path d="M12 20.5s-7.2-4.5-9.8-8.9C.5 8.4 1.9 4.5 5.6 4.5c2.2 0 3.8 1.4 4.9 3.1 1.1-1.7 2.7-3.1 4.9-3.1 3.7 0 5.1 3.9 2.4 7.1-2.6 4.4-9.8 8.9-9.8 8.9z"/>
-        </svg>
-        <span class="case-like__label"><span data-lang="ru">Нравится</span><span data-lang="en">Like</span></span>
-        <span class="case-like__count">0</span>
-      </button>
       <a class="case-next" href="case-eaj-trader.html">
         <span class="case-next__label"><span data-lang="ru">Следующий кейс</span><span data-lang="en">Next case</span></span>
         <span class="case-next__title-row">
@@ -633,7 +643,6 @@
           <span class="case-next__arrow" aria-hidden="true">→</span>
         </span>
       </a>
-      <span class="sr-only" aria-live="polite" data-case-live></span>
     </nav>
   </div>
 

@@ -267,14 +267,14 @@
   .case-floating-nav {
     position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom));
     transform: translateX(-50%) translateY(12px);
-    z-index: 110; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px;
+    z-index: 110; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 16px;
     width: max-content; max-width: calc(100vw - 32px);
     opacity: 0;
     transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1);
   }
   .case-floating-nav.is-inview { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  .case-like, .case-next, .case-home {
+  .case-next, .case-home {
     background: rgba(255, 255, 255, 0.62);
     border: 1px solid rgba(255, 255, 255, 0.72);
     box-shadow: 0 10px 32px rgba(15, 13, 12, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.7);
@@ -283,7 +283,7 @@
     border-radius: var(--radius-pill);
   }
   @supports not (backdrop-filter: blur(1px)) {
-    .case-like, .case-next, .case-home { background: rgba(248, 248, 248, 0.94); }
+    .case-next, .case-home { background: rgba(248, 248, 248, 0.94); }
   }
   .case-home {
     display: inline-flex; align-items: center; gap: 10px;
@@ -297,25 +297,6 @@
   .case-home__arrow { font-family: var(--mono); color: var(--text-dim); transition: transform 0.2s cubic-bezier(0.22,1,0.36,1); }
   .case-home:hover .case-home__arrow, .case-home:focus-visible .case-home__arrow { transform: translateX(-4px); }
   .case-home__label { white-space: nowrap; }
-
-  .case-like {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-family: var(--sans); font-size: 0.92rem; font-weight: 600; color: #171717;
-    padding-inline: 20px; min-height: 56px; cursor: pointer; flex-shrink: 0;
-    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s cubic-bezier(0.22,1,0.36,1);
-  }
-  .case-like:hover { background: rgba(255,255,255,0.85); box-shadow: var(--shadow-control); }
-  .case-like:focus-visible { outline: 2px solid var(--text-strong); outline-offset: 2px; }
-  .case-like:active { transform: scale(0.96); }
-  .case-like__icon { width: 20px; height: 20px; flex-shrink: 0; color: var(--text-dim); transition: transform 0.2s cubic-bezier(0.22,1,0.36,1), color 0.2s ease; }
-  .case-like:hover .case-like__icon { transform: scale(1.06); }
-  .case-like.is-liked { color: var(--text-strong); }
-  .case-like.is-liked .case-like__icon { color: var(--text-strong); }
-  .case-like.is-liked .case-like__icon path { fill: currentColor; }
-  .case-like.is-pulsing .case-like__icon { animation: caseLikePulse 240ms cubic-bezier(0.22,1,0.36,1); }
-  @keyframes caseLikePulse { 0% { transform: scale(1); } 45% { transform: scale(1.22); } 100% { transform: scale(1); } }
-  .case-like__label { white-space: nowrap; }
-  .case-like__count { font-family: var(--mono); color: var(--text-dim); min-width: 1.4em; }
 
   .case-next {
     display: flex; align-items: center; gap: 12px;
@@ -332,8 +313,8 @@
   .case-next:hover .case-next__arrow, .case-next:focus-visible .case-next__arrow { transform: translateX(5px); }
 
   @media (max-width: 720px) {
-    .case-floating-nav { bottom: max(14px, env(safe-area-inset-bottom)); gap: 8px; }
-    .case-like, .case-home { min-height: 48px; padding-inline: 16px; }
+    .case-floating-nav { bottom: max(14px, env(safe-area-inset-bottom)); gap: 16px; }
+    .case-home { min-height: 48px; padding-inline: 16px; }
     .case-next { min-height: 48px; padding-inline: 16px; max-width: min(220px, 52vw); }
     .case-next__label, .case-home__label {
       position: absolute; width: 1px; height: 1px; overflow: hidden;
@@ -344,7 +325,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .site-nav, .tg-card, .tg-card__arrow, .collage-photo,
-    .case-floating-nav, .case-like__icon, .case-next__arrow, .case-like, .case-next, .case-home, .case-home__arrow {
+    .case-floating-nav, .case-next__arrow, .case-next, .case-home, .case-home__arrow {
       transition: none !important;
     }
     .tg-card:hover, .tg-card:focus-visible { transform: none; }
@@ -352,7 +333,6 @@
     .collage-photo, .collage-photo.is-visible { opacity: 1 !important; transform: none !important; }
     .collage-photo:hover, .collage-photo:focus-within { transform: none !important; }
     .collage-caption { transition: none !important; opacity: 1 !important; clip-path: inset(0 0 0 0) !important; }
-    .case-like.is-pulsing .case-like__icon { animation: none; }
     .case-floating-nav { opacity: 1; transform: translateX(-50%); }
   }
 
@@ -473,13 +453,6 @@
         <span class="case-home__arrow" aria-hidden="true">←</span>
         <span class="case-home__label"><span data-lang="ru">Главная страница</span><span data-lang="en">Homepage</span></span>
       </a>
-      <button class="case-like" type="button" data-case-id="about" aria-pressed="false" aria-label="Поставить лайк странице «Обо мне»">
-        <svg class="case-like__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
-          <path d="M12 20.5s-7.2-4.5-9.8-8.9C.5 8.4 1.9 4.5 5.6 4.5c2.2 0 3.8 1.4 4.9 3.1 1.1-1.7 2.7-3.1 4.9-3.1 3.7 0 5.1 3.9 2.4 7.1-2.6 4.4-9.8 8.9-9.8 8.9z"/>
-        </svg>
-        <span class="case-like__label"><span data-lang="ru">Нравится</span><span data-lang="en">Like</span></span>
-        <span class="case-like__count">0</span>
-      </button>
       <a class="case-next" href="index.html#work">
         <span class="case-next__label"><span data-lang="ru">Смотреть кейсы</span><span data-lang="en">See the work</span></span>
         <span class="case-next__title-row">
@@ -487,7 +460,6 @@
           <span class="case-next__arrow" aria-hidden="true">→</span>
         </span>
       </a>
-      <span class="sr-only" aria-live="polite" data-case-live></span>
     </nav>
   </div>
 

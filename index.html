@@ -260,27 +260,11 @@
      box but kept here too, harmless). Baseline-aligned so the static text
      and the word sit on the same text line, one normal-looking space apart. */
   .hero-role {
-    font-family: var(--sans); font-weight: 500; font-size: clamp(1rem, 1.7cqw, 1.6rem);
-    color: var(--hero-text-dim); line-height: 1.3;
-    display: inline-flex; flex-wrap: wrap; align-items: baseline; justify-content: center;
-    text-align: center; gap: 0.25em; max-width: 100%; margin-inline: auto; margin-top: 28px;
+    font-family: var(--sans); font-weight: 500; font-size: clamp(0.85rem, 1.4cqw, 1.35rem);
+    color: var(--hero-text-dim); line-height: 1.4;
+    text-align: center; max-width: 640px; margin-inline: auto; margin-top: 28px;
     opacity: 0; transform: translateY(8px);
     animation: softIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) 1.6s forwards;
-  }
-  .hero-role__static { white-space: nowrap; }
-  /* Fixed to the widest word's width so the row never resizes as words
-     change. The word is left-aligned inside this box (not centered) so it
-     always sits flush against "building" — any reserved slack trails
-     after the word, invisible, never as a gap before it. */
-  .hero-role__word {
-    display: inline-block; white-space: nowrap; text-align: left; color: var(--hero-text);
-    min-width: 11ch; width: var(--hero-role-word-width, 11ch);
-    opacity: 1; transition: opacity 200ms ease;
-  }
-  .hero-role__word.is-fading { opacity: 0; }
-  .hero-role .sr-only {
-    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
   }
 
   .hero-contacts {
@@ -311,7 +295,7 @@
 
   @media (max-width: 900px) {
     h1.hero-name { font-size: clamp(2rem, 8vw, 3rem); }
-    .hero-role { font-size: clamp(1.2rem, 5vw, 1.6rem); }
+    .hero-role { font-size: clamp(1rem, 4.3vw, 1.35rem); }
     .contact-btn { font-size: 0.85rem; padding: 12px 20px; }
   }
 
@@ -319,7 +303,6 @@
     .site-nav { animation: none; opacity: 1; }
     .hero-name { animation: none; opacity: 1; filter: none; transform: none; }
     .hero-role { animation: none; opacity: 1; transform: none; }
-    .hero-role__word { transition: none; opacity: 1; }
     .hero-contacts { animation: none; opacity: 1; transform: none; }
     .orbit-ring-line { animation: none; opacity: 1; }
     .logo-card { animation: none; opacity: 1; transform: none; }
@@ -443,8 +426,7 @@
   }
   .project-showcase--namaste .project-showcase__content { justify-content: flex-end; }
   .project-showcase--namaste .project-showcase__index,
-  .project-showcase--namaste .project-showcase__meta,
-  .project-showcase--namaste .project-showcase__tags { color: rgba(23,17,17,.58); }
+  .project-showcase--namaste .project-showcase__meta { color: rgba(23,17,17,.58); }
   .project-showcase--namaste .project-showcase__title { color: #171717; }
   .project-showcase--namaste .project-showcase__desc { color: rgba(23,17,17,.82); }
   /* Namaste's light scene makes the shared light `.project-showcase__cta` disappear
@@ -556,7 +538,6 @@
     font-family: var(--display); font-weight: 700;
     font-size: clamp(2.1rem, 4.6vw, 3.8rem); line-height: 1.05; letter-spacing: -0.025em; color: #fff;
   }
-  .project-showcase__tags { font-family: var(--mono); font-size: 0.82rem; color: rgba(255,255,255,0.75); white-space: nowrap; }
   .project-showcase__meta {
     font-family: var(--mono); font-size: 0.85rem; color: rgba(255,255,255,0.75);
   }
@@ -674,7 +655,6 @@
     .projects-stage-wrap .project-showcase__header,
     .projects-stage-wrap .project-showcase__row { align-items: flex-start; }
     .projects-stage-wrap .project-showcase__title { font-size: clamp(1.7rem, 8.5vw, 2.2rem); color: var(--text); }
-    .projects-stage-wrap .project-showcase__tags { color: var(--text-dim); }
     .projects-stage-wrap .project-showcase__meta { color: var(--text-dim-2); }
     .projects-stage-wrap .project-showcase__desc { color: var(--text-dim); }
     .projects-stage-wrap .project-showcase--tracker .project-showcase__body,
@@ -830,13 +810,10 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
               </span>
               <span data-lang="ru">Ищу продуктовую команду</span><span data-lang="en">Looking for a product team</span>
             </span>
-            <h1 class="hero-name" id="heroNameText" data-ru="Рашидова Мадина" data-en="Madina Rashidova">Рашидова Мадина</h1>
-            <div class="hero-role" id="heroRole">
-              <span class="hero-role__static" id="heroRoleStatic" aria-hidden="true" data-ru="Product Designer, создаю" data-en="Product Designer, building">Product Designer, создаю</span>
-              <span class="hero-role__word" id="heroRoleWord" aria-hidden="true">приложения</span>
-              <span class="sr-only" data-lang="ru">Product Designer, создаю приложения, сайты, прототипы и сервисы</span>
-              <span class="sr-only" data-lang="en">Product Designer, building apps, websites, prototypes, and services</span>
-            </div>
+            <h1 class="hero-name" id="heroNameText" data-ru="Мадина Рашидова" data-en="Madina Rashidova">Мадина Рашидова</h1>
+            <p class="hero-role" id="heroRole">
+              <span data-lang="ru">Проектирую и запускаю сложные B2B и B2C продукты: банковские админ-панели, личные кабинеты и мобильные приложения.</span><span data-lang="en">I design and ship complex B2B and B2C products: banking admin panels, personal dashboards, and mobile apps.</span>
+            </p>
             <div class="hero-contacts">
               <a class="contact-btn" href="https://t.me/Madina_Rashidova" target="_blank" rel="noopener">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 3.5L2.7 10.9c-1.2.5-1.2 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.4.8.8.8.4 0 .6-.2.9-.5l2.2-2.1 4.6 3.4c.8.5 1.4.2 1.6-.8l3-14c.3-1.3-.4-1.9-1.4-1.5zM8 15.1l9-5.7c.4-.3.8-.1.5.2l-7.7 7-.3 3.1-1.5-4.6z"/></svg>
@@ -866,12 +843,10 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         <div class="project-showcase__content">
           <div class="project-showcase__body">
             <div class="project-showcase__header">
-              <span class="project-showcase__index" aria-hidden="true">01</span>
               <div class="project-showcase__row">
                 <h3 class="project-showcase__title">Alif Partners</h3>
-                <div class="project-showcase__tags">/b2b /ux-research /fintech</div>
               </div>
-              <div class="project-showcase__meta"><span data-lang="ru">Alif Bank · Web + Mobile · 4 месяца</span><span data-lang="en">Alif Bank · Web + Mobile · 4 months</span></div>
+              <div class="project-showcase__meta"><span data-lang="ru">B2B fintech · Web + Mobile</span><span data-lang="en">B2B fintech · Web + Mobile</span></div>
             </div>
             <p class="project-showcase__desc"><span data-lang="ru">Редизайн админ-панели для партнёрской сети Alif Bank: снизили нагрузку на колл-центр и модераторов, партнёры стали самостоятельнее в ключевых операциях.</span><span data-lang="en">Redesigned the partner admin panel for Alif Bank's fast-growing network: cut the load on the call center and moderators, and gave partners more independence in key operations.</span></p>
             <span class="project-showcase__cta-wrap">
@@ -889,12 +864,10 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         <div class="project-showcase__content">
           <div class="project-showcase__body">
             <div class="project-showcase__header">
-              <span class="project-showcase__index" aria-hidden="true">02</span>
               <div class="project-showcase__row">
                 <h3 class="project-showcase__title">EAJ Trader</h3>
-                <div class="project-showcase__tags">/0→1 /trading B2C</div>
               </div>
-              <div class="project-showcase__meta"><span data-lang="ru">Web · MVP за 2 месяца</span><span data-lang="en">Web · MVP in 2 months</span></div>
+              <div class="project-showcase__meta"><span data-lang="ru">B2C trading · Web</span><span data-lang="en">B2C trading · Web</span></div>
             </div>
             <p class="project-showcase__desc"><span data-lang="ru">MVP личного кабинета трейдера с нуля: определили ключевые сегменты пользователей и спроектировали архитектуру кабинета под быстрые и частые финансовые операции.</span><span data-lang="en">Built a trader's personal dashboard MVP from scratch: defined key user segments and shaped a dashboard architecture built for fast, frequent financial operations.</span></p>
             <span class="project-showcase__cta-wrap">
@@ -912,12 +885,10 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         <div class="project-showcase__content">
           <div class="project-showcase__body">
             <div class="project-showcase__header">
-              <span class="project-showcase__index" aria-hidden="true">03</span>
               <div class="project-showcase__row">
                 <h3 class="project-showcase__title">Namaste</h3>
-                <div class="project-showcase__tags">/mobile /0→1 B2C</div>
               </div>
-              <div class="project-showcase__meta"><span data-lang="ru">iOS · MVP за 3 месяца</span><span data-lang="en">iOS · MVP in 3 months</span></div>
+              <div class="project-showcase__meta"><span data-lang="ru">B2C wellness · iOS</span><span data-lang="en">B2C wellness · iOS</span></div>
             </div>
             <p class="project-showcase__desc"><span data-lang="ru">Концепция, айдентика и интерфейсы MVP приложения для йоги и медитаций: от анализа конкурентов до базового сценария тренировок в тесной связке с разработкой.</span><span data-lang="en">Concept, identity, and interfaces for a yoga and meditation app MVP: from competitor research to the core workout scenario, working closely with engineering.</span></p>
             <span class="project-showcase__cta-wrap">
@@ -935,12 +906,10 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         <div class="project-showcase__content">
           <div class="project-showcase__body">
             <div class="project-showcase__header">
-              <span class="project-showcase__index" aria-hidden="true">04</span>
               <div class="project-showcase__row">
                 <h3 class="project-showcase__title">360 Tracker</h3>
-                <div class="project-showcase__tags">/mobile /0→1 B2C</div>
               </div>
-              <div class="project-showcase__meta"><span data-lang="ru">iOS · MVP за 6 месяцев</span><span data-lang="en">iOS · MVP in 6 months</span></div>
+              <div class="project-showcase__meta"><span data-lang="ru">B2C family safety · iOS</span><span data-lang="en">B2C family safety · iOS</span></div>
             </div>
             <p class="project-showcase__desc"><span data-lang="ru">MVP приложения для безопасности семьи с геолокацией, экстренными оповещениями и быстрой коммуникацией: проверили концепцию через юзабилити-тестирование и freemium-модель монетизации.</span><span data-lang="en">A family-safety app MVP combining geolocation, emergency alerts, and quick communication: validated through usability testing and a freemium monetization model.</span></p>
             <span class="project-showcase__cta-wrap">
@@ -1133,94 +1102,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       if (!textEl) return;
       document.addEventListener('langchange', function (e) {
         textEl.textContent = e.detail.lang === 'en' ? textEl.dataset.en : textEl.dataset.ru;
-      });
-    })();
-
-    // Hero role line: static "Product Designer, создаю" + one word that
-    // rotates in place. The rotating word's viewport is sized in JS to the
-    // widest word so the row's total width, and therefore the centered
-    // name/buttons above and below it, never shifts as words change.
-    (function () {
-      var roleEl = document.getElementById('heroRole');
-      var staticEl = document.getElementById('heroRoleStatic');
-      var wordEl = document.getElementById('heroRoleWord');
-      if (!roleEl || !staticEl || !wordEl) return;
-
-      var WORDS = {
-        ru: ['приложения', 'сайты', 'прототипы', 'сервисы'],
-        en: ['apps', 'websites', 'prototypes', 'services']
-      };
-      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var lang = (localStorage.getItem('site-lang') || 'ru') === 'en' ? 'en' : 'ru';
-      var idx = 0;
-      var timer = null;
-      var generation = 0;
-
-      function sizeWord() {
-        var words = WORDS[lang];
-        var measurer = wordEl.cloneNode(false);
-        measurer.style.position = 'absolute';
-        measurer.style.visibility = 'hidden';
-        measurer.style.left = '-9999px';
-        measurer.style.width = 'auto';
-        measurer.classList.remove('is-fading');
-        roleEl.appendChild(measurer);
-        var max = 0;
-        for (var i = 0; i < words.length; i++) {
-          measurer.textContent = words[i];
-          max = Math.max(max, measurer.getBoundingClientRect().width);
-        }
-        roleEl.removeChild(measurer);
-        if (max > 0) roleEl.style.setProperty('--hero-role-word-width', Math.ceil(max) + 'px');
-      }
-
-      // Calm crossfade word swap: fade the current word out (200ms) -> swap
-      // the text -> fade the new word in (200ms) -> a ~2s pause -> repeat.
-      // No highlight, no slide, no scale — opacity only. `gen` guards
-      // against a language switch firing mid-sequence: every step checks
-      // it's still the current generation before touching the DOM, so an
-      // old cycle started in the other language can never clobber a fresh one.
-      function cycle(gen) {
-        if (gen !== generation) return;
-        wordEl.classList.add('is-fading');
-        setTimeout(function () {
-          if (gen !== generation) return;
-          idx = (idx + 1) % WORDS[lang].length;
-          wordEl.textContent = WORDS[lang][idx];
-          wordEl.classList.remove('is-fading');
-          timer = setTimeout(function () { cycle(gen); }, 2000);
-        }, 200);
-      }
-
-      function startCycle() {
-        generation++;
-        var gen = generation;
-        if (timer) clearTimeout(timer);
-        if (!reduceMotion) {
-          timer = setTimeout(function () { cycle(gen); }, 2000);
-        }
-      }
-
-      function applyLang() {
-        staticEl.textContent = lang === 'en' ? staticEl.dataset.en : staticEl.dataset.ru;
-        idx = reduceMotion ? WORDS[lang].length - 1 : 0;
-        wordEl.textContent = WORDS[lang][idx];
-        wordEl.classList.remove('is-fading');
-        sizeWord();
-        startCycle();
-      }
-
-      applyLang();
-
-      var resizeTimer = null;
-      window.addEventListener('resize', function () {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(sizeWord, 150);
-      });
-
-      document.addEventListener('langchange', function (e) {
-        lang = e.detail.lang === 'en' ? 'en' : 'ru';
-        applyLang();
       });
     })();
 

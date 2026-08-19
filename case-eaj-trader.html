@@ -332,7 +332,7 @@
      of glass result cards. No decorative numbers, no icons, no repeated
      "Результат" word, no invented figures. Replaces the old split
      Результат/Метрики pair — see typography-hierarchy instruction §3. */
-  .result-cards {
+  .result-cards, .metric-cards {
     display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px;
     margin-top: clamp(32px, 3vw, 40px); align-items: stretch;
   }
@@ -364,9 +364,21 @@
     content: ''; display: inline-block; width: 16px; height: 2px; border-radius: 2px;
     background: var(--accent-blue);
   }
-  .result-card .result-card__metric { font-family: var(--display); font-weight: 600; font-size: 1.05rem; color: var(--text); line-height: 1.35; margin: 0; max-width: none; }
-  .result-card .result-card__desc { font-size: var(--font-size-label); color: var(--text-dim); line-height: 1.55; margin: 0; max-width: none; }
-  @media (max-width: 720px) { .result-cards { grid-template-columns: 1fr; } .result-card { min-height: 0; } }
+  .result-card .result-card__metric, .metric-card .result-card__metric { font-family: var(--display); font-weight: 600; font-size: 1.05rem; color: var(--text); line-height: 1.35; margin: 0; max-width: none; }
+  .result-card .result-card__desc, .metric-card .result-card__desc { font-size: var(--font-size-label); color: var(--text-dim); line-height: 1.55; margin: 0; max-width: none; }
+  /* Metric cards mark the second, separate "Как оценивать эффект" layer —
+     a quiet neutral surface (not the case's accent tint) so it reads as a
+     distinct kind of card, not a continuation of the Результат grid. */
+  .metric-card {
+    background: var(--line-faint);
+    border: 1px solid var(--line);
+    box-shadow: none;
+    border-radius: 24px;
+    min-height: 200px;
+    padding: clamp(28px, 2.6vw, 36px);
+    display: flex; flex-direction: column; align-items: flex-start; text-align: left; gap: 10px; min-width: 0;
+  }
+  @media (max-width: 720px) { .result-cards, .metric-cards { grid-template-columns: 1fr; } .result-card, .metric-card { min-height: 0; } }
 
   /* ===== Case floating dock (like + next case) — shared across all case pages =====
      Two independent glass controls, fixed to the viewport like the top nav —
@@ -378,7 +390,7 @@
   .case-floating-nav {
     position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom));
     transform: translateX(-50%) translateY(12px);
-    z-index: 110; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px;
+    z-index: 110; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 16px;
     width: max-content; max-width: calc(100vw - 32px);
     opacity: 0;
     transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1);
@@ -386,7 +398,7 @@
   .case-floating-nav.is-inview { opacity: 1; transform: translateX(-50%) translateY(0); }
   body.lightbox-open .case-floating-nav { opacity: 0; pointer-events: none; }
 
-  .case-like, .case-next, .case-prev {
+  .case-next, .case-prev {
     background: rgba(255, 255, 255, 0.62);
     border: 1px solid rgba(255, 255, 255, 0.72);
     box-shadow:
@@ -397,7 +409,7 @@
     border-radius: var(--radius-pill);
   }
   @supports not (backdrop-filter: blur(1px)) {
-    .case-like, .case-next, .case-prev { background: rgba(248, 248, 248, 0.94); }
+    .case-next, .case-prev { background: rgba(248, 248, 248, 0.94); }
   }
 
   .case-prev {
@@ -415,30 +427,6 @@
   .case-prev__title { font-family: var(--display); font-weight: 700; font-size: 1.05rem; color: #171717; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .case-prev:hover .case-prev__arrow, .case-prev:focus-visible .case-prev__arrow { transform: translateX(-5px); }
 
-  .case-like {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-family: var(--sans); font-size: 0.92rem; font-weight: 600; color: #171717;
-    padding-inline: 20px; min-height: 56px;
-    cursor: pointer; flex-shrink: 0;
-    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s cubic-bezier(0.22,1,0.36,1);
-  }
-  .case-like:hover { background: rgba(255,255,255,0.85); box-shadow: var(--shadow-control); }
-  .case-like:focus-visible { outline: 2px solid var(--text-strong); outline-offset: 2px; }
-  .case-like:active { transform: scale(0.96); }
-  .case-like__icon { width: 20px; height: 20px; flex-shrink: 0; color: var(--text-dim); transition: transform 0.2s cubic-bezier(0.22,1,0.36,1), color 0.2s ease; }
-  .case-like:hover .case-like__icon { transform: scale(1.06); }
-  .case-like.is-liked { color: var(--text-strong); }
-  .case-like.is-liked .case-like__icon { color: var(--text-strong); }
-  .case-like.is-liked .case-like__icon path { fill: currentColor; }
-  .case-like.is-pulsing .case-like__icon { animation: caseLikePulse 240ms cubic-bezier(0.22,1,0.36,1); }
-  @keyframes caseLikePulse {
-    0% { transform: scale(1); }
-    45% { transform: scale(1.22); }
-    100% { transform: scale(1); }
-  }
-  .case-like__label { white-space: nowrap; }
-  .case-like__count { font-family: var(--mono); color: var(--text-dim); min-width: 1.4em; }
-
   .case-next {
     display: flex; align-items: center; gap: 12px;
     padding-inline: 24px; min-height: 56px;
@@ -455,8 +443,7 @@
   .case-next:hover .case-next__arrow, .case-next:focus-visible .case-next__arrow { transform: translateX(5px); }
 
   @media (max-width: 720px) {
-    .case-floating-nav { bottom: max(14px, env(safe-area-inset-bottom)); gap: 8px; }
-    .case-like { min-height: 48px; padding-inline: 16px; }
+    .case-floating-nav { bottom: max(14px, env(safe-area-inset-bottom)); gap: 16px; }
     .case-next, .case-prev { min-height: 48px; padding-inline: 16px; max-width: min(220px, 52vw); }
     .case-next__label, .case-prev__label {
       position: absolute; width: 1px; height: 1px; overflow: hidden;
@@ -466,8 +453,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .case-floating-nav { transition: none; opacity: 1; transform: translateX(-50%); }
-    .case-like__icon, .case-next__arrow, .case-prev__arrow, .case-like, .case-next, .case-prev { transition: none; }
-    .case-like.is-pulsing .case-like__icon { animation: none; }
+    .case-next__arrow, .case-prev__arrow, .case-next, .case-prev { transition: none; }
   }
 </style>
   <link rel="stylesheet" href="assets/typography.css">
@@ -487,7 +473,7 @@
       <div class="case-header">
         <h1 class="case-title">EAJ Trader</h1>
         <div class="case-meta-group">
-          <div class="case-tags"><span>/0→1</span><span>/trading</span><span>B2C</span></div>
+          <div class="case-tags"><span>/trading</span><span>B2C</span></div>
         </div>
         <h4 class="case-headline"><span data-lang="ru">Запуск личного кабинета EAJ Trader с нуля</span><span data-lang="en">Launching the EAJ Trader dashboard from scratch</span></h4>
         <p class="case-dek"><span data-lang="ru">У EAJ Trader уже были айдентика, лендинг и список будущих функций. Следующим шагом был сам продукт: личный кабинет для открытия счетов, управления средствами и контроля операций.</span><span data-lang="en">EAJ Trader already had an identity, a landing page, and a list of future features. The next step was the product itself: a dashboard for opening accounts, managing funds, and tracking operations.</span></p>
@@ -617,33 +603,67 @@
             </div>
           </div>
         </div>
+        <p><span data-lang="ru">Вместе кабинет, Funding и Claims &amp; Complaints закрывают ключевые сценарии первой версии. Дальше стоит посмотреть, что из этого получилось на выходе.</span><span data-lang="en">Together, the dashboard, Funding, and Claims &amp; Complaints cover the key scenarios of the first version. Next is a look at what actually came out of it.</span></p>
       </div>
       <div class="detail-block">
         <div class="detail-head">
           <span class="detail-num">07</span>
           <div class="detail-head-text">
             <h2><span data-lang="ru">Результат</span><span data-lang="en">Result</span></h2>
-            <p class="detail-kicker"><span data-lang="ru">Что запустили</span><span data-lang="en">What we launched</span></p>
+            <p class="detail-kicker"><span data-lang="ru">Из списка требований получился работающий личный кабинет</span><span data-lang="en">A list of requirements became a working personal dashboard</span></p>
           </div>
         </div>
-        <p><span data-lang="ru">Продукт запустился недавно, поэтому устойчивых постзапусковых данных пока нет. Проверяем путь от входа в личный кабинет до открытия, пополнения и регулярного использования торгового счёта.</span><span data-lang="en">The product launched recently, so there's no stable post-launch data yet. We're checking the path from entering the dashboard to opening, funding, and regularly using a trading account.</span></p>
+        <p><span data-lang="ru">Запущен личный кабинет с базовым финансовым циклом: просмотр состояния капитала, управление счетами.</span><span data-lang="en">A personal dashboard has launched with the basic financial cycle: viewing your capital and managing accounts.</span></p>
         <div class="result-cards">
           <div class="result-card">
+            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
+            <p class="result-card__metric"><span data-lang="ru">Главный экран</span><span data-lang="en">Home screen</span></p>
+            <p class="result-card__desc"><span data-lang="ru">Баланс, счета, доступные суммы, входы в операции.</span><span data-lang="en">Balance, accounts, available amounts, entry points into operations.</span></p>
+          </div>
+          <div class="result-card">
+            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
+            <p class="result-card__metric"><span data-lang="ru">Карточный формат счёта вместо табличного</span><span data-lang="en">A card-based account format instead of a table</span></p>
+          </div>
+          <div class="result-card">
+            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
+            <p class="result-card__metric"><span data-lang="ru">Прозрачные статусы операций</span><span data-lang="en">Transparent operation statuses</span></p>
+            <p class="result-card__desc"><span data-lang="ru">Пользователь видит состояние пополнений, выводов и переводов.</span><span data-lang="en">The user sees the state of deposits, withdrawals, and transfers.</span></p>
+          </div>
+          <div class="result-card">
+            <span class="result-card__label"><span data-lang="ru">Что изменилось</span><span data-lang="en">What changed</span></span>
+            <p class="result-card__metric"><span data-lang="ru">Поддержка внутри продукта</span><span data-lang="en">Support built into the product</span></p>
+            <p class="result-card__desc"><span data-lang="ru">Обращение создаётся и отслеживается без поиска внешних контактов.</span><span data-lang="en">A request is created and tracked without hunting for outside contacts.</span></p>
+          </div>
+        </div>
+        <p><span data-lang="ru">Первая версия закрыла основной цикл работы трейдера и заложила структуру, которую можно расширять новыми операциями и аналитикой без перестройки базовых сценариев.</span><span data-lang="en">The first version covered the trader's core workflow and laid a structure that can be extended with new operations and analytics without reworking the basic scenarios.</span></p>
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-head">
+          <span class="detail-num">08</span>
+          <div class="detail-head-text">
+            <h2><span data-lang="ru">Как оценивать эффект</span><span data-lang="en">How to evaluate the effect</span></h2>
+            <p class="detail-kicker"><span data-lang="ru">Продукт запущен недавно</span><span data-lang="en">The product launched recently</span></p>
+          </div>
+        </div>
+        <p><span data-lang="ru">Устойчивых постзапусковых данных пока нет, поэтому ниже приведены не готовые результаты, а метрики, по которым будем оценивать эффект после того, как накопится статистика.</span><span data-lang="en">There's no stable post-launch data yet, so what follows isn't a finished result. It's the metrics we'll use to evaluate the effect once enough data has built up.</span></p>
+        <div class="metric-cards">
+          <div class="metric-card">
             <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Конверсия в открытие и пополнение счёта</span><span data-lang="en">Conversion to opening and funding an account</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, доходит ли пользователь от входа в кабинет до первого ценностного действия.</span><span data-lang="en">Shows whether the user gets from entering the dashboard to the first valuable action.</span></p>
           </div>
-          <div class="result-card">
+          <div class="metric-card">
             <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Доля новых пользователей, открывших торговый счёт</span><span data-lang="en">The share of new users who opened a trading account</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, доходит ли пользователь до первого счёта, а не только до главного экрана.</span><span data-lang="en">Shows whether the user reaches a first account, not just the home screen.</span></p>
           </div>
-          <div class="result-card">
+          <div class="metric-card">
             <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Доля пополненных счетов с повторной операцией</span><span data-lang="en">The share of funded accounts with a repeat operation</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает, возвращается ли пользователь в кабинет после первого пополнения.</span><span data-lang="en">Shows whether the user comes back to the dashboard after the first deposit.</span></p>
           </div>
-          <div class="result-card">
+          <div class="metric-card">
             <span class="result-card__label"><span data-lang="ru">Показатель</span><span data-lang="en">Indicator</span></span>
             <p class="result-card__metric"><span data-lang="ru">Доля успешно завершённых пополнений, выводов и переводов</span><span data-lang="en">The share of successfully completed deposits, withdrawals, and transfers</span></p>
             <p class="result-card__desc"><span data-lang="ru">Показывает надёжность финансового цикла, вокруг которого построен кабинет.</span><span data-lang="en">Shows the reliability of the financial cycle the dashboard is built around.</span></p>
@@ -661,13 +681,6 @@
           <span class="case-prev__title">Alif Partners</span>
         </span>
       </a>
-      <button class="case-like" type="button" data-case-id="eaj-trader" aria-pressed="false" aria-label="Поставить лайк кейсу EAJ Trader">
-        <svg class="case-like__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
-          <path d="M12 20.5s-7.2-4.5-9.8-8.9C.5 8.4 1.9 4.5 5.6 4.5c2.2 0 3.8 1.4 4.9 3.1 1.1-1.7 2.7-3.1 4.9-3.1 3.7 0 5.1 3.9 2.4 7.1-2.6 4.4-9.8 8.9-9.8 8.9z"/>
-        </svg>
-        <span class="case-like__label"><span data-lang="ru">Нравится</span><span data-lang="en">Like</span></span>
-        <span class="case-like__count">0</span>
-      </button>
       <a class="case-next" href="case-namaste.html">
         <span class="case-next__label"><span data-lang="ru">Следующий кейс</span><span data-lang="en">Next case</span></span>
         <span class="case-next__title-row">
@@ -675,7 +688,6 @@
           <span class="case-next__arrow" aria-hidden="true">→</span>
         </span>
       </a>
-      <span class="sr-only" aria-live="polite" data-case-live></span>
     </nav>
   </div>
 
